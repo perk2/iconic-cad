@@ -35,7 +35,9 @@ def test_members_json_exists_and_has_all_modules():
     # every library/modules/<id> entry must have a members.json entry
     lib_root = os.path.join(os.path.dirname(MEMBERS_PATH), "..", "..", "..", "library", "modules")
     lib_root = os.path.normpath(lib_root)
-    ids = sorted(os.listdir(lib_root))
+    # new-format folders (schema.yaml) are out of scope for the legacy members.json
+    ids = sorted(d for d in os.listdir(lib_root)
+                 if not os.path.isfile(os.path.join(lib_root, d, "schema.yaml")))
     for iid in ids:
         assert iid in doc, f"library/modules/{iid} has no members.json entry"
 

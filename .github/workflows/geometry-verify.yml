@@ -61,7 +61,7 @@ jobs:
         run: python3 build_lib.py --verify --no-thumbs
 
       - name: Validate library output
-        run: python3 -m libtools validate-output --root . --all
+        run: python3 scripts/legacy_registry.py validate-output --root . --all
 
       - uses: actions/upload-artifact@v4
         if: always()

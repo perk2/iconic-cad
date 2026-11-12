@@ -35,7 +35,7 @@ jobs:
         run: python -m pytest tests/test_aperture_envelope.py tests/test_blocking_math.py tests/test_library_drift.py tests/test_generated_entry.py tests/test_members_boxes.py tests/test_export_ifc.py -v
 
       - name: Validate library entry code
-        run: python -m libtools validate-code --root . --all
+        run: python scripts/legacy_registry.py validate-code --root . --all
 
       - name: JS test suite (every tests/*.mjs, discovered)
         run: node tests/run_js.mjs

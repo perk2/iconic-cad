@@ -71,7 +71,8 @@ def fail(msg):
 
 def validate_entries():
     """Run libtools validation before deriving any artifacts."""
-    cmd = [sys.executable, "-m", "libtools", "validate-code", "--root", ".", "--all"]
+    cmd = [sys.executable, os.path.join("scripts", "legacy_registry.py"),
+           "validate-code", "--root", ".", "--all"]
     print("[validate] " + " ".join(cmd), flush=True)
     res = subprocess.run(cmd, cwd=REPO_ROOT)
     if res.returncode != 0:

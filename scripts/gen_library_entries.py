@@ -14,6 +14,7 @@ from pathlib import Path
 import yaml
 
 from aperture_envelope import validate_aperture_envelopes
+from legacy_registry import is_new_format
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -67,14 +68,13 @@ def verify(instances: list[dict]) -> int:
 
 
 def write_entries(root: Path, instances: list[dict], clean: bool) -> None:
-    if clean and root.exists():
-        shutil.rmtree(root)
     root.mkdir(parents=True, exist_ok=True)
 
     expected_ids = {inst["id"] for inst in instances}
     if clean:
+        # Remove stale legacy entries; new-format folders are not ours to touch.
         for child in root.iterdir():
-            if child.is_dir() and child.name not in expected_ids:
+            if child.is_dir() and child.name not in expected_ids and not is_new_format(child):
                 shutil.rmtree(child)
 
     for inst in instances:
@@ -89,7 +89,7 @@ def write_entries(root: Path, instances: list[dict], clean: bool) -> None:
 def collect_diffs(generated: Path, committed: Path) -> list[str]:
     diffs = []
     entry_names = {p.name for p in generated.iterdir() if p.is_dir()} | {
-        p.name for p in committed.iterdir() if p.is_dir()
+        p.name for p in committed.iterdir() if p.is_dir() and not is_new_format(p)
     }
     paths = [
         Path(entry_name) / file_name

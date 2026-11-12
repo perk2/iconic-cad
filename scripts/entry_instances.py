@@ -5,9 +5,10 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from libtools.registry import discover, load_schema
+from libtools.registry import load_schema
 
 from aperture_envelope import validate_aperture_envelopes
+from legacy_registry import discover_legacy as discover
 
 
 ROOT = Path(__file__).resolve().parent.parent

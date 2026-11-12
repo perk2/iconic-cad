@@ -1,0 +1,5 @@
+# Exactly one implementation for now; it must cover every possible port pair
+# and variant pair. (Later: an order of preference.)
+implementations: [plain]
+stage: site               # open panels: connection parts are fitted on site
+status: draft

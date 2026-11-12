@@ -1,0 +1,41 @@
+# Joint types: which two parts are joined, and why. Never how; each system's
+# fastening schedule says how. System-independent: every system uses this list.
+# Each joint type has a description and its two sides. Side names are chosen
+# per joint type and never reuse interface role names; a fastening schedule
+# refers to them ("through stud into backing").
+
+stud_to_plate:
+  description: A stud end bearing on a bottom or top plate.
+  sides:
+    plate: The plate, fastened through.
+    stud: The stud, fastened into its end.
+
+top_plates:
+  description: The upper top plate laid on the lower one, tying the top of the wall.
+  sides:
+    upper: The upper top plate.
+    lower: The lower top plate.
+
+sheathing_to_framing:
+  description: A sheet fastened to the studs and plates behind it.
+  sides:
+    sheet: The sheet.
+    framing: The stud or plate behind it.
+
+panel_seam:
+  description: The end studs of two neighbouring panels in a run.
+  sides:
+    a: The earlier panel's end stud.
+    b: The next panel's end stud.
+
+corner_studs:
+  description: The butt wall's end stud fastened to the through wall's end stud or backer.
+  sides:
+    stud: The butt wall's end stud, fastened through.
+    backing: What it is fastened into; the through wall's end stud or a backer.
+
+backer_to_plate:
+  description: A backer stud bearing on the through wall's bottom or top plate.
+  sides:
+    plate: The plate.
+    backer: The backer stud.

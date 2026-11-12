@@ -1,0 +1,54 @@
+# Framed wall panel: studs at a fixed spacing between a bottom plate and two
+# top plates, plus the build-up's workshop layers. Variants per system choose
+# the sizes and the build-up.
+#
+# Datum: exterior face (face A), bottom-left seen from outside; x along the run,
+# y into the wall, z up. Lengths are in the system's units.
+
+id: wall_panel
+title: Wall panel
+
+parameters:
+  width:
+    type: length
+    min: 600
+    max: 3600
+    description: Panel length along the run.
+  height:
+    type: length
+    min: 2100
+    max: 3000
+    description: Overall height, bottom of the bottom plate to top of the top plates.
+  spacing:
+    type: length
+    min: 300
+    max: 600
+    description: Stud spacing, centre to centre.
+  stud:
+    type: lumber
+    description: Lumber for studs and plates (catalog id).
+  buildup:
+    type: buildup
+    description: Build-up (system build-up id); its workshop layers become parts.
+
+# Ports. The compiler computes each port's frame (origin, normal, axis) from
+# the parameters; the schema declares what the port is for.
+# kind: how a connection is positioned on the port (fixed: one position).
+# roles: the interface roles the port can fill, as interface.role.
+# exposes: the compiler's part names an implementation can refer to.
+ports:
+  left:
+    description: The panel's left end, seen from outside.
+    kind: fixed
+    roles: [wall_inline.b, wall_corner.through, wall_corner.butt]
+    exposes: [end_stud, bottom_plate, top_plates]
+  right:
+    description: The panel's right end, seen from outside.
+    kind: fixed
+    roles: [wall_inline.a, wall_corner.through, wall_corner.butt]
+    exposes: [end_stud, bottom_plate, top_plates]
+  bottom:
+    description: The underside of the bottom plate. Unused until the floor.
+    kind: fixed
+    roles: []
+    exposes: [bottom_plate]

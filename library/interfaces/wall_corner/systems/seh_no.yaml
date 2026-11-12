@@ -1,0 +1,5 @@
+# Exactly one implementation for now; it must cover every possible port pair
+# and variant pair. (Later: an order of preference.)
+implementations: [backer]
+stage: site               # open panels: the backer is fitted on site
+status: draft

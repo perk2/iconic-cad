@@ -1,0 +1,14 @@
+# Load-bearing wall in seh_no: open panels, studs c/c 600.
+
+fixed:
+  stud: "48x148"
+  spacing: 600            # two bays per 1200 sheet
+  height: 2400            # one sheet height
+  buildup: exterior
+
+default: "1200"
+
+variants:
+  "1200":
+    width: 1200
+    status: draft

@@ -1,0 +1,24 @@
+# Two walls meeting at a right-angled outside corner. Either end port of a
+# wall can fill either role; the connection says which wall runs through.
+
+id: wall_corner
+title: Wall corner
+description: >-
+  Two walls meeting at a right-angled outside corner. One runs through to the
+  corner; the other butts against its inside face.
+
+roles:
+  through: The wall that runs through to the outer corner.
+  butt: The wall that stops against the through wall's inside face.
+
+relations:
+  - {from: butt, relation: fastens_to, to: through}
+
+# corner: the butt wall's end lands on the through wall's inside face, one
+# through-wall depth in from the through wall's end, outer faces flush.
+# depth is the compiled variant's size across the wall.
+placement:
+  rule: corner
+  offset: through.depth
+
+checks: [same_height]

@@ -1,0 +1,17 @@
+# Two wall panels next to each other in a straight run.
+
+id: wall_inline
+title: Wall inline
+description: Two wall panels next to each other in a straight run, faces flush.
+
+roles:
+  a: The earlier panel in the run; its right end.
+  b: The next panel in the run; its left end.
+
+relations: []
+
+# flush: port origins meet, normals opposed, axes aligned, outer faces flush.
+placement:
+  rule: flush
+
+checks: [same_height, same_depth]

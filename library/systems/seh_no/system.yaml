@@ -1,0 +1,50 @@
+# Placeholder values from common Norwegian practice for light timber framing.
+# Not yet checked against Byggforsk or TEK17; the code profile will check them.
+
+id: seh_no
+title: SEH Norway
+description: >-
+  A subset of the Seed Eco-Home modules, adapted to Norway: metric sizes,
+  studs c/c 600, open panels (framing and bracing sheet in the workshop,
+  all other layers on site).
+status: draft
+units: mm
+grid: 600
+
+catalog:
+  lumber:
+    "48x98": {section: [48, 98], grade: C24}
+    "48x148": {section: [48, 148], grade: C24}
+  sheets:
+    osb_12: {material: OSB/3, thickness: 12, size: [1200, 2400]}
+
+# Build-ups: ordered layers. face_a lists layers outward from the framing
+# (exterior side), face_b inward from the framing. Cavity layers sit between
+# the studs and take the stud depth, so they have no thickness.
+# A layer is either a catalog sheet (sheet) or plain material text (material);
+# only workshop layers become parts of the panel.
+buildups:
+  exterior:
+    description: Exterior wall with ventilated cladding, designed as heated.
+    face_a:
+      - {role: bracing, sheet: osb_12, stage: workshop}
+      - {role: wind_barrier, material: wind barrier membrane, thickness: 0, stage: site}
+      - {role: ventilated_cavity, material: battens 23x48, thickness: 23, stage: site}
+      - {role: cladding, material: timber cladding, thickness: 19, stage: site}
+    cavity:
+      - {role: insulation, material: mineral wool, stage: site}
+    face_b:
+      - {role: vapour_control, material: PE 0.15, thickness: 0, stage: site}
+      - {role: service_cavity, material: battens 48x48 with 50 mm mineral wool, thickness: 48, stage: site}
+      - {role: lining, material: interior panel, thickness: 12, stage: site}
+
+# Fastening schedule: how each joint type is fastened in this system.
+# Placeholder patterns until the schedule is worked out (fasteners are not
+# produced yet).
+fastening:
+  stud_to_plate: {pattern: placeholder}
+  top_plates: {pattern: placeholder}
+  sheathing_to_framing: {pattern: placeholder}
+  panel_seam: {pattern: placeholder}
+  corner_studs: {pattern: placeholder}
+  backer_to_plate: {pattern: placeholder}

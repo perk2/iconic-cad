@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "allowJs": true,
+    "noEmit": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "module": "es2022",
+    "target": "es2022",
+    "moduleResolution": "bundler",
+    "lib": [
+      "es2022"
+    ]
+  },
+  "include": [
+    "*.js",
+    "../../../library/modules/*/derive.js",
+    "../../../library/modules/*/compile.js",
+    "../../../library/interfaces/*/implementations/*.js"
+  ],
+  "exclude": [
+    "builder.js"
+  ]
+}

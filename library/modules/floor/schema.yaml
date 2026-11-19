@@ -1,0 +1,24 @@
+# Joist floor built on site, on a sill all round, derived from the walls
+# standing on it (derive.js): the outline is the walls' framing loop, the
+# sill their stud lumber, and the blocking stands under their members over
+# the edges along the joists. The storey derives it. The system file chooses
+# the joists, their spacing and the build-up.
+#
+# Build-up face A is the exterior side (down), face B is up.
+
+id: floor
+title: Floor
+derived: true
+
+parameters:
+  joist:
+    type: lumber
+    description: Lumber for joists, rims and blocking (catalog id).
+  spacing:
+    type: length
+    min: 300
+    max: 600
+    description: Joist spacing, centre to centre.
+  buildup:
+    type: buildup
+    description: Build-up (system build-up id); its sheet layers on face B become parts.

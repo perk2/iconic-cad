@@ -7,8 +7,8 @@
 stud_to_plate:
   description: A stud end bearing on a bottom or top plate.
   sides:
-    plate: The plate, fastened through.
-    stud: The stud, fastened into its end.
+    plate: The plate.
+    stud: The stud.
 
 top_plates:
   description: The upper top plate laid on the lower one, tying the top of the wall.
@@ -17,10 +17,10 @@ top_plates:
     lower: The lower top plate.
 
 sheathing_to_framing:
-  description: A sheet fastened to the studs and plates behind it.
+  description: A sheet fastened to the framing behind it.
   sides:
     sheet: The sheet.
-    framing: The stud or plate behind it.
+    framing: The framing member behind it (stud, plate, header, sill, cripple, ...).
 
 panel_seam:
   description: The end studs of two neighbouring panels in a run.
@@ -29,13 +29,102 @@ panel_seam:
     b: The next panel's end stud.
 
 corner_studs:
-  description: The butt wall's end stud fastened to the through wall's end stud or backer.
+  description: The butt wall's end stud fastened to the through wall's end stud or a corner's turned stud.
   sides:
-    stud: The butt wall's end stud, fastened through.
-    backing: What it is fastened into; the through wall's end stud or a backer.
+    stud: The butt wall's end stud.
+    backing: The through wall's end stud, or the turned stud beside it.
+
+backer_to_stud:
+  description: >-
+    A corner's turned stud, its narrow edge against the through wall's end
+    stud, nailed through the stud into the backer's edge.
+  sides:
+    stud: The through wall's end stud.
+    backer: The turned stud.
 
 backer_to_plate:
   description: A backer stud bearing on the through wall's bottom or top plate.
   sides:
     plate: The plate.
     backer: The backer stud.
+
+jack_to_king:
+  description: A jack stud fastened against its king stud beside an opening.
+  sides:
+    jack: The jack stud.
+    king: The king stud.
+
+header_to_king:
+  description: A header ply's end against a king stud.
+  sides:
+    header: The header ply.
+    king: The king stud.
+
+header_on_jack:
+  description: A header ply bearing on a jack stud.
+  sides:
+    header: The header ply.
+    jack: The jack stud.
+
+sill_to_jack:
+  description: A rough sill's end against a jack stud.
+  sides:
+    sill: The rough sill.
+    jack: The jack stud.
+
+cripple_to_sill:
+  description: A bottom cripple carrying the rough sill.
+  sides:
+    cripple: The cripple.
+    sill: The rough sill.
+
+cripple_to_header:
+  description: A cripple above a header, standing on its plies.
+  sides:
+    cripple: The cripple.
+    header: The header ply.
+
+header_to_plate:
+  description: A header ply tight under the lower top plate.
+  sides:
+    header: The header ply.
+    plate: The lower top plate.
+
+plate_end:
+  description: >-
+    At a corner, the end of one wall's upper top plate against the side of
+    the other wall's, which laps over the corner; nailed through the side
+    into the end.
+  sides:
+    end: The upper top plate whose end meets the other.
+    side: The lapping upper top plate.
+
+joist_to_rim:
+  description: A floor joist's end against a rim joist.
+  sides:
+    rim: The rim joist.
+    joist: The joist.
+
+on_sill:
+  description: A rim, joist or block bearing on the sill.
+  sides:
+    sill: The sill.
+    member: The rim, joist or block on it.
+
+sill_corner:
+  description: The end of a side sill against an end sill at a corner.
+  sides:
+    a: The sill along the width (south or north).
+    b: The sill along the depth (west or east).
+
+blocking_to_joist:
+  description: A block's end against a joist, nailed through the joist.
+  sides:
+    joist: The joist.
+    block: The block.
+
+doubled_blocking:
+  description: Two blocks side by side under two end studs at a wall panel joint.
+  sides:
+    a: The first block.
+    b: The block beside it.

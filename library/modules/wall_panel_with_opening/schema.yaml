@@ -1,0 +1,58 @@
+# Framed wall panel with one window or door, centred: the wall's framing with
+# king and jack studs, a two-ply header, cripples at the stud spacing, and for
+# a window a rough sill. Variants per system choose the sizes, the unit and
+# the build-up.
+#
+# Datum as for wall_panel: exterior face (face A), bottom-left seen from outside;
+# x along the run, y into the wall, z up. Lengths are in the system's units.
+
+id: wall_panel_with_opening
+title: Wall panel with opening
+
+parameters:
+  width:
+    type: length
+    min: 1200
+    max: 3600
+    description: Panel length along the run.
+  height:
+    type: length
+    min: 2100
+    max: 3000
+    description: >-
+      Overall height, bottom of the bottom plate to top of the upper top
+      plate (fitted on site; the panel's framing stops one plate lower).
+  spacing:
+    type: length
+    min: 300
+    max: 600
+    description: Stud spacing, centre to centre; cripples keep it.
+  stud:
+    type: lumber
+    description: Lumber for studs, plates, cripples and the rough sill (catalog id).
+  header:
+    type: lumber
+    description: Lumber for each of the header's two plies, stood on edge (catalog id).
+  unit:
+    type: opening_unit
+    description: The window or door (catalog id); its rough opening sets the framed hole.
+  sill_height:
+    type: length
+    min: 0
+    max: 2000
+    description: Height of the rough opening's bottom above the bottom of the wall; 0 for a door.
+  buildup:
+    type: buildup
+    description: Build-up (system build-up id); its workshop layers become parts.
+
+# Ports as on wall. A door's end ports expose the bottom plate piece at that
+# end as bottom_plate.
+ports:
+  left:
+    description: The panel's left end, seen from outside.
+    kind: fixed
+    roles: [wall_inline.b, wall_corner.through, wall_corner.butt]
+  right:
+    description: The panel's right end, seen from outside.
+    kind: fixed
+    roles: [wall_inline.a, wall_corner.through, wall_corner.butt]

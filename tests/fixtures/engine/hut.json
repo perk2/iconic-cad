@@ -1,0 +1,29 @@
+{
+  "system": "seh_no",
+  "git": null,
+  "anchor": {"entity": "S1", "position": [0, 0, 0], "facing": 0},
+  "entities": [
+    {"id": "S1", "module": "wall_panel", "variant": "1200"},
+    {"id": "S2", "module": "wall_panel", "variant": "1200"},
+    {"id": "S3", "module": "wall_panel", "variant": "1200"},
+    {"id": "E1", "module": "wall_panel", "variant": "1200"},
+    {"id": "E2", "module": "wall_panel", "variant": "1200"},
+    {"id": "N1", "module": "wall_panel", "variant": "1200"},
+    {"id": "N2", "module": "wall_panel", "variant": "1200"},
+    {"id": "N3", "module": "wall_panel", "variant": "1200"},
+    {"id": "W1", "module": "wall_panel", "variant": "1200"},
+    {"id": "W2", "module": "wall_panel", "variant": "1200"}
+  ],
+  "connections": [
+    {"id": "c_s12", "interface": "wall_inline", "a": "S1.right", "b": "S2.left"},
+    {"id": "c_s23", "interface": "wall_inline", "a": "S2.right", "b": "S3.left"},
+    {"id": "c_se", "interface": "wall_corner", "through": "S3.right", "butt": "E1.left"},
+    {"id": "c_e12", "interface": "wall_inline", "a": "E1.right", "b": "E2.left"},
+    {"id": "c_ne", "interface": "wall_corner", "through": "N1.left", "butt": "E2.right"},
+    {"id": "c_n12", "interface": "wall_inline", "a": "N1.right", "b": "N2.left"},
+    {"id": "c_n23", "interface": "wall_inline", "a": "N2.right", "b": "N3.left"},
+    {"id": "c_nw", "interface": "wall_corner", "through": "N3.right", "butt": "W1.left"},
+    {"id": "c_w12", "interface": "wall_inline", "a": "W1.right", "b": "W2.left"},
+    {"id": "c_sw", "interface": "wall_corner", "through": "S1.left", "butt": "W2.right"}
+  ]
+}

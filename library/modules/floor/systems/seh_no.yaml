@@ -1,0 +1,8 @@
+# Floor in seh_no: site-built joists c/c 600 over a ventilated crawl space,
+# derived from the walls (the outline, the sill and the blocking follow
+# them).
+
+fixed:
+  joist: "48x198"         # checked: 3.1 m span at c/c 600 (SINTEF Byggforsk table, in Tømrerboka)
+  spacing: 600
+  buildup: floor

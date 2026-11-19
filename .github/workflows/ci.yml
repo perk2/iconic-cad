@@ -32,13 +32,21 @@ jobs:
         run: node scripts/gen_landing_hero.mjs --verify
 
       - name: Python blocking-math unit tests
-        run: python -m pytest tests/test_aperture_envelope.py tests/test_blocking_math.py tests/test_library_drift.py tests/test_generated_entry.py tests/test_members_boxes.py tests/test_export_ifc.py -v
+        run: python -m pytest tests/test_aperture_envelope.py tests/test_blocking_math.py tests/test_library_drift.py tests/test_generated_entry.py tests/test_members_boxes.py tests/test_export_ifc.py tests/test_legacy_registry.py -v
 
       - name: Validate library entry code
         run: python scripts/legacy_registry.py validate-code --root . --all
 
+      - name: Assert library.json is built from library/
+        run: node scripts/build_library.mjs --verify
+
       - name: JS test suite (every tests/*.mjs, discovered)
         run: node tests/run_js.mjs
+
+      - name: Type-check the library code (JSDoc, no build step)
+        run: |
+          npx --yes -p typescript@5.9.3 tsc -p web/js/library/jsconfig.json
+          npx --yes -p typescript@5.9.3 tsc -p web/js/library/jsconfig.builder.json
 
       - name: Machine browser workflows with original fixture geometry
         run: |

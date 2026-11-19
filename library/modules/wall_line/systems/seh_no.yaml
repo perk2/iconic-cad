@@ -1,0 +1,7 @@
+# Wall lines in seh_no: the upper top plate in pieces of at most 2400 (two
+# from a 4800 stock length), its joints at least 600 from a panel joint, so
+# with 1200 panels at a panel's middle stud.
+
+fixed:
+  max_piece: 2400
+  min_from_joint: 600

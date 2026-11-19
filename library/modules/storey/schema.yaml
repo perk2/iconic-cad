@@ -1,0 +1,9 @@
+# A storey: the walls on one level, joined into wall lines, with what spans
+# them, and the floor derived from the walls. Derived: compiled at design
+# time from the layout (derive.js), once the walls close into a rectangle.
+
+id: storey
+title: Storey
+derived: true
+
+parameters: {}

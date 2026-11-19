@@ -7,18 +7,33 @@ description: >-
   Two walls meeting at a right-angled outside corner. One runs through to the
   corner; the other butts against its inside face.
 
+# Each role lists the parts a module must expose on a port that fills it;
+# implementations may refer only to these. end_sheet is the outermost
+# workshop sheet on the exterior face, so a wall with none can't be in a
+# corner.
 roles:
-  through: The wall that runs through to the outer corner.
-  butt: The wall that stops against the through wall's inside face.
+  through:
+    description: The wall that runs through to the outer corner.
+    exposes: [end_stud, end_sheet, bottom_plate, top_plate]
+  butt:
+    description: The wall that stops against the through wall's inside face.
+    exposes: [end_stud]
 
 relations:
   - {from: butt, relation: fastens_to, to: through}
 
-# corner: the butt wall's end lands on the through wall's inside face, one
-# through-wall depth in from the through wall's end, outer faces flush.
-# depth is the compiled variant's size across the wall.
+# corner, written in the port frame of the reference role (R) for the other
+# port (M): M.origin = R.origin + offset * R.across, M.normal = -R.across,
+# M.across = -R.normal, M.along = R.along. Wall ports sit on the framing's
+# outer face, so the butt wall's end lands on the through wall's inside
+# framing face, and the butt wall's framing is flush with the through wall's
+# end: the framing outline is a rectangle and the sheets meet at the corner.
+# framing is the compiled variant's framing depth
+# across the wall. The reference role's port frame is also the connection
+# frame.
 placement:
   rule: corner
-  offset: through.depth
+  reference: through
+  offset: through.framing
 
-checks: [same_height]
+checks: [same_height, same_framing]

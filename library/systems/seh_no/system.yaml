@@ -11,23 +11,54 @@ status: draft
 units: mm
 grid: 600
 
+# What the values are based on. Filled in when values are checked.
+sources: []
+
 catalog:
   lumber:
     "48x98": {section: [48, 98], grade: C24}
     "48x148": {section: [48, 148], grade: C24}
+    "48x198": {section: [48, 198], grade: C24}   # floor joists; placeholder
   sheets:
     osb_12: {material: OSB/3, thickness: 12, size: [1200, 2400]}
+    chipboard_22: {material: chipboard P5, thickness: 22, size: [600, 2400]}   # subfloor; placeholder
+  fasteners:
+    # Framing nail, from Tømrerboka; shank and coating not checked yet.
+    nail_28x95: {kind: nail, diameter: 2.8, length: 95}
+    # Sheathing nail: placeholder until the books are checked.
+    nail_25x60_ring: {kind: nail, diameter: 2.5, length: 60, shank: ring}
+    # Subfloor screw: placeholder.
+    screw_42x55: {kind: screw, diameter: 4.2, length: 55}
+  # Windows and doors, named by their size in decimetres. size is the unit's
+  # frame, rough_opening the framed hole; placeholders until checked.
+  windows:
+    window_10x12: {size: [990, 1190], rough_opening: [1010, 1210]}
+  doors:
+    # Swedoor's exterior 10x20 frame (karmyttermål); the rough opening is the
+    # frame plus a placeholder 20 in height and 22 in width (1010, as the window).
+    door_10x20: {size: [988, 1980], rough_opening: [1010, 2000]}
 
 # Build-ups: ordered layers. face_a lists layers outward from the framing
 # (exterior side), face_b inward from the framing. Cavity layers sit between
 # the studs and take the stud depth, so they have no thickness.
 # A layer is either a catalog sheet (sheet) or plain material text (material);
-# only workshop layers become parts of the panel.
+# only workshop layers become parts of the panel. Layer roles are unique
+# within a build-up. A layer's fastening says how its parts are fastened
+# (the same fields as the fastening schedule below).
 buildups:
   exterior:
     description: Exterior wall with ventilated cladding, designed as heated.
     face_a:
-      - {role: bracing, sheet: osb_12, stage: workshop}
+      - role: bracing
+        sheet: osb_12
+        stage: workshop
+        fastening:
+          fastener: nail_25x60_ring
+          from: sheet
+          along: framing
+          spacing: 300        # along studs in the middle of the sheet
+          edge_spacing: 150   # along the sheet's edges, including seams
+          end_distance: 10    # placeholder
       - {role: wind_barrier, material: wind barrier membrane, thickness: 0, stage: site}
       - {role: ventilated_cavity, material: battens 23x48, thickness: 23, stage: site}
       - {role: cladding, material: timber cladding, thickness: 19, stage: site}
@@ -37,14 +68,49 @@ buildups:
       - {role: vapour_control, material: PE 0.15, thickness: 0, stage: site}
       - {role: service_cavity, material: battens 48x48 with 50 mm mineral wool, thickness: 48, stage: site}
       - {role: lining, material: interior panel, thickness: 12, stage: site}
+  floor:
+    description: Floor over a ventilated crawl space, designed as heated.
+    # face_a is the exterior side, down towards the crawl space; face_b is up.
+    face_a:
+      - {role: wind_barrier, material: wind barrier board, thickness: 12, stage: site}
+    cavity:
+      - {role: insulation, material: mineral wool, stage: site}
+    face_b:
+      - role: subfloor
+        sheet: chipboard_22
+        stage: site
+        fastening:
+          fastener: screw_42x55
+          from: sheet
+          along: framing
+          spacing: 300        # placeholder
+          edge_spacing: 150   # placeholder
+          end_distance: 10    # placeholder
 
-# Fastening schedule: how each joint type is fastened in this system.
-# Placeholder patterns until the schedule is worked out (fasteners are not
-# produced yet).
+# Fastening schedule: how each joint type is fastened, for joints whose
+# parts don't come from a layer with its own fastening. An entry gives the
+# fastener (catalog id), the side it is driven from, the method (straight or
+# toe, default straight), and either a count per joint, or a spacing along the
+# long axis of the side named by along, with optional edge_spacing (when the
+# contact runs along an edge of the from part) and end_distance.
+# Counts and spacings are placeholders until the books are checked.
 fastening:
-  stud_to_plate: {pattern: placeholder}
-  top_plates: {pattern: placeholder}
-  sheathing_to_framing: {pattern: placeholder}
-  panel_seam: {pattern: placeholder}
-  corner_studs: {pattern: placeholder}
-  backer_to_plate: {pattern: placeholder}
+  stud_to_plate: {fastener: nail_28x95, from: stud, method: toe, count: 2}
+  top_plates: {fastener: nail_28x95, from: upper, along: lower, spacing: 600, end_distance: 50}
+  panel_seam: {fastener: nail_28x95, from: a, along: b, spacing: 600, end_distance: 100}
+  corner_studs: {fastener: nail_28x95, from: stud, along: backing, spacing: 600, end_distance: 100}
+  backer_to_plate: {fastener: nail_28x95, from: backer, method: toe, count: 2}
+  backer_to_stud: {fastener: nail_28x95, from: stud, along: backer, spacing: 300, end_distance: 100}   # placeholder
+  jack_to_king: {fastener: nail_28x95, from: jack, along: king, spacing: 300, end_distance: 50}
+  header_to_king: {fastener: nail_28x95, from: king, count: 3}
+  header_on_jack: {fastener: nail_28x95, from: header, method: toe, count: 2}
+  sill_to_jack: {fastener: nail_28x95, from: sill, method: toe, count: 2}
+  cripple_to_sill: {fastener: nail_28x95, from: sill, count: 2}
+  cripple_to_header: {fastener: nail_28x95, from: cripple, method: toe, count: 2}
+  header_to_plate: {fastener: nail_28x95, from: plate, along: header, spacing: 300, end_distance: 50}
+  plate_end: {fastener: nail_28x95, from: side, count: 2}   # placeholder
+  joist_to_rim: {fastener: nail_28x95, from: rim, count: 3}
+  on_sill: {fastener: nail_28x95, from: member, method: toe, count: 2}   # placeholder
+  sill_corner: {fastener: nail_28x95, from: a, count: 2}   # placeholder
+  blocking_to_joist: {fastener: nail_28x95, from: joist, count: 3}   # placeholder
+  doubled_blocking: {fastener: nail_28x95, from: a, along: b, spacing: 300, end_distance: 50}   # placeholder

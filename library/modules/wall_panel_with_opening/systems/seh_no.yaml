@@ -1,0 +1,23 @@
+# Load-bearing wall with a window or door in seh_no: open panels, c/c 600.
+# The opening is centred; window and door heads are level (2000).
+
+fixed:
+  stud: "48x148"
+  header: "48x148"        # placeholder: two plies on edge
+  spacing: 600
+  height: 2400
+  buildup: exterior
+
+default: window_10x12
+
+variants:
+  window_10x12:
+    width: 1800
+    unit: window_10x12
+    sill_height: 790
+    status: draft
+  door_10x20:
+    width: 1800
+    unit: door_10x20
+    sill_height: 0
+    status: draft

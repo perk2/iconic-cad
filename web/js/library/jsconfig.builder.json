@@ -1,0 +1,22 @@
+// The builder checks untyped YAML, so it is type-checked without strict
+// mode (no implicit-any errors); the rest of the library code is strict.
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "allowJs": true,
+    "noEmit": true,
+    "strict": false,
+    "strictNullChecks": true,
+    "noImplicitAny": false,
+    "module": "es2022",
+    "target": "es2022",
+    "moduleResolution": "bundler",
+    "lib": [
+      "es2022",
+      "dom"
+    ]
+  },
+  "include": [
+    "builder.js"
+  ]
+}

@@ -4,14 +4,24 @@ id: wall_inline
 title: Wall inline
 description: Two wall panels next to each other in a straight run, faces flush.
 
+# Each role lists the parts a module must expose on a port that fills it;
+# implementations may refer only to these.
 roles:
-  a: The earlier panel in the run; its right end.
-  b: The next panel in the run; its left end.
+  a:
+    description: The earlier panel in the run; its right end.
+    exposes: [end_stud]
+  b:
+    description: The next panel in the run; its left end.
+    exposes: [end_stud]
 
 relations: []
 
-# flush: port origins meet, normals opposed, axes aligned, outer faces flush.
+# flush, written in the port frame of the reference role (R) for the other
+# port (M): M.origin = R.origin, M.normal = -R.normal, M.across = R.across,
+# M.along = R.along. The ends meet and face each other, exteriors on the same
+# side. The reference role's port frame is also the connection frame.
 placement:
   rule: flush
+  reference: a
 
 checks: [same_height, same_depth]

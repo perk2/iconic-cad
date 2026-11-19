@@ -1,0 +1,22 @@
+# A wall line: the wall panels in a straight run from one corner to the next,
+# and the upper top plate laid along them on site. Derived: compiled at
+# design time from the panels the user placed (derive.js); the storey finds
+# the lines and runs it.
+
+id: wall_line
+title: Wall line
+derived: true
+
+parameters:
+  max_piece:
+    type: length
+    min: 600
+    max: 6000
+    description: The longest piece of upper top plate.
+  min_from_joint:
+    type: length
+    min: 0
+    max: 2400
+    description: >-
+      The least distance from a joint in the upper top plate to a joint
+      between panels (or a corner).

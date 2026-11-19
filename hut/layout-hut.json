@@ -1,0 +1,193 @@
+{
+  "version": 2,
+  "units": "mm",
+  "levels": [
+    {
+      "id": "L1",
+      "name": "Level 1",
+      "z_mm": 0
+    }
+  ],
+  "layers": [
+    {
+      "id": "structural",
+      "name": "Structural",
+      "color": "#4fc3f7",
+      "visible": true
+    },
+    {
+      "id": "foundation",
+      "name": "Foundation",
+      "color": "#a1887f",
+      "visible": true
+    },
+    {
+      "id": "electrical",
+      "name": "Electrical",
+      "color": "#ffd54f",
+      "visible": true
+    },
+    {
+      "id": "plumbing",
+      "name": "Plumbing",
+      "color": "#80cbc4",
+      "visible": true
+    },
+    {
+      "id": "hvac",
+      "name": "HVAC",
+      "color": "#81c784",
+      "visible": true
+    },
+    {
+      "id": "solar",
+      "name": "Solar / PV",
+      "color": "#ff8a65",
+      "visible": true
+    }
+  ],
+  "project": {
+    "name": "Hut test",
+    "system": "seh",
+    "stories": 1,
+    "climate": {
+      "iecc_zone": 5,
+      "frost_mm": 750,
+      "snow_psf": 30,
+      "wind_mph": 115,
+      "seismic_class": "B"
+    }
+  },
+  "entities": [
+    {
+      "id": "wall_1",
+      "kind": "wall",
+      "module": "wall_4x8_2x6_16oc",
+      "system": "seh",
+      "direction": "south",
+      "x_mm": 619.8,
+      "y_mm": 1008.78,
+      "level": "L1",
+      "layer": "structural",
+      "width_mm": 1219.1999999999998,
+      "depth_mm": 150.8125
+    },
+    {
+      "id": "wall_3",
+      "kind": "wall",
+      "module": "wall_4x8_2x6_16oc",
+      "system": "seh",
+      "direction": "east",
+      "x_mm": 2907.39,
+      "y_mm": -210.42,
+      "level": "L1",
+      "layer": "structural",
+      "width_mm": 1219.1999999999998,
+      "depth_mm": 150.8125
+    },
+    {
+      "id": "wall_4",
+      "kind": "wall",
+      "module": "wall_4x8_2x6_16oc",
+      "system": "seh",
+      "direction": "west",
+      "x_mm": -599.4,
+      "y_mm": -210.42,
+      "level": "L1",
+      "layer": "structural",
+      "width_mm": 1219.1999999999998,
+      "depth_mm": 150.8125
+    },
+    {
+      "id": "wall_8",
+      "kind": "wall",
+      "module": "window_4x8_2x6_36x48",
+      "system": "seh",
+      "direction": "south",
+      "x_mm": 1839,
+      "y_mm": 1008.78,
+      "level": "L1",
+      "layer": "structural",
+      "width_mm": 1219.1999999999998,
+      "depth_mm": 150.8125
+    },
+    {
+      "id": "wall_9",
+      "kind": "wall",
+      "module": "door_out_4x8_2x6_38x83",
+      "system": "seh",
+      "direction": "south",
+      "x_mm": -599.4,
+      "y_mm": 1008.78,
+      "level": "L1",
+      "layer": "structural",
+      "width_mm": 1219.1999999999998,
+      "depth_mm": 150.8125
+    },
+    {
+      "id": "wall_10",
+      "kind": "wall",
+      "module": "wall_4x8_2x6_16oc",
+      "system": "seh",
+      "direction": "west",
+      "x_mm": -599.4,
+      "y_mm": -1429.62,
+      "level": "L1",
+      "layer": "structural",
+      "width_mm": 1219.1999999999998,
+      "depth_mm": 150.8125
+    },
+    {
+      "id": "wall_11",
+      "kind": "wall",
+      "module": "wall_4x8_2x6_16oc",
+      "system": "seh",
+      "direction": "east",
+      "x_mm": 2907.39,
+      "y_mm": -1429.62,
+      "level": "L1",
+      "layer": "structural",
+      "width_mm": 1219.1999999999998,
+      "depth_mm": 150.8125
+    },
+    {
+      "id": "wall_12",
+      "kind": "wall",
+      "module": "wall_4x8_2x6_16oc",
+      "system": "seh",
+      "direction": "north",
+      "x_mm": -599.4,
+      "y_mm": -1580.43,
+      "level": "L1",
+      "layer": "structural",
+      "width_mm": 1219.1999999999998,
+      "depth_mm": 150.8125
+    },
+    {
+      "id": "wall_13",
+      "kind": "wall",
+      "module": "wall_4x8_2x6_16oc",
+      "system": "seh",
+      "direction": "north",
+      "x_mm": 619.8,
+      "y_mm": -1580.43,
+      "level": "L1",
+      "layer": "structural",
+      "width_mm": 1219.1999999999998,
+      "depth_mm": 150.8125
+    },
+    {
+      "id": "wall_14",
+      "kind": "wall",
+      "module": "wall_4x8_2x6_16oc",
+      "system": "seh",
+      "direction": "north",
+      "x_mm": 1839,
+      "y_mm": -1580.43,
+      "level": "L1",
+      "layer": "structural",
+      "width_mm": 1219.1999999999998,
+      "depth_mm": 150.8125
+    }
+  ]
+}

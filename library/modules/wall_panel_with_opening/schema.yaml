@@ -40,7 +40,7 @@ parameters:
     type: length
     min: 0
     max: 2000
-    description: Height of the rough opening's bottom above the bottom of the wall; 0 for a door.
+    description: Height of the rough opening's bottom above the bottom of the wall; for a door the bottom plate's thickness (the door stands on the plate).
   buildup:
     type: buildup
     description: Build-up (system build-up id); its workshop layers become parts.

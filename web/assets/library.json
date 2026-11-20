@@ -59,6 +59,22 @@
        "message": "a left end and a left end can't meet in rule 'corner', which needs opposite hands",
        "participants": {
         "butt": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "1200"
+        }
+       },
+       "reason": "hands"
+      },
+      {
+       "message": "a left end and a left end can't meet in rule 'corner', which needs opposite hands",
+       "participants": {
+        "butt": {
          "module": "wall_panel_with_opening",
          "port": "left",
          "variant": "window_10x12"
@@ -88,12 +104,92 @@
        "reason": "hands"
       },
       {
+       "message": "a left end and a left end can't meet in rule 'corner', which needs opposite hands",
+       "participants": {
+        "butt": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "1200"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        }
+       },
+       "reason": "hands"
+      },
+      {
+       "message": "a left end and a left end can't meet in rule 'corner', which needs opposite hands",
+       "participants": {
+        "butt": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        }
+       },
+       "reason": "hands"
+      },
+      {
+       "message": "a left end and a left end can't meet in rule 'corner', which needs opposite hands",
+       "participants": {
+        "butt": {
+         "module": "wall_panel_with_opening",
+         "port": "left",
+         "variant": "window_10x12"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        }
+       },
+       "reason": "hands"
+      },
+      {
+       "message": "a left end and a left end can't meet in rule 'corner', which needs opposite hands",
+       "participants": {
+        "butt": {
+         "module": "wall_panel_with_opening",
+         "port": "left",
+         "variant": "door_10x20"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        }
+       },
+       "reason": "hands"
+      },
+      {
        "message": "a right end and a right end can't meet in rule 'corner', which needs opposite hands",
        "participants": {
         "butt": {
          "module": "wall_panel",
          "port": "right",
          "variant": "1200"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "1200"
+        }
+       },
+       "reason": "hands"
+      },
+      {
+       "message": "a right end and a right end can't meet in rule 'corner', which needs opposite hands",
+       "participants": {
+        "butt": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
         },
         "through": {
          "module": "wall_panel",
@@ -131,6 +227,70 @@
          "module": "wall_panel",
          "port": "right",
          "variant": "1200"
+        }
+       },
+       "reason": "hands"
+      },
+      {
+       "message": "a right end and a right end can't meet in rule 'corner', which needs opposite hands",
+       "participants": {
+        "butt": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "1200"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
+        }
+       },
+       "reason": "hands"
+      },
+      {
+       "message": "a right end and a right end can't meet in rule 'corner', which needs opposite hands",
+       "participants": {
+        "butt": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
+        }
+       },
+       "reason": "hands"
+      },
+      {
+       "message": "a right end and a right end can't meet in rule 'corner', which needs opposite hands",
+       "participants": {
+        "butt": {
+         "module": "wall_panel_with_opening",
+         "port": "right",
+         "variant": "window_10x12"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
+        }
+       },
+       "reason": "hands"
+      },
+      {
+       "message": "a right end and a right end can't meet in rule 'corner', which needs opposite hands",
+       "participants": {
+        "butt": {
+         "module": "wall_panel_with_opening",
+         "port": "right",
+         "variant": "door_10x20"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
         }
        },
        "reason": "hands"
@@ -155,6 +315,22 @@
        "message": "a left end and a left end can't meet in rule 'corner', which needs opposite hands",
        "participants": {
         "butt": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        },
+        "through": {
+         "module": "wall_panel_with_opening",
+         "port": "left",
+         "variant": "window_10x12"
+        }
+       },
+       "reason": "hands"
+      },
+      {
+       "message": "a left end and a left end can't meet in rule 'corner', which needs opposite hands",
+       "participants": {
+        "butt": {
          "module": "wall_panel_with_opening",
          "port": "left",
          "variant": "window_10x12"
@@ -203,6 +379,22 @@
        "message": "a left end and a left end can't meet in rule 'corner', which needs opposite hands",
        "participants": {
         "butt": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        },
+        "through": {
+         "module": "wall_panel_with_opening",
+         "port": "left",
+         "variant": "door_10x20"
+        }
+       },
+       "reason": "hands"
+      },
+      {
+       "message": "a left end and a left end can't meet in rule 'corner', which needs opposite hands",
+       "participants": {
+        "butt": {
          "module": "wall_panel_with_opening",
          "port": "left",
          "variant": "window_10x12"
@@ -251,6 +443,22 @@
        "message": "a right end and a right end can't meet in rule 'corner', which needs opposite hands",
        "participants": {
         "butt": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
+        },
+        "through": {
+         "module": "wall_panel_with_opening",
+         "port": "right",
+         "variant": "window_10x12"
+        }
+       },
+       "reason": "hands"
+      },
+      {
+       "message": "a right end and a right end can't meet in rule 'corner', which needs opposite hands",
+       "participants": {
+        "butt": {
          "module": "wall_panel_with_opening",
          "port": "right",
          "variant": "window_10x12"
@@ -286,6 +494,22 @@
          "module": "wall_panel",
          "port": "right",
          "variant": "1200"
+        },
+        "through": {
+         "module": "wall_panel_with_opening",
+         "port": "right",
+         "variant": "door_10x20"
+        }
+       },
+       "reason": "hands"
+      },
+      {
+       "message": "a right end and a right end can't meet in rule 'corner', which needs opposite hands",
+       "participants": {
+        "butt": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
         },
         "through": {
          "module": "wall_panel_with_opening",
@@ -648,6 +872,202 @@
        ],
        "participants": {
         "butt": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "1200"
+        }
+       },
+       "parts": [
+        {
+         "box": {
+          "max": [
+           -48,
+           2304,
+           148
+          ],
+          "min": [
+           -196,
+           48,
+           100
+          ]
+         },
+         "catalog": "48x148",
+         "host": "through",
+         "id": "turned_stud",
+         "material": "timber C24",
+         "role": "stud",
+         "stage": "site"
+        },
+        {
+         "box": {
+          "max": [
+           12,
+           2400,
+           148
+          ],
+          "min": [
+           0,
+           0,
+           -12
+          ]
+         },
+         "catalog": "osb_12",
+         "host": "through",
+         "id": "sheathing_strip",
+         "layer": "bracing",
+         "material": "OSB/3",
+         "role": "bracing",
+         "stage": "site"
+        }
+       ],
+       "transform": {
+        "across": [
+         -1,
+         0,
+         0
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         0,
+         0,
+         -1
+        ],
+        "origin": [
+         0,
+         0,
+         148
+        ]
+       }
+      },
+      {
+       "implementation": "california",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "backing": {
+           "of": "through",
+           "part": "stud_left"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j2",
+         "parts": {
+          "backing": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 8,
+          "item": "nail_28x95"
+         },
+         "id": "j3",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "through",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_stud"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j4",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "bottom_plate"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j5",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "top_plate_lower"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 16,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j6",
+         "parts": {
+          "framing": {
+           "of": "through",
+           "part": "stud_left"
+          },
+          "sheet": {
+           "of": "implementation",
+           "part": "sheathing_strip"
+          }
+         },
+         "stage": "site",
+         "type": "sheathing_to_framing"
+        }
+       ],
+       "participants": {
+        "butt": {
          "module": "wall_panel_with_opening",
          "port": "right",
          "variant": "window_10x12"
@@ -932,6 +1352,790 @@
          "parts": {
           "backing": {
            "of": "through",
+           "part": "stud_left"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j2",
+         "parts": {
+          "backing": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 8,
+          "item": "nail_28x95"
+         },
+         "id": "j3",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "through",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_stud"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j4",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "bottom_plate"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j5",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "top_plate_lower"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 16,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j6",
+         "parts": {
+          "framing": {
+           "of": "through",
+           "part": "stud_left"
+          },
+          "sheet": {
+           "of": "implementation",
+           "part": "sheathing_strip"
+          }
+         },
+         "stage": "site",
+         "type": "sheathing_to_framing"
+        }
+       ],
+       "participants": {
+        "butt": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "1200"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        }
+       },
+       "parts": [
+        {
+         "box": {
+          "max": [
+           -48,
+           2304,
+           148
+          ],
+          "min": [
+           -196,
+           48,
+           100
+          ]
+         },
+         "catalog": "48x148",
+         "host": "through",
+         "id": "turned_stud",
+         "material": "timber C24",
+         "role": "stud",
+         "stage": "site"
+        },
+        {
+         "box": {
+          "max": [
+           12,
+           2400,
+           148
+          ],
+          "min": [
+           0,
+           0,
+           -12
+          ]
+         },
+         "catalog": "osb_12",
+         "host": "through",
+         "id": "sheathing_strip",
+         "layer": "bracing",
+         "material": "OSB/3",
+         "role": "bracing",
+         "stage": "site"
+        }
+       ],
+       "transform": {
+        "across": [
+         -1,
+         0,
+         0
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         0,
+         0,
+         -1
+        ],
+        "origin": [
+         0,
+         0,
+         148
+        ]
+       }
+      },
+      {
+       "implementation": "california",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "backing": {
+           "of": "through",
+           "part": "stud_left"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j2",
+         "parts": {
+          "backing": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 8,
+          "item": "nail_28x95"
+         },
+         "id": "j3",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "through",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_stud"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j4",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "bottom_plate"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j5",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "top_plate_lower"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 16,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j6",
+         "parts": {
+          "framing": {
+           "of": "through",
+           "part": "stud_left"
+          },
+          "sheet": {
+           "of": "implementation",
+           "part": "sheathing_strip"
+          }
+         },
+         "stage": "site",
+         "type": "sheathing_to_framing"
+        }
+       ],
+       "participants": {
+        "butt": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        }
+       },
+       "parts": [
+        {
+         "box": {
+          "max": [
+           -48,
+           2304,
+           148
+          ],
+          "min": [
+           -196,
+           48,
+           100
+          ]
+         },
+         "catalog": "48x148",
+         "host": "through",
+         "id": "turned_stud",
+         "material": "timber C24",
+         "role": "stud",
+         "stage": "site"
+        },
+        {
+         "box": {
+          "max": [
+           12,
+           2400,
+           148
+          ],
+          "min": [
+           0,
+           0,
+           -12
+          ]
+         },
+         "catalog": "osb_12",
+         "host": "through",
+         "id": "sheathing_strip",
+         "layer": "bracing",
+         "material": "OSB/3",
+         "role": "bracing",
+         "stage": "site"
+        }
+       ],
+       "transform": {
+        "across": [
+         -1,
+         0,
+         0
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         0,
+         0,
+         -1
+        ],
+        "origin": [
+         0,
+         0,
+         148
+        ]
+       }
+      },
+      {
+       "implementation": "california",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "backing": {
+           "of": "through",
+           "part": "stud_left"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j2",
+         "parts": {
+          "backing": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 8,
+          "item": "nail_28x95"
+         },
+         "id": "j3",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "through",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_stud"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j4",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "bottom_plate"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j5",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "top_plate_lower"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 16,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j6",
+         "parts": {
+          "framing": {
+           "of": "through",
+           "part": "stud_left"
+          },
+          "sheet": {
+           "of": "implementation",
+           "part": "sheathing_strip"
+          }
+         },
+         "stage": "site",
+         "type": "sheathing_to_framing"
+        }
+       ],
+       "participants": {
+        "butt": {
+         "module": "wall_panel_with_opening",
+         "port": "right",
+         "variant": "window_10x12"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        }
+       },
+       "parts": [
+        {
+         "box": {
+          "max": [
+           -48,
+           2304,
+           148
+          ],
+          "min": [
+           -196,
+           48,
+           100
+          ]
+         },
+         "catalog": "48x148",
+         "host": "through",
+         "id": "turned_stud",
+         "material": "timber C24",
+         "role": "stud",
+         "stage": "site"
+        },
+        {
+         "box": {
+          "max": [
+           12,
+           2400,
+           148
+          ],
+          "min": [
+           0,
+           0,
+           -12
+          ]
+         },
+         "catalog": "osb_12",
+         "host": "through",
+         "id": "sheathing_strip",
+         "layer": "bracing",
+         "material": "OSB/3",
+         "role": "bracing",
+         "stage": "site"
+        }
+       ],
+       "transform": {
+        "across": [
+         -1,
+         0,
+         0
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         0,
+         0,
+         -1
+        ],
+        "origin": [
+         0,
+         0,
+         148
+        ]
+       }
+      },
+      {
+       "implementation": "california",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "backing": {
+           "of": "through",
+           "part": "stud_left"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j2",
+         "parts": {
+          "backing": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 8,
+          "item": "nail_28x95"
+         },
+         "id": "j3",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "through",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_stud"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j4",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "bottom_plate"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j5",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "top_plate_lower"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 16,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j6",
+         "parts": {
+          "framing": {
+           "of": "through",
+           "part": "stud_left"
+          },
+          "sheet": {
+           "of": "implementation",
+           "part": "sheathing_strip"
+          }
+         },
+         "stage": "site",
+         "type": "sheathing_to_framing"
+        }
+       ],
+       "participants": {
+        "butt": {
+         "module": "wall_panel_with_opening",
+         "port": "right",
+         "variant": "door_10x20"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        }
+       },
+       "parts": [
+        {
+         "box": {
+          "max": [
+           -48,
+           2304,
+           148
+          ],
+          "min": [
+           -196,
+           48,
+           100
+          ]
+         },
+         "catalog": "48x148",
+         "host": "through",
+         "id": "turned_stud",
+         "material": "timber C24",
+         "role": "stud",
+         "stage": "site"
+        },
+        {
+         "box": {
+          "max": [
+           12,
+           2400,
+           148
+          ],
+          "min": [
+           0,
+           0,
+           -12
+          ]
+         },
+         "catalog": "osb_12",
+         "host": "through",
+         "id": "sheathing_strip",
+         "layer": "bracing",
+         "material": "OSB/3",
+         "role": "bracing",
+         "stage": "site"
+        }
+       ],
+       "transform": {
+        "across": [
+         -1,
+         0,
+         0
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         0,
+         0,
+         -1
+        ],
+        "origin": [
+         0,
+         0,
+         148
+        ]
+       }
+      },
+      {
+       "implementation": "california",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "backing": {
+           "of": "through",
            "part": "stud_right"
           },
           "stud": {
@@ -1236,6 +2440,202 @@
        ],
        "participants": {
         "butt": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "1200"
+        }
+       },
+       "parts": [
+        {
+         "box": {
+          "max": [
+           -48,
+           2304,
+           148
+          ],
+          "min": [
+           -196,
+           48,
+           100
+          ]
+         },
+         "catalog": "48x148",
+         "host": "through",
+         "id": "turned_stud",
+         "material": "timber C24",
+         "role": "stud",
+         "stage": "site"
+        },
+        {
+         "box": {
+          "max": [
+           12,
+           2400,
+           148
+          ],
+          "min": [
+           0,
+           0,
+           -12
+          ]
+         },
+         "catalog": "osb_12",
+         "host": "through",
+         "id": "sheathing_strip",
+         "layer": "bracing",
+         "material": "OSB/3",
+         "role": "bracing",
+         "stage": "site"
+        }
+       ],
+       "transform": {
+        "across": [
+         -1,
+         0,
+         0
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         0,
+         0,
+         -1
+        ],
+        "origin": [
+         0,
+         0,
+         148
+        ]
+       }
+      },
+      {
+       "implementation": "california",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "backing": {
+           "of": "through",
+           "part": "stud_right"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j2",
+         "parts": {
+          "backing": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 8,
+          "item": "nail_28x95"
+         },
+         "id": "j3",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "through",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_stud"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j4",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "bottom_plate"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j5",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "top_plate_lower"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 16,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j6",
+         "parts": {
+          "framing": {
+           "of": "through",
+           "part": "stud_right"
+          },
+          "sheet": {
+           "of": "implementation",
+           "part": "sheathing_strip"
+          }
+         },
+         "stage": "site",
+         "type": "sheathing_to_framing"
+        }
+       ],
+       "participants": {
+        "butt": {
          "module": "wall_panel_with_opening",
          "port": "left",
          "variant": "window_10x12"
@@ -1520,6 +2920,790 @@
          "parts": {
           "backing": {
            "of": "through",
+           "part": "stud_right"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j2",
+         "parts": {
+          "backing": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 8,
+          "item": "nail_28x95"
+         },
+         "id": "j3",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "through",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_stud"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j4",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "bottom_plate"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j5",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "top_plate_lower"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 16,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j6",
+         "parts": {
+          "framing": {
+           "of": "through",
+           "part": "stud_right"
+          },
+          "sheet": {
+           "of": "implementation",
+           "part": "sheathing_strip"
+          }
+         },
+         "stage": "site",
+         "type": "sheathing_to_framing"
+        }
+       ],
+       "participants": {
+        "butt": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "1200"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
+        }
+       },
+       "parts": [
+        {
+         "box": {
+          "max": [
+           -48,
+           2304,
+           148
+          ],
+          "min": [
+           -196,
+           48,
+           100
+          ]
+         },
+         "catalog": "48x148",
+         "host": "through",
+         "id": "turned_stud",
+         "material": "timber C24",
+         "role": "stud",
+         "stage": "site"
+        },
+        {
+         "box": {
+          "max": [
+           12,
+           2400,
+           148
+          ],
+          "min": [
+           0,
+           0,
+           -12
+          ]
+         },
+         "catalog": "osb_12",
+         "host": "through",
+         "id": "sheathing_strip",
+         "layer": "bracing",
+         "material": "OSB/3",
+         "role": "bracing",
+         "stage": "site"
+        }
+       ],
+       "transform": {
+        "across": [
+         -1,
+         0,
+         0
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         0,
+         0,
+         -1
+        ],
+        "origin": [
+         0,
+         0,
+         148
+        ]
+       }
+      },
+      {
+       "implementation": "california",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "backing": {
+           "of": "through",
+           "part": "stud_right"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j2",
+         "parts": {
+          "backing": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 8,
+          "item": "nail_28x95"
+         },
+         "id": "j3",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "through",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_stud"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j4",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "bottom_plate"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j5",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "top_plate_lower"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 16,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j6",
+         "parts": {
+          "framing": {
+           "of": "through",
+           "part": "stud_right"
+          },
+          "sheet": {
+           "of": "implementation",
+           "part": "sheathing_strip"
+          }
+         },
+         "stage": "site",
+         "type": "sheathing_to_framing"
+        }
+       ],
+       "participants": {
+        "butt": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
+        }
+       },
+       "parts": [
+        {
+         "box": {
+          "max": [
+           -48,
+           2304,
+           148
+          ],
+          "min": [
+           -196,
+           48,
+           100
+          ]
+         },
+         "catalog": "48x148",
+         "host": "through",
+         "id": "turned_stud",
+         "material": "timber C24",
+         "role": "stud",
+         "stage": "site"
+        },
+        {
+         "box": {
+          "max": [
+           12,
+           2400,
+           148
+          ],
+          "min": [
+           0,
+           0,
+           -12
+          ]
+         },
+         "catalog": "osb_12",
+         "host": "through",
+         "id": "sheathing_strip",
+         "layer": "bracing",
+         "material": "OSB/3",
+         "role": "bracing",
+         "stage": "site"
+        }
+       ],
+       "transform": {
+        "across": [
+         -1,
+         0,
+         0
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         0,
+         0,
+         -1
+        ],
+        "origin": [
+         0,
+         0,
+         148
+        ]
+       }
+      },
+      {
+       "implementation": "california",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "backing": {
+           "of": "through",
+           "part": "stud_right"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j2",
+         "parts": {
+          "backing": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 8,
+          "item": "nail_28x95"
+         },
+         "id": "j3",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "through",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_stud"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j4",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "bottom_plate"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j5",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "top_plate_lower"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 16,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j6",
+         "parts": {
+          "framing": {
+           "of": "through",
+           "part": "stud_right"
+          },
+          "sheet": {
+           "of": "implementation",
+           "part": "sheathing_strip"
+          }
+         },
+         "stage": "site",
+         "type": "sheathing_to_framing"
+        }
+       ],
+       "participants": {
+        "butt": {
+         "module": "wall_panel_with_opening",
+         "port": "left",
+         "variant": "window_10x12"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
+        }
+       },
+       "parts": [
+        {
+         "box": {
+          "max": [
+           -48,
+           2304,
+           148
+          ],
+          "min": [
+           -196,
+           48,
+           100
+          ]
+         },
+         "catalog": "48x148",
+         "host": "through",
+         "id": "turned_stud",
+         "material": "timber C24",
+         "role": "stud",
+         "stage": "site"
+        },
+        {
+         "box": {
+          "max": [
+           12,
+           2400,
+           148
+          ],
+          "min": [
+           0,
+           0,
+           -12
+          ]
+         },
+         "catalog": "osb_12",
+         "host": "through",
+         "id": "sheathing_strip",
+         "layer": "bracing",
+         "material": "OSB/3",
+         "role": "bracing",
+         "stage": "site"
+        }
+       ],
+       "transform": {
+        "across": [
+         -1,
+         0,
+         0
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         0,
+         0,
+         -1
+        ],
+        "origin": [
+         0,
+         0,
+         148
+        ]
+       }
+      },
+      {
+       "implementation": "california",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "backing": {
+           "of": "through",
+           "part": "stud_right"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j2",
+         "parts": {
+          "backing": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 8,
+          "item": "nail_28x95"
+         },
+         "id": "j3",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "through",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_stud"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j4",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "bottom_plate"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j5",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "top_plate_lower"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 16,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j6",
+         "parts": {
+          "framing": {
+           "of": "through",
+           "part": "stud_right"
+          },
+          "sheet": {
+           "of": "implementation",
+           "part": "sheathing_strip"
+          }
+         },
+         "stage": "site",
+         "type": "sheathing_to_framing"
+        }
+       ],
+       "participants": {
+        "butt": {
+         "module": "wall_panel_with_opening",
+         "port": "left",
+         "variant": "door_10x20"
+        },
+        "through": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
+        }
+       },
+       "parts": [
+        {
+         "box": {
+          "max": [
+           -48,
+           2304,
+           148
+          ],
+          "min": [
+           -196,
+           48,
+           100
+          ]
+         },
+         "catalog": "48x148",
+         "host": "through",
+         "id": "turned_stud",
+         "material": "timber C24",
+         "role": "stud",
+         "stage": "site"
+        },
+        {
+         "box": {
+          "max": [
+           12,
+           2400,
+           148
+          ],
+          "min": [
+           0,
+           0,
+           -12
+          ]
+         },
+         "catalog": "osb_12",
+         "host": "through",
+         "id": "sheathing_strip",
+         "layer": "bracing",
+         "material": "OSB/3",
+         "role": "bracing",
+         "stage": "site"
+        }
+       ],
+       "transform": {
+        "across": [
+         -1,
+         0,
+         0
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         0,
+         0,
+         -1
+        ],
+        "origin": [
+         0,
+         0,
+         148
+        ]
+       }
+      },
+      {
+       "implementation": "california",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "backing": {
+           "of": "through",
            "part": "stud_left"
           },
           "stud": {
@@ -1824,6 +4008,202 @@
        ],
        "participants": {
         "butt": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
+        },
+        "through": {
+         "module": "wall_panel_with_opening",
+         "port": "left",
+         "variant": "window_10x12"
+        }
+       },
+       "parts": [
+        {
+         "box": {
+          "max": [
+           -48,
+           2304,
+           148
+          ],
+          "min": [
+           -196,
+           48,
+           100
+          ]
+         },
+         "catalog": "48x148",
+         "host": "through",
+         "id": "turned_stud",
+         "material": "timber C24",
+         "role": "stud",
+         "stage": "site"
+        },
+        {
+         "box": {
+          "max": [
+           12,
+           2400,
+           148
+          ],
+          "min": [
+           0,
+           0,
+           -12
+          ]
+         },
+         "catalog": "osb_12",
+         "host": "through",
+         "id": "sheathing_strip",
+         "layer": "bracing",
+         "material": "OSB/3",
+         "role": "bracing",
+         "stage": "site"
+        }
+       ],
+       "transform": {
+        "across": [
+         -1,
+         0,
+         0
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         0,
+         0,
+         -1
+        ],
+        "origin": [
+         0,
+         0,
+         148
+        ]
+       }
+      },
+      {
+       "implementation": "california",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "backing": {
+           "of": "through",
+           "part": "stud_left"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j2",
+         "parts": {
+          "backing": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 8,
+          "item": "nail_28x95"
+         },
+         "id": "j3",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "through",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_stud"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j4",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "bottom_plate"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j5",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "top_plate_lower"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 16,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j6",
+         "parts": {
+          "framing": {
+           "of": "through",
+           "part": "stud_left"
+          },
+          "sheet": {
+           "of": "implementation",
+           "part": "sheathing_strip"
+          }
+         },
+         "stage": "site",
+         "type": "sheathing_to_framing"
+        }
+       ],
+       "participants": {
+        "butt": {
          "module": "wall_panel_with_opening",
          "port": "right",
          "variant": "window_10x12"
@@ -2169,7 +4549,7 @@
           },
           "plate": {
            "of": "through",
-           "part": "bottom_plate_left"
+           "part": "bottom_plate"
           }
          },
          "stage": "site",
@@ -2365,7 +4745,203 @@
           },
           "plate": {
            "of": "through",
-           "part": "bottom_plate_left"
+           "part": "bottom_plate"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j5",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "top_plate_lower"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 16,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j6",
+         "parts": {
+          "framing": {
+           "of": "through",
+           "part": "stud_left"
+          },
+          "sheet": {
+           "of": "implementation",
+           "part": "sheathing_strip"
+          }
+         },
+         "stage": "site",
+         "type": "sheathing_to_framing"
+        }
+       ],
+       "participants": {
+        "butt": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
+        },
+        "through": {
+         "module": "wall_panel_with_opening",
+         "port": "left",
+         "variant": "door_10x20"
+        }
+       },
+       "parts": [
+        {
+         "box": {
+          "max": [
+           -48,
+           2304,
+           148
+          ],
+          "min": [
+           -196,
+           48,
+           100
+          ]
+         },
+         "catalog": "48x148",
+         "host": "through",
+         "id": "turned_stud",
+         "material": "timber C24",
+         "role": "stud",
+         "stage": "site"
+        },
+        {
+         "box": {
+          "max": [
+           12,
+           2400,
+           148
+          ],
+          "min": [
+           0,
+           0,
+           -12
+          ]
+         },
+         "catalog": "osb_12",
+         "host": "through",
+         "id": "sheathing_strip",
+         "layer": "bracing",
+         "material": "OSB/3",
+         "role": "bracing",
+         "stage": "site"
+        }
+       ],
+       "transform": {
+        "across": [
+         -1,
+         0,
+         0
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         0,
+         0,
+         -1
+        ],
+        "origin": [
+         0,
+         0,
+         148
+        ]
+       }
+      },
+      {
+       "implementation": "california",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "backing": {
+           "of": "through",
+           "part": "stud_left"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j2",
+         "parts": {
+          "backing": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 8,
+          "item": "nail_28x95"
+         },
+         "id": "j3",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "through",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_stud"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j4",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "bottom_plate"
           }
          },
          "stage": "site",
@@ -2561,7 +5137,7 @@
           },
           "plate": {
            "of": "through",
-           "part": "bottom_plate_left"
+           "part": "bottom_plate"
           }
          },
          "stage": "site",
@@ -3000,6 +5576,202 @@
        ],
        "participants": {
         "butt": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        },
+        "through": {
+         "module": "wall_panel_with_opening",
+         "port": "right",
+         "variant": "window_10x12"
+        }
+       },
+       "parts": [
+        {
+         "box": {
+          "max": [
+           -48,
+           2304,
+           148
+          ],
+          "min": [
+           -196,
+           48,
+           100
+          ]
+         },
+         "catalog": "48x148",
+         "host": "through",
+         "id": "turned_stud",
+         "material": "timber C24",
+         "role": "stud",
+         "stage": "site"
+        },
+        {
+         "box": {
+          "max": [
+           12,
+           2400,
+           148
+          ],
+          "min": [
+           0,
+           0,
+           -12
+          ]
+         },
+         "catalog": "osb_12",
+         "host": "through",
+         "id": "sheathing_strip",
+         "layer": "bracing",
+         "material": "OSB/3",
+         "role": "bracing",
+         "stage": "site"
+        }
+       ],
+       "transform": {
+        "across": [
+         -1,
+         0,
+         0
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         0,
+         0,
+         -1
+        ],
+        "origin": [
+         0,
+         0,
+         148
+        ]
+       }
+      },
+      {
+       "implementation": "california",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "backing": {
+           "of": "through",
+           "part": "stud_right"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j2",
+         "parts": {
+          "backing": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 8,
+          "item": "nail_28x95"
+         },
+         "id": "j3",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "through",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_stud"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j4",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "bottom_plate"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j5",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "top_plate_lower"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 16,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j6",
+         "parts": {
+          "framing": {
+           "of": "through",
+           "part": "stud_right"
+          },
+          "sheet": {
+           "of": "implementation",
+           "part": "sheathing_strip"
+          }
+         },
+         "stage": "site",
+         "type": "sheathing_to_framing"
+        }
+       ],
+       "participants": {
+        "butt": {
          "module": "wall_panel_with_opening",
          "port": "left",
          "variant": "window_10x12"
@@ -3345,7 +6117,7 @@
           },
           "plate": {
            "of": "through",
-           "part": "bottom_plate_right"
+           "part": "bottom_plate"
           }
          },
          "stage": "site",
@@ -3541,7 +6313,203 @@
           },
           "plate": {
            "of": "through",
-           "part": "bottom_plate_right"
+           "part": "bottom_plate"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j5",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "top_plate_lower"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 16,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j6",
+         "parts": {
+          "framing": {
+           "of": "through",
+           "part": "stud_right"
+          },
+          "sheet": {
+           "of": "implementation",
+           "part": "sheathing_strip"
+          }
+         },
+         "stage": "site",
+         "type": "sheathing_to_framing"
+        }
+       ],
+       "participants": {
+        "butt": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        },
+        "through": {
+         "module": "wall_panel_with_opening",
+         "port": "right",
+         "variant": "door_10x20"
+        }
+       },
+       "parts": [
+        {
+         "box": {
+          "max": [
+           -48,
+           2304,
+           148
+          ],
+          "min": [
+           -196,
+           48,
+           100
+          ]
+         },
+         "catalog": "48x148",
+         "host": "through",
+         "id": "turned_stud",
+         "material": "timber C24",
+         "role": "stud",
+         "stage": "site"
+        },
+        {
+         "box": {
+          "max": [
+           12,
+           2400,
+           148
+          ],
+          "min": [
+           0,
+           0,
+           -12
+          ]
+         },
+         "catalog": "osb_12",
+         "host": "through",
+         "id": "sheathing_strip",
+         "layer": "bracing",
+         "material": "OSB/3",
+         "role": "bracing",
+         "stage": "site"
+        }
+       ],
+       "transform": {
+        "across": [
+         -1,
+         0,
+         0
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         0,
+         0,
+         -1
+        ],
+        "origin": [
+         0,
+         0,
+         148
+        ]
+       }
+      },
+      {
+       "implementation": "california",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "backing": {
+           "of": "through",
+           "part": "stud_right"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j2",
+         "parts": {
+          "backing": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "butt",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "corner_studs"
+        },
+        {
+         "fasteners": {
+          "count": 8,
+          "item": "nail_28x95"
+         },
+         "id": "j3",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "stud": {
+           "of": "through",
+           "part": "stud_right"
+          }
+         },
+         "stage": "site",
+         "type": "backer_to_stud"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j4",
+         "parts": {
+          "backer": {
+           "of": "implementation",
+           "part": "turned_stud"
+          },
+          "plate": {
+           "of": "through",
+           "part": "bottom_plate"
           }
          },
          "stage": "site",
@@ -3737,7 +6705,7 @@
           },
           "plate": {
            "of": "through",
-           "part": "bottom_plate_right"
+           "part": "bottom_plate"
           }
          },
          "stage": "site",
@@ -3988,6 +6956,65 @@
          "variant": "1200"
         },
         "b": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        }
+       },
+       "parts": [],
+       "transform": {
+        "across": [
+         0,
+         0,
+         1
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         -1,
+         0,
+         0
+        ],
+        "origin": [
+         0,
+         0,
+         0
+        ]
+       }
+      },
+      {
+       "implementation": "plain",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "a": {
+           "of": "a",
+           "part": "stud_right"
+          },
+          "b": {
+           "of": "b",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "panel_seam"
+        }
+       ],
+       "participants": {
+        "a": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "1200"
+        },
+        "b": {
          "module": "wall_panel_with_opening",
          "port": "left",
          "variant": "window_10x12"
@@ -4045,6 +7072,242 @@
          "module": "wall_panel",
          "port": "right",
          "variant": "1200"
+        },
+        "b": {
+         "module": "wall_panel_with_opening",
+         "port": "left",
+         "variant": "door_10x20"
+        }
+       },
+       "parts": [],
+       "transform": {
+        "across": [
+         0,
+         0,
+         1
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         -1,
+         0,
+         0
+        ],
+        "origin": [
+         0,
+         0,
+         0
+        ]
+       }
+      },
+      {
+       "implementation": "plain",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "a": {
+           "of": "a",
+           "part": "stud_right"
+          },
+          "b": {
+           "of": "b",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "panel_seam"
+        }
+       ],
+       "participants": {
+        "a": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
+        },
+        "b": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "1200"
+        }
+       },
+       "parts": [],
+       "transform": {
+        "across": [
+         0,
+         0,
+         1
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         -1,
+         0,
+         0
+        ],
+        "origin": [
+         0,
+         0,
+         0
+        ]
+       }
+      },
+      {
+       "implementation": "plain",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "a": {
+           "of": "a",
+           "part": "stud_right"
+          },
+          "b": {
+           "of": "b",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "panel_seam"
+        }
+       ],
+       "participants": {
+        "a": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
+        },
+        "b": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        }
+       },
+       "parts": [],
+       "transform": {
+        "across": [
+         0,
+         0,
+         1
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         -1,
+         0,
+         0
+        ],
+        "origin": [
+         0,
+         0,
+         0
+        ]
+       }
+      },
+      {
+       "implementation": "plain",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "a": {
+           "of": "a",
+           "part": "stud_right"
+          },
+          "b": {
+           "of": "b",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "panel_seam"
+        }
+       ],
+       "participants": {
+        "a": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
+        },
+        "b": {
+         "module": "wall_panel_with_opening",
+         "port": "left",
+         "variant": "window_10x12"
+        }
+       },
+       "parts": [],
+       "transform": {
+        "across": [
+         0,
+         0,
+         1
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         -1,
+         0,
+         0
+        ],
+        "origin": [
+         0,
+         0,
+         0
+        ]
+       }
+      },
+      {
+       "implementation": "plain",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "a": {
+           "of": "a",
+           "part": "stud_right"
+          },
+          "b": {
+           "of": "b",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "panel_seam"
+        }
+       ],
+       "participants": {
+        "a": {
+         "module": "wall_panel",
+         "port": "right",
+         "variant": "600"
         },
         "b": {
          "module": "wall_panel_with_opening",
@@ -4165,6 +7428,65 @@
          "variant": "window_10x12"
         },
         "b": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
+        }
+       },
+       "parts": [],
+       "transform": {
+        "across": [
+         0,
+         0,
+         1
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         -1,
+         0,
+         0
+        ],
+        "origin": [
+         0,
+         0,
+         0
+        ]
+       }
+      },
+      {
+       "implementation": "plain",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "a": {
+           "of": "a",
+           "part": "stud_right"
+          },
+          "b": {
+           "of": "b",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "panel_seam"
+        }
+       ],
+       "participants": {
+        "a": {
+         "module": "wall_panel_with_opening",
+         "port": "right",
+         "variant": "window_10x12"
+        },
+        "b": {
          "module": "wall_panel_with_opening",
          "port": "left",
          "variant": "window_10x12"
@@ -4286,6 +7608,65 @@
          "module": "wall_panel",
          "port": "left",
          "variant": "1200"
+        }
+       },
+       "parts": [],
+       "transform": {
+        "across": [
+         0,
+         0,
+         1
+        ],
+        "along": [
+         0,
+         1,
+         0
+        ],
+        "normal": [
+         -1,
+         0,
+         0
+        ],
+        "origin": [
+         0,
+         0,
+         0
+        ]
+       }
+      },
+      {
+       "implementation": "plain",
+       "joints": [
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "a": {
+           "of": "a",
+           "part": "stud_right"
+          },
+          "b": {
+           "of": "b",
+           "part": "stud_left"
+          }
+         },
+         "stage": "site",
+         "type": "panel_seam"
+        }
+       ],
+       "participants": {
+        "a": {
+         "module": "wall_panel_with_opening",
+         "port": "right",
+         "variant": "door_10x20"
+        },
+        "b": {
+         "module": "wall_panel",
+         "port": "left",
+         "variant": "600"
         }
        },
        "parts": [],
@@ -5175,6 +8556,366 @@
         "width": 1200
        },
        "status": "draft"
+      },
+      {
+       "joints": [
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j1",
+         "parts": {
+          "plate": "bottom_plate",
+          "stud": "stud_left"
+         },
+         "stage": "workshop",
+         "type": "stud_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j2",
+         "parts": {
+          "plate": "top_plate_lower",
+          "stud": "stud_left"
+         },
+         "stage": "workshop",
+         "type": "stud_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j3",
+         "parts": {
+          "plate": "bottom_plate",
+          "stud": "stud_right"
+         },
+         "stage": "workshop",
+         "type": "stud_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 2,
+          "item": "nail_28x95"
+         },
+         "id": "j4",
+         "parts": {
+          "plate": "top_plate_lower",
+          "stud": "stud_right"
+         },
+         "stage": "workshop",
+         "type": "stud_to_plate"
+        },
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j5",
+         "parts": {
+          "framing": "bottom_plate",
+          "sheet": "a1_bracing_1"
+         },
+         "stage": "workshop",
+         "type": "sheathing_to_framing"
+        },
+        {
+         "fasteners": {
+          "count": 3,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j6",
+         "parts": {
+          "framing": "top_plate_lower",
+          "sheet": "a1_bracing_1"
+         },
+         "stage": "workshop",
+         "type": "sheathing_to_framing"
+        },
+        {
+         "fasteners": {
+          "count": 16,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j7",
+         "parts": {
+          "framing": "stud_left",
+          "sheet": "a1_bracing_1"
+         },
+         "stage": "workshop",
+         "type": "sheathing_to_framing"
+        },
+        {
+         "fasteners": {
+          "count": 16,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j8",
+         "parts": {
+          "framing": "stud_right",
+          "sheet": "a1_bracing_1"
+         },
+         "stage": "workshop",
+         "type": "sheathing_to_framing"
+        }
+       ],
+       "name": "600",
+       "params": {
+        "buildup": {
+         "cavity": [
+          {
+           "material": "mineral wool",
+           "role": "insulation",
+           "stage": "site"
+          }
+         ],
+         "description": "Exterior wall with ventilated cladding, designed as heated.",
+         "face_a": [
+          {
+           "fastening": {
+            "along": "framing",
+            "edge_spacing": 150,
+            "end_distance": 10,
+            "fastener": "nail_25x60_ring",
+            "from": "sheet",
+            "spacing": 300
+           },
+           "role": "bracing",
+           "sheet": {
+            "id": "osb_12",
+            "material": "OSB/3",
+            "size": [
+             1200,
+             2400
+            ],
+            "thickness": 12
+           },
+           "stage": "workshop",
+           "thickness": 12
+          },
+          {
+           "material": "wind barrier membrane",
+           "role": "wind_barrier",
+           "stage": "site",
+           "thickness": 0
+          },
+          {
+           "material": "battens 23x48",
+           "role": "ventilated_cavity",
+           "stage": "site",
+           "thickness": 23
+          },
+          {
+           "material": "timber cladding",
+           "role": "cladding",
+           "stage": "site",
+           "thickness": 19
+          }
+         ],
+         "face_b": [
+          {
+           "material": "PE 0.15",
+           "role": "vapour_control",
+           "stage": "site",
+           "thickness": 0
+          },
+          {
+           "material": "battens 48x48 with 50 mm mineral wool",
+           "role": "service_cavity",
+           "stage": "site",
+           "thickness": 48
+          },
+          {
+           "material": "interior panel",
+           "role": "lining",
+           "stage": "site",
+           "thickness": 12
+          }
+         ],
+         "id": "exterior"
+        },
+        "height": 2400,
+        "spacing": 600,
+        "stud": {
+         "grade": "C24",
+         "id": "48x148",
+         "section": [
+          48,
+          148
+         ]
+        },
+        "width": 600
+       },
+       "parts": [
+        {
+         "box": {
+          "max": [
+           600,
+           160,
+           48
+          ],
+          "min": [
+           0,
+           12,
+           0
+          ]
+         },
+         "catalog": "48x148",
+         "id": "bottom_plate",
+         "material": "timber C24",
+         "role": "bottom_plate",
+         "stage": "workshop"
+        },
+        {
+         "box": {
+          "max": [
+           600,
+           160,
+           2352
+          ],
+          "min": [
+           0,
+           12,
+           2304
+          ]
+         },
+         "catalog": "48x148",
+         "id": "top_plate_lower",
+         "material": "timber C24",
+         "role": "top_plate",
+         "stage": "workshop"
+        },
+        {
+         "box": {
+          "max": [
+           48,
+           160,
+           2304
+          ],
+          "min": [
+           0,
+           12,
+           48
+          ]
+         },
+         "catalog": "48x148",
+         "id": "stud_left",
+         "material": "timber C24",
+         "role": "stud",
+         "stage": "workshop"
+        },
+        {
+         "box": {
+          "max": [
+           600,
+           160,
+           2304
+          ],
+          "min": [
+           552,
+           12,
+           48
+          ]
+         },
+         "catalog": "48x148",
+         "id": "stud_right",
+         "material": "timber C24",
+         "role": "stud",
+         "stage": "workshop"
+        },
+        {
+         "box": {
+          "max": [
+           600,
+           12,
+           2400
+          ],
+          "min": [
+           0,
+           0,
+           0
+          ]
+         },
+         "catalog": "osb_12",
+         "id": "a1_bracing_1",
+         "layer": "bracing",
+         "material": "OSB/3",
+         "role": "bracing",
+         "stage": "workshop"
+        }
+       ],
+       "ports": {
+        "left": {
+         "across": [
+          0,
+          1,
+          0
+         ],
+         "along": [
+          0,
+          0,
+          1
+         ],
+         "exposes": {
+          "bottom_plate": "bottom_plate",
+          "end_sheet": "a1_bracing_1",
+          "end_stud": "stud_left",
+          "top_plate": "top_plate_lower"
+         },
+         "hand": "left",
+         "normal": [
+          -1,
+          0,
+          0
+         ],
+         "origin": [
+          0,
+          12,
+          0
+         ]
+        },
+        "right": {
+         "across": [
+          0,
+          1,
+          0
+         ],
+         "along": [
+          0,
+          0,
+          1
+         ],
+         "exposes": {
+          "bottom_plate": "bottom_plate",
+          "end_sheet": "a1_bracing_1",
+          "end_stud": "stud_right",
+          "top_plate": "top_plate_lower"
+         },
+         "hand": "right",
+         "normal": [
+          1,
+          0,
+          0
+         ],
+         "origin": [
+          600,
+          12,
+          0
+         ]
+        }
+       },
+       "size": {
+        "depth": 160,
+        "framing": 148,
+        "height": 2400,
+        "width": 600
+       },
+       "status": "draft"
       }
      ]
     }
@@ -5220,7 +8961,7 @@
      "type": "opening_unit"
     },
     {
-     "description": "Height of the rough opening's bottom above the bottom of the wall; 0 for a door.",
+     "description": "Height of the rough opening's bottom above the bottom of the wall; for a door the bottom plate's thickness (the door stands on the plate).",
      "max": 2000,
      "min": 0,
      "name": "sill_height",
@@ -5689,7 +9430,7 @@
         },
         {
          "fasteners": {
-          "count": 6,
+          "count": 7,
           "item": "nail_25x60_ring"
          },
          "id": "j34",
@@ -5897,7 +9638,7 @@
         },
         {
          "fasteners": {
-          "count": 6,
+          "count": 7,
           "item": "nail_25x60_ring"
          },
          "id": "j50",
@@ -6149,7 +9890,7 @@
          ]
         },
         "height": 2400,
-        "sill_height": 790,
+        "sill_height": 838,
         "spacing": 600,
         "stud": {
          "grade": "C24",
@@ -6274,7 +10015,7 @@
           "max": [
            395,
            160,
-           2000
+           2048
           ],
           "min": [
            347,
@@ -6312,7 +10053,7 @@
           "max": [
            1453,
            160,
-           2000
+           2048
           ],
           "min": [
            1405,
@@ -6331,12 +10072,12 @@
           "max": [
            1453,
            60,
-           2148
+           2196
           ],
           "min": [
            347,
            12,
-           2000
+           2048
           ]
          },
          "catalog": "48x148",
@@ -6350,12 +10091,12 @@
           "max": [
            1453,
            160,
-           2148
+           2196
           ],
           "min": [
            347,
            112,
-           2000
+           2048
           ]
          },
          "catalog": "48x148",
@@ -6369,12 +10110,12 @@
           "max": [
            1405,
            160,
-           790
+           838
           ],
           "min": [
            395,
            12,
-           742
+           790
           ]
          },
          "catalog": "48x148",
@@ -6393,7 +10134,7 @@
           "min": [
            576,
            12,
-           2148
+           2196
           ]
          },
          "catalog": "48x148",
@@ -6407,7 +10148,7 @@
           "max": [
            624,
            160,
-           742
+           790
           ],
           "min": [
            576,
@@ -6431,7 +10172,7 @@
           "min": [
            1176,
            12,
-           2148
+           2196
           ]
          },
          "catalog": "48x148",
@@ -6445,7 +10186,7 @@
           "max": [
            1224,
            160,
-           742
+           790
           ],
           "min": [
            1176,
@@ -6464,7 +10205,7 @@
           "max": [
            1200,
            12,
-           790
+           838
           ],
           "min": [
            0,
@@ -6490,7 +10231,7 @@
           "min": [
            0,
            0,
-           2000
+           2048
           ]
          },
          "catalog": "osb_12",
@@ -6506,12 +10247,12 @@
           "max": [
            395,
            12,
-           2000
+           2048
           ],
           "min": [
            0,
            0,
-           790
+           838
           ]
          },
          "catalog": "osb_12",
@@ -6527,7 +10268,7 @@
           "max": [
            1800,
            12,
-           790
+           838
           ],
           "min": [
            1200,
@@ -6553,7 +10294,7 @@
           "min": [
            1200,
            0,
-           2000
+           2048
           ]
          },
          "catalog": "osb_12",
@@ -6569,12 +10310,12 @@
           "max": [
            1800,
            12,
-           2000
+           2048
           ],
           "min": [
            1405,
            0,
-           790
+           838
           ]
          },
          "catalog": "osb_12",
@@ -6663,7 +10404,7 @@
          },
          "id": "j1",
          "parts": {
-          "plate": "bottom_plate_left",
+          "plate": "bottom_plate",
           "stud": "stud_left"
          },
          "stage": "workshop",
@@ -6689,7 +10430,7 @@
          },
          "id": "j3",
          "parts": {
-          "plate": "bottom_plate_right",
+          "plate": "bottom_plate",
           "stud": "stud_right"
          },
          "stage": "workshop",
@@ -6715,7 +10456,7 @@
          },
          "id": "j5",
          "parts": {
-          "plate": "bottom_plate_left",
+          "plate": "bottom_plate",
           "stud": "king_left"
          },
          "stage": "workshop",
@@ -6741,7 +10482,7 @@
          },
          "id": "j7",
          "parts": {
-          "plate": "bottom_plate_left",
+          "plate": "bottom_plate",
           "stud": "jack_left"
          },
          "stage": "workshop",
@@ -6767,7 +10508,7 @@
          },
          "id": "j9",
          "parts": {
-          "plate": "bottom_plate_right",
+          "plate": "bottom_plate",
           "stud": "king_right"
          },
          "stage": "workshop",
@@ -6793,7 +10534,7 @@
          },
          "id": "j11",
          "parts": {
-          "plate": "bottom_plate_right",
+          "plate": "bottom_plate",
           "stud": "jack_right"
          },
          "stage": "workshop",
@@ -6996,13 +10737,26 @@
         },
         {
          "fasteners": {
-          "count": 5,
+          "count": 9,
           "item": "nail_25x60_ring"
          },
          "id": "j27",
          "parts": {
-          "framing": "top_plate_lower",
+          "framing": "bottom_plate",
           "sheet": "a1_bracing_1"
+         },
+         "stage": "workshop",
+         "type": "sheathing_to_framing"
+        },
+        {
+         "fasteners": {
+          "count": 5,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j28",
+         "parts": {
+          "framing": "top_plate_lower",
+          "sheet": "a1_bracing_2"
          },
          "stage": "workshop",
          "type": "sheathing_to_framing"
@@ -7012,10 +10766,10 @@
           "count": 3,
           "item": "nail_25x60_ring"
          },
-         "id": "j28",
+         "id": "j29",
          "parts": {
           "framing": "stud_left",
-          "sheet": "a1_bracing_1"
+          "sheet": "a1_bracing_2"
          },
          "stage": "workshop",
          "type": "sheathing_to_framing"
@@ -7025,10 +10779,10 @@
           "count": 2,
           "item": "nail_25x60_ring"
          },
-         "id": "j29",
+         "id": "j30",
          "parts": {
           "framing": "king_left",
-          "sheet": "a1_bracing_1"
+          "sheet": "a1_bracing_2"
          },
          "stage": "workshop",
          "type": "sheathing_to_framing"
@@ -7038,23 +10792,10 @@
           "count": 7,
           "item": "nail_25x60_ring"
          },
-         "id": "j30",
-         "parts": {
-          "framing": "header_outer",
-          "sheet": "a1_bracing_1"
-         },
-         "stage": "workshop",
-         "type": "sheathing_to_framing"
-        },
-        {
-         "fasteners": {
-          "count": 2,
-          "item": "nail_25x60_ring"
-         },
          "id": "j31",
          "parts": {
-          "framing": "cripple_top_1",
-          "sheet": "a1_bracing_1"
+          "framing": "header_outer",
+          "sheet": "a1_bracing_2"
          },
          "stage": "workshop",
          "type": "sheathing_to_framing"
@@ -7066,20 +10807,7 @@
          },
          "id": "j32",
          "parts": {
-          "framing": "cripple_top_2",
-          "sheet": "a1_bracing_1"
-         },
-         "stage": "workshop",
-         "type": "sheathing_to_framing"
-        },
-        {
-         "fasteners": {
-          "count": 4,
-          "item": "nail_25x60_ring"
-         },
-         "id": "j33",
-         "parts": {
-          "framing": "bottom_plate_left",
+          "framing": "cripple_top_1",
           "sheet": "a1_bracing_2"
          },
          "stage": "workshop",
@@ -7087,13 +10815,26 @@
         },
         {
          "fasteners": {
-          "count": 14,
+          "count": 2,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j33",
+         "parts": {
+          "framing": "cripple_top_2",
+          "sheet": "a1_bracing_2"
+         },
+         "stage": "workshop",
+         "type": "sheathing_to_framing"
+        },
+        {
+         "fasteners": {
+          "count": 15,
           "item": "nail_25x60_ring"
          },
          "id": "j34",
          "parts": {
           "framing": "stud_left",
-          "sheet": "a1_bracing_2"
+          "sheet": "a1_bracing_3"
          },
          "stage": "workshop",
          "type": "sheathing_to_framing"
@@ -7106,33 +10847,33 @@
          "id": "j35",
          "parts": {
           "framing": "king_left",
-          "sheet": "a1_bracing_2"
+          "sheet": "a1_bracing_3"
          },
          "stage": "workshop",
          "type": "sheathing_to_framing"
         },
         {
          "fasteners": {
-          "count": 14,
+          "count": 15,
           "item": "nail_25x60_ring"
          },
          "id": "j36",
          "parts": {
           "framing": "jack_left",
-          "sheet": "a1_bracing_2"
+          "sheet": "a1_bracing_3"
          },
          "stage": "workshop",
          "type": "sheathing_to_framing"
         },
         {
          "fasteners": {
-          "count": 3,
+          "count": 5,
           "item": "nail_25x60_ring"
          },
          "id": "j37",
          "parts": {
-          "framing": "top_plate_lower",
-          "sheet": "a1_bracing_3"
+          "framing": "bottom_plate",
+          "sheet": "a1_bracing_4"
          },
          "stage": "workshop",
          "type": "sheathing_to_framing"
@@ -7144,21 +10885,8 @@
          },
          "id": "j38",
          "parts": {
-          "framing": "stud_right",
-          "sheet": "a1_bracing_3"
-         },
-         "stage": "workshop",
-         "type": "sheathing_to_framing"
-        },
-        {
-         "fasteners": {
-          "count": 2,
-          "item": "nail_25x60_ring"
-         },
-         "id": "j39",
-         "parts": {
-          "framing": "king_right",
-          "sheet": "a1_bracing_3"
+          "framing": "top_plate_lower",
+          "sheet": "a1_bracing_5"
          },
          "stage": "workshop",
          "type": "sheathing_to_framing"
@@ -7168,10 +10896,10 @@
           "count": 3,
           "item": "nail_25x60_ring"
          },
-         "id": "j40",
+         "id": "j39",
          "parts": {
-          "framing": "header_outer",
-          "sheet": "a1_bracing_3"
+          "framing": "stud_right",
+          "sheet": "a1_bracing_5"
          },
          "stage": "workshop",
          "type": "sheathing_to_framing"
@@ -7181,36 +10909,49 @@
           "count": 2,
           "item": "nail_25x60_ring"
          },
-         "id": "j41",
+         "id": "j40",
          "parts": {
-          "framing": "cripple_top_2",
-          "sheet": "a1_bracing_3"
+          "framing": "king_right",
+          "sheet": "a1_bracing_5"
          },
          "stage": "workshop",
          "type": "sheathing_to_framing"
         },
         {
          "fasteners": {
-          "count": 4,
+          "count": 3,
+          "item": "nail_25x60_ring"
+         },
+         "id": "j41",
+         "parts": {
+          "framing": "header_outer",
+          "sheet": "a1_bracing_5"
+         },
+         "stage": "workshop",
+         "type": "sheathing_to_framing"
+        },
+        {
+         "fasteners": {
+          "count": 2,
           "item": "nail_25x60_ring"
          },
          "id": "j42",
          "parts": {
-          "framing": "bottom_plate_right",
-          "sheet": "a1_bracing_4"
+          "framing": "cripple_top_2",
+          "sheet": "a1_bracing_5"
          },
          "stage": "workshop",
          "type": "sheathing_to_framing"
         },
         {
          "fasteners": {
-          "count": 14,
+          "count": 15,
           "item": "nail_25x60_ring"
          },
          "id": "j43",
          "parts": {
           "framing": "stud_right",
-          "sheet": "a1_bracing_4"
+          "sheet": "a1_bracing_6"
          },
          "stage": "workshop",
          "type": "sheathing_to_framing"
@@ -7223,20 +10964,20 @@
          "id": "j44",
          "parts": {
           "framing": "king_right",
-          "sheet": "a1_bracing_4"
+          "sheet": "a1_bracing_6"
          },
          "stage": "workshop",
          "type": "sheathing_to_framing"
         },
         {
          "fasteners": {
-          "count": 14,
+          "count": 15,
           "item": "nail_25x60_ring"
          },
          "id": "j45",
          "parts": {
           "framing": "jack_right",
-          "sheet": "a1_bracing_4"
+          "sheet": "a1_bracing_6"
          },
          "stage": "workshop",
          "type": "sheathing_to_framing"
@@ -7326,7 +11067,7 @@
          ]
         },
         "height": 2400,
-        "sill_height": 0,
+        "sill_height": 48,
         "spacing": 600,
         "stud": {
          "grade": "C24",
@@ -7356,6 +11097,25 @@
           "max": [
            1800,
            160,
+           48
+          ],
+          "min": [
+           0,
+           12,
+           0
+          ]
+         },
+         "catalog": "48x148",
+         "id": "bottom_plate",
+         "material": "timber C24",
+         "role": "bottom_plate",
+         "stage": "workshop"
+        },
+        {
+         "box": {
+          "max": [
+           1800,
+           160,
            2352
           ],
           "min": [
@@ -7368,44 +11128,6 @@
          "id": "top_plate_lower",
          "material": "timber C24",
          "role": "top_plate",
-         "stage": "workshop"
-        },
-        {
-         "box": {
-          "max": [
-           395,
-           160,
-           48
-          ],
-          "min": [
-           0,
-           12,
-           0
-          ]
-         },
-         "catalog": "48x148",
-         "id": "bottom_plate_left",
-         "material": "timber C24",
-         "role": "bottom_plate",
-         "stage": "workshop"
-        },
-        {
-         "box": {
-          "max": [
-           1800,
-           160,
-           48
-          ],
-          "min": [
-           1405,
-           12,
-           0
-          ]
-         },
-         "catalog": "48x148",
-         "id": "bottom_plate_right",
-         "material": "timber C24",
-         "role": "bottom_plate",
          "stage": "workshop"
         },
         {
@@ -7470,7 +11192,7 @@
           "max": [
            395,
            160,
-           2000
+           2048
           ],
           "min": [
            347,
@@ -7508,7 +11230,7 @@
           "max": [
            1453,
            160,
-           2000
+           2048
           ],
           "min": [
            1405,
@@ -7527,12 +11249,12 @@
           "max": [
            1453,
            60,
-           2148
+           2196
           ],
           "min": [
            347,
            12,
-           2000
+           2048
           ]
          },
          "catalog": "48x148",
@@ -7546,12 +11268,12 @@
           "max": [
            1453,
            160,
-           2148
+           2196
           ],
           "min": [
            347,
            112,
-           2000
+           2048
           ]
          },
          "catalog": "48x148",
@@ -7570,7 +11292,7 @@
           "min": [
            576,
            12,
-           2148
+           2196
           ]
          },
          "catalog": "48x148",
@@ -7589,7 +11311,7 @@
           "min": [
            1176,
            12,
-           2148
+           2196
           ]
          },
          "catalog": "48x148",
@@ -7603,12 +11325,12 @@
           "max": [
            1200,
            12,
-           2400
+           48
           ],
           "min": [
            0,
            0,
-           2000
+           0
           ]
          },
          "catalog": "osb_12",
@@ -7622,14 +11344,14 @@
         {
          "box": {
           "max": [
-           395,
+           1200,
            12,
-           2000
+           2400
           ],
           "min": [
            0,
            0,
-           0
+           2048
           ]
          },
          "catalog": "osb_12",
@@ -7643,18 +11365,39 @@
         {
          "box": {
           "max": [
-           1800,
+           395,
            12,
-           2400
+           2048
           ],
           "min": [
-           1200,
            0,
-           2000
+           0,
+           48
           ]
          },
          "catalog": "osb_12",
          "id": "a1_bracing_3",
+         "layer": "bracing",
+         "material": "OSB/3",
+         "role": "bracing",
+         "sheet": "a1_bracing_sheet_1",
+         "stage": "workshop"
+        },
+        {
+         "box": {
+          "max": [
+           1800,
+           12,
+           48
+          ],
+          "min": [
+           1200,
+           0,
+           0
+          ]
+         },
+         "catalog": "osb_12",
+         "id": "a1_bracing_4",
          "layer": "bracing",
          "material": "OSB/3",
          "role": "bracing",
@@ -7666,16 +11409,37 @@
           "max": [
            1800,
            12,
-           2000
+           2400
+          ],
+          "min": [
+           1200,
+           0,
+           2048
+          ]
+         },
+         "catalog": "osb_12",
+         "id": "a1_bracing_5",
+         "layer": "bracing",
+         "material": "OSB/3",
+         "role": "bracing",
+         "sheet": "a1_bracing_sheet_2",
+         "stage": "workshop"
+        },
+        {
+         "box": {
+          "max": [
+           1800,
+           12,
+           2048
           ],
           "min": [
            1405,
            0,
-           0
+           48
           ]
          },
          "catalog": "osb_12",
-         "id": "a1_bracing_4",
+         "id": "a1_bracing_6",
          "layer": "bracing",
          "material": "OSB/3",
          "role": "bracing",
@@ -7696,8 +11460,8 @@
           1
          ],
          "exposes": {
-          "bottom_plate": "bottom_plate_left",
-          "end_sheet": "a1_bracing_2",
+          "bottom_plate": "bottom_plate",
+          "end_sheet": "a1_bracing_1",
           "end_stud": "stud_left",
           "top_plate": "top_plate_lower"
          },
@@ -7725,7 +11489,7 @@
           1
          ],
          "exposes": {
-          "bottom_plate": "bottom_plate_right",
+          "bottom_plate": "bottom_plate",
           "end_sheet": "a1_bracing_4",
           "end_stud": "stud_right",
           "top_plate": "top_plate_lower"

@@ -5706,7 +5706,7 @@ null,
 ]
 },
 "height": 2700,
-"sill_height": 0,
+"sill_height": 48,
 "spacing": 600,
 "stud": {
 "grade": "C24",
@@ -5731,778 +5731,812 @@ null,
 "width": 1800
 },
 {
-"joints": [
-{
-"parts": {
-"plate": "bottom_plate_left",
-"stud": "stud_left"
+"size": {
+"width": 1800,
+"height": 2700,
+"depth": 160,
+"framing": 148
 },
-"type": "stud_to_plate"
-},
-{
-"parts": {
-"plate": "top_plate_lower",
-"stud": "stud_left"
-},
-"type": "stud_to_plate"
-},
-{
-"parts": {
-"plate": "bottom_plate_right",
-"stud": "stud_right"
-},
-"type": "stud_to_plate"
-},
-{
-"parts": {
-"plate": "top_plate_lower",
-"stud": "stud_right"
-},
-"type": "stud_to_plate"
-},
-{
-"parts": {
-"plate": "bottom_plate_left",
-"stud": "king_left"
-},
-"type": "stud_to_plate"
-},
-{
-"parts": {
-"plate": "top_plate_lower",
-"stud": "king_left"
-},
-"type": "stud_to_plate"
-},
-{
-"parts": {
-"plate": "bottom_plate_left",
-"stud": "jack_left"
-},
-"type": "stud_to_plate"
-},
-{
-"parts": {
-"jack": "jack_left",
-"king": "king_left"
-},
-"type": "jack_to_king"
-},
-{
-"parts": {
-"plate": "bottom_plate_right",
-"stud": "king_right"
-},
-"type": "stud_to_plate"
-},
-{
-"parts": {
-"plate": "top_plate_lower",
-"stud": "king_right"
-},
-"type": "stud_to_plate"
-},
-{
-"parts": {
-"plate": "bottom_plate_right",
-"stud": "jack_right"
-},
-"type": "stud_to_plate"
-},
-{
-"parts": {
-"jack": "jack_right",
-"king": "king_right"
-},
-"type": "jack_to_king"
-},
-{
-"parts": {
-"header": "header_outer",
-"king": "king_left"
-},
-"type": "header_to_king"
-},
-{
-"parts": {
-"header": "header_outer",
-"jack": "jack_left"
-},
-"type": "header_on_jack"
-},
-{
-"parts": {
-"header": "header_outer",
-"king": "king_right"
-},
-"type": "header_to_king"
-},
-{
-"parts": {
-"header": "header_outer",
-"jack": "jack_right"
-},
-"type": "header_on_jack"
-},
-{
-"parts": {
-"header": "header_inner",
-"king": "king_left"
-},
-"type": "header_to_king"
-},
-{
-"parts": {
-"header": "header_inner",
-"jack": "jack_left"
-},
-"type": "header_on_jack"
-},
-{
-"parts": {
-"header": "header_inner",
-"king": "king_right"
-},
-"type": "header_to_king"
-},
-{
-"parts": {
-"header": "header_inner",
-"jack": "jack_right"
-},
-"type": "header_on_jack"
-},
-{
-"parts": {
-"plate": "top_plate_lower",
-"stud": "cripple_top_1"
-},
-"type": "stud_to_plate"
-},
-{
-"parts": {
-"cripple": "cripple_top_1",
-"header": "header_outer"
-},
-"type": "cripple_to_header"
-},
-{
-"parts": {
-"cripple": "cripple_top_1",
-"header": "header_inner"
-},
-"type": "cripple_to_header"
-},
-{
-"parts": {
-"plate": "top_plate_lower",
-"stud": "cripple_top_2"
-},
-"type": "stud_to_plate"
-},
-{
-"parts": {
-"cripple": "cripple_top_2",
-"header": "header_outer"
-},
-"type": "cripple_to_header"
-},
-{
-"parts": {
-"cripple": "cripple_top_2",
-"header": "header_inner"
-},
-"type": "cripple_to_header"
-},
-{
-"parts": {
-"framing": "stud_left",
-"sheet": "a1_bracing_1"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "king_left",
-"sheet": "a1_bracing_1"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "header_outer",
-"sheet": "a1_bracing_1"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "cripple_top_1",
-"sheet": "a1_bracing_1"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "cripple_top_2",
-"sheet": "a1_bracing_1"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "bottom_plate_left",
-"sheet": "a1_bracing_2"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "stud_left",
-"sheet": "a1_bracing_2"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "king_left",
-"sheet": "a1_bracing_2"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "jack_left",
-"sheet": "a1_bracing_2"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "top_plate_lower",
-"sheet": "a1_bracing_3"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "stud_left",
-"sheet": "a1_bracing_3"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "king_left",
-"sheet": "a1_bracing_3"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "cripple_top_1",
-"sheet": "a1_bracing_3"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "cripple_top_2",
-"sheet": "a1_bracing_3"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "stud_right",
-"sheet": "a1_bracing_4"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "king_right",
-"sheet": "a1_bracing_4"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "header_outer",
-"sheet": "a1_bracing_4"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "cripple_top_2",
-"sheet": "a1_bracing_4"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "bottom_plate_right",
-"sheet": "a1_bracing_5"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "stud_right",
-"sheet": "a1_bracing_5"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "king_right",
-"sheet": "a1_bracing_5"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "jack_right",
-"sheet": "a1_bracing_5"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "top_plate_lower",
-"sheet": "a1_bracing_6"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "stud_right",
-"sheet": "a1_bracing_6"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "king_right",
-"sheet": "a1_bracing_6"
-},
-"type": "sheathing_to_framing"
-},
-{
-"parts": {
-"framing": "cripple_top_2",
-"sheet": "a1_bracing_6"
-},
-"type": "sheathing_to_framing"
-}
-],
 "parts": [
 {
+"id": "bottom_plate",
+"role": "bottom_plate",
+"material": "timber C24",
+"catalog": "48x148",
 "box": {
+"min": [
+0,
+12,
+0
+],
+"max": [
+1800,
+160,
+48
+]
+},
+"stage": "workshop"
+},
+{
+"id": "top_plate_lower",
+"role": "top_plate",
+"material": "timber C24",
+"catalog": "48x148",
+"box": {
+"min": [
+0,
+12,
+2604
+],
 "max": [
 1800,
 160,
 2652
-],
+]
+},
+"stage": "workshop"
+},
+{
+"id": "stud_left",
+"role": "stud",
+"material": "timber C24",
+"catalog": "48x148",
+"box": {
 "min": [
 0,
 12,
-2604
-]
-},
-"catalog": "48x148",
-"id": "top_plate_lower",
-"material": "timber C24",
-"role": "top_plate",
-"stage": "workshop"
-},
-{
-"box": {
-"max": [
-395,
-160,
 48
 ],
-"min": [
-0,
-12,
-0
-]
-},
-"catalog": "48x148",
-"id": "bottom_plate_left",
-"material": "timber C24",
-"role": "bottom_plate",
-"stage": "workshop"
-},
-{
-"box": {
-"max": [
-1800,
-160,
-48
-],
-"min": [
-1405,
-12,
-0
-]
-},
-"catalog": "48x148",
-"id": "bottom_plate_right",
-"material": "timber C24",
-"role": "bottom_plate",
-"stage": "workshop"
-},
-{
-"box": {
 "max": [
 48,
 160,
 2604
-],
-"min": [
-0,
-12,
-48
 ]
 },
-"catalog": "48x148",
-"id": "stud_left",
-"material": "timber C24",
-"role": "stud",
 "stage": "workshop"
 },
 {
+"id": "stud_right",
+"role": "stud",
+"material": "timber C24",
+"catalog": "48x148",
 "box": {
-"max": [
-1800,
-160,
-2604
-],
 "min": [
 1752,
 12,
 48
+],
+"max": [
+1800,
+160,
+2604
 ]
 },
-"catalog": "48x148",
-"id": "stud_right",
-"material": "timber C24",
-"role": "stud",
 "stage": "workshop"
 },
 {
+"id": "king_left",
+"role": "king",
+"material": "timber C24",
+"catalog": "48x148",
 "box": {
-"max": [
-347,
-160,
-2604
-],
 "min": [
 299,
 12,
 48
+],
+"max": [
+347,
+160,
+2604
 ]
 },
-"catalog": "48x148",
-"id": "king_left",
-"material": "timber C24",
-"role": "king",
 "stage": "workshop"
 },
 {
+"id": "jack_left",
+"role": "jack",
+"material": "timber C24",
+"catalog": "48x148",
 "box": {
-"max": [
-395,
-160,
-2000
-],
 "min": [
 347,
 12,
 48
+],
+"max": [
+395,
+160,
+2048
 ]
 },
-"catalog": "48x148",
-"id": "jack_left",
-"material": "timber C24",
-"role": "jack",
 "stage": "workshop"
 },
 {
+"id": "king_right",
+"role": "king",
+"material": "timber C24",
+"catalog": "48x148",
 "box": {
+"min": [
+1453,
+12,
+48
+],
 "max": [
 1501,
 160,
 2604
-],
-"min": [
-1453,
-12,
-48
 ]
 },
-"catalog": "48x148",
-"id": "king_right",
-"material": "timber C24",
-"role": "king",
 "stage": "workshop"
 },
 {
+"id": "jack_right",
+"role": "jack",
+"material": "timber C24",
+"catalog": "48x148",
 "box": {
-"max": [
-1453,
-160,
-2000
-],
 "min": [
 1405,
 12,
 48
-]
-},
-"catalog": "48x148",
-"id": "jack_right",
-"material": "timber C24",
-"role": "jack",
-"stage": "workshop"
-},
-{
-"box": {
-"max": [
-1453,
-60,
-2148
 ],
-"min": [
-347,
-12,
-2000
-]
-},
-"catalog": "48x148",
-"id": "header_outer",
-"material": "timber C24",
-"role": "header",
-"stage": "workshop"
-},
-{
-"box": {
 "max": [
 1453,
 160,
-2148
-],
-"min": [
-347,
-112,
-2000
+2048
 ]
 },
-"catalog": "48x148",
-"id": "header_inner",
-"material": "timber C24",
-"role": "header",
 "stage": "workshop"
 },
 {
+"id": "header_outer",
+"role": "header",
+"material": "timber C24",
+"catalog": "48x148",
 "box": {
+"min": [
+347,
+12,
+2048
+],
+"max": [
+1453,
+60,
+2196
+]
+},
+"stage": "workshop"
+},
+{
+"id": "header_inner",
+"role": "header",
+"material": "timber C24",
+"catalog": "48x148",
+"box": {
+"min": [
+347,
+112,
+2048
+],
+"max": [
+1453,
+160,
+2196
+]
+},
+"stage": "workshop"
+},
+{
+"id": "cripple_top_1",
+"role": "cripple",
+"material": "timber C24",
+"catalog": "48x148",
+"box": {
+"min": [
+576,
+12,
+2196
+],
 "max": [
 624,
 160,
 2604
-],
-"min": [
-576,
-12,
-2148
 ]
 },
-"catalog": "48x148",
-"id": "cripple_top_1",
-"material": "timber C24",
-"role": "cripple",
 "stage": "workshop"
 },
 {
+"id": "cripple_top_2",
+"role": "cripple",
+"material": "timber C24",
+"catalog": "48x148",
 "box": {
+"min": [
+1176,
+12,
+2196
+],
 "max": [
 1224,
 160,
 2604
-],
-"min": [
-1176,
-12,
-2148
 ]
 },
-"catalog": "48x148",
-"id": "cripple_top_2",
-"material": "timber C24",
-"role": "cripple",
 "stage": "workshop"
 },
 {
+"id": "a1_bracing_1",
+"role": "bracing",
+"layer": "bracing",
+"material": "OSB/3",
+"catalog": "osb_12",
 "box": {
+"min": [
+0,
+0,
+0
+],
+"max": [
+1200,
+12,
+48
+]
+},
+"stage": "workshop",
+"sheet": "a1_bracing_sheet_1"
+},
+{
+"id": "a1_bracing_2",
+"role": "bracing",
+"layer": "bracing",
+"material": "OSB/3",
+"catalog": "osb_12",
+"box": {
+"min": [
+0,
+0,
+2048
+],
 "max": [
 1200,
 12,
 2400
-],
+]
+},
+"stage": "workshop",
+"sheet": "a1_bracing_sheet_1"
+},
+{
+"id": "a1_bracing_3",
+"role": "bracing",
+"layer": "bracing",
+"material": "OSB/3",
+"catalog": "osb_12",
+"box": {
 "min": [
 0,
 0,
-2000
-]
-},
-"catalog": "osb_12",
-"id": "a1_bracing_1",
-"layer": "bracing",
-"material": "OSB/3",
-"role": "bracing",
-"sheet": "a1_bracing_sheet_1",
-"stage": "workshop"
-},
-{
-"box": {
+48
+],
 "max": [
 395,
 12,
-2000
-],
+2048
+]
+},
+"stage": "workshop",
+"sheet": "a1_bracing_sheet_1"
+},
+{
+"id": "a1_bracing_4",
+"role": "bracing",
+"layer": "bracing",
+"material": "OSB/3",
+"catalog": "osb_12",
+"box": {
 "min": [
 0,
 0,
-0
-]
-},
-"catalog": "osb_12",
-"id": "a1_bracing_2",
-"layer": "bracing",
-"material": "OSB/3",
-"role": "bracing",
-"sheet": "a1_bracing_sheet_1",
-"stage": "workshop"
-},
-{
-"box": {
+2400
+],
 "max": [
 1200,
 12,
 2700
-],
-"min": [
-0,
-0,
-2400
 ]
 },
-"catalog": "osb_12",
-"id": "a1_bracing_3",
-"layer": "bracing",
-"material": "OSB/3",
-"role": "bracing",
 "stage": "workshop"
 },
 {
+"id": "a1_bracing_5",
+"role": "bracing",
+"layer": "bracing",
+"material": "OSB/3",
+"catalog": "osb_12",
 "box": {
-"max": [
-1800,
-12,
-2400
-],
 "min": [
 1200,
 0,
-2000
-]
-},
-"catalog": "osb_12",
-"id": "a1_bracing_4",
-"layer": "bracing",
-"material": "OSB/3",
-"role": "bracing",
-"sheet": "a1_bracing_sheet_3",
-"stage": "workshop"
-},
-{
-"box": {
+0
+],
 "max": [
 1800,
 12,
-2000
+48
+]
+},
+"stage": "workshop",
+"sheet": "a1_bracing_sheet_3"
+},
+{
+"id": "a1_bracing_6",
+"role": "bracing",
+"layer": "bracing",
+"material": "OSB/3",
+"catalog": "osb_12",
+"box": {
+"min": [
+1200,
+0,
+2048
 ],
+"max": [
+1800,
+12,
+2400
+]
+},
+"stage": "workshop",
+"sheet": "a1_bracing_sheet_3"
+},
+{
+"id": "a1_bracing_7",
+"role": "bracing",
+"layer": "bracing",
+"material": "OSB/3",
+"catalog": "osb_12",
+"box": {
 "min": [
 1405,
 0,
-0
-]
-},
-"catalog": "osb_12",
-"id": "a1_bracing_5",
-"layer": "bracing",
-"material": "OSB/3",
-"role": "bracing",
-"sheet": "a1_bracing_sheet_3",
-"stage": "workshop"
-},
-{
-"box": {
+48
+],
 "max": [
 1800,
 12,
-2700
-],
+2048
+]
+},
+"stage": "workshop",
+"sheet": "a1_bracing_sheet_3"
+},
+{
+"id": "a1_bracing_8",
+"role": "bracing",
+"layer": "bracing",
+"material": "OSB/3",
+"catalog": "osb_12",
+"box": {
 "min": [
 1200,
 0,
 2400
+],
+"max": [
+1800,
+12,
+2700
 ]
 },
-"catalog": "osb_12",
-"id": "a1_bracing_6",
-"layer": "bracing",
-"material": "OSB/3",
-"role": "bracing",
 "stage": "workshop"
+}
+],
+"joints": [
+{
+"type": "stud_to_plate",
+"parts": {
+"plate": "bottom_plate",
+"stud": "stud_left"
+}
+},
+{
+"type": "stud_to_plate",
+"parts": {
+"plate": "top_plate_lower",
+"stud": "stud_left"
+}
+},
+{
+"type": "stud_to_plate",
+"parts": {
+"plate": "bottom_plate",
+"stud": "stud_right"
+}
+},
+{
+"type": "stud_to_plate",
+"parts": {
+"plate": "top_plate_lower",
+"stud": "stud_right"
+}
+},
+{
+"type": "stud_to_plate",
+"parts": {
+"plate": "bottom_plate",
+"stud": "king_left"
+}
+},
+{
+"type": "stud_to_plate",
+"parts": {
+"plate": "top_plate_lower",
+"stud": "king_left"
+}
+},
+{
+"type": "stud_to_plate",
+"parts": {
+"plate": "bottom_plate",
+"stud": "jack_left"
+}
+},
+{
+"type": "jack_to_king",
+"parts": {
+"jack": "jack_left",
+"king": "king_left"
+}
+},
+{
+"type": "stud_to_plate",
+"parts": {
+"plate": "bottom_plate",
+"stud": "king_right"
+}
+},
+{
+"type": "stud_to_plate",
+"parts": {
+"plate": "top_plate_lower",
+"stud": "king_right"
+}
+},
+{
+"type": "stud_to_plate",
+"parts": {
+"plate": "bottom_plate",
+"stud": "jack_right"
+}
+},
+{
+"type": "jack_to_king",
+"parts": {
+"jack": "jack_right",
+"king": "king_right"
+}
+},
+{
+"type": "header_to_king",
+"parts": {
+"header": "header_outer",
+"king": "king_left"
+}
+},
+{
+"type": "header_on_jack",
+"parts": {
+"header": "header_outer",
+"jack": "jack_left"
+}
+},
+{
+"type": "header_to_king",
+"parts": {
+"header": "header_outer",
+"king": "king_right"
+}
+},
+{
+"type": "header_on_jack",
+"parts": {
+"header": "header_outer",
+"jack": "jack_right"
+}
+},
+{
+"type": "header_to_king",
+"parts": {
+"header": "header_inner",
+"king": "king_left"
+}
+},
+{
+"type": "header_on_jack",
+"parts": {
+"header": "header_inner",
+"jack": "jack_left"
+}
+},
+{
+"type": "header_to_king",
+"parts": {
+"header": "header_inner",
+"king": "king_right"
+}
+},
+{
+"type": "header_on_jack",
+"parts": {
+"header": "header_inner",
+"jack": "jack_right"
+}
+},
+{
+"type": "stud_to_plate",
+"parts": {
+"plate": "top_plate_lower",
+"stud": "cripple_top_1"
+}
+},
+{
+"type": "cripple_to_header",
+"parts": {
+"cripple": "cripple_top_1",
+"header": "header_outer"
+}
+},
+{
+"type": "cripple_to_header",
+"parts": {
+"cripple": "cripple_top_1",
+"header": "header_inner"
+}
+},
+{
+"type": "stud_to_plate",
+"parts": {
+"plate": "top_plate_lower",
+"stud": "cripple_top_2"
+}
+},
+{
+"type": "cripple_to_header",
+"parts": {
+"cripple": "cripple_top_2",
+"header": "header_outer"
+}
+},
+{
+"type": "cripple_to_header",
+"parts": {
+"cripple": "cripple_top_2",
+"header": "header_inner"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_1",
+"framing": "bottom_plate"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_2",
+"framing": "stud_left"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_2",
+"framing": "king_left"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_2",
+"framing": "header_outer"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_2",
+"framing": "cripple_top_1"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_2",
+"framing": "cripple_top_2"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_3",
+"framing": "stud_left"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_3",
+"framing": "king_left"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_3",
+"framing": "jack_left"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_4",
+"framing": "top_plate_lower"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_4",
+"framing": "stud_left"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_4",
+"framing": "king_left"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_4",
+"framing": "cripple_top_1"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_4",
+"framing": "cripple_top_2"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_5",
+"framing": "bottom_plate"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_6",
+"framing": "stud_right"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_6",
+"framing": "king_right"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_6",
+"framing": "header_outer"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_6",
+"framing": "cripple_top_2"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_7",
+"framing": "stud_right"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_7",
+"framing": "king_right"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_7",
+"framing": "jack_right"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_8",
+"framing": "top_plate_lower"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_8",
+"framing": "stud_right"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_8",
+"framing": "king_right"
+}
+},
+{
+"type": "sheathing_to_framing",
+"parts": {
+"sheet": "a1_bracing_8",
+"framing": "cripple_top_2"
+}
 }
 ],
 "ports": {
 "left": {
-"across": [
+"origin": [
 0,
-1,
+12,
 0
 ],
-"along": [
-0,
-0,
-1
-],
-"exposes": {
-"bottom_plate": "bottom_plate_left",
-"end_sheet": "a1_bracing_2",
-"end_stud": "stud_left",
-"top_plate": "top_plate_lower"
-},
 "normal": [
 -1,
 0,
 0
 ],
-"origin": [
+"along": [
 0,
-12,
-0
-]
-},
-"right": {
+0,
+1
+],
 "across": [
 0,
 1,
+0
+],
+"exposes": {
+"end_stud": "stud_left",
+"end_sheet": "a1_bracing_1",
+"bottom_plate": "bottom_plate",
+"top_plate": "top_plate_lower"
+}
+},
+"right": {
+"origin": [
+1800,
+12,
+0
+],
+"normal": [
+1,
+0,
 0
 ],
 "along": [
@@ -6510,29 +6544,18 @@ null,
 0,
 1
 ],
-"exposes": {
-"bottom_plate": "bottom_plate_right",
-"end_sheet": "a1_bracing_5",
-"end_stud": "stud_right",
-"top_plate": "top_plate_lower"
-},
-"normal": [
-1,
+"across": [
 0,
+1,
 0
 ],
-"origin": [
-1800,
-12,
-0
-]
+"exposes": {
+"end_stud": "stud_right",
+"end_sheet": "a1_bracing_5",
+"bottom_plate": "bottom_plate",
+"top_plate": "top_plate_lower"
 }
-},
-"size": {
-"depth": 160,
-"framing": 148,
-"height": 2700,
-"width": 1800
+}
 }
 },
 null
@@ -6647,7 +6670,7 @@ null
 "width": 1800
 },
 null,
-"a door's sill_height must be 0, got 900"
+"a door stands on the bottom plate: its sill_height must be 48, got 900"
 ],
 [
 "wall_panel_with_opening",
@@ -30468,7 +30491,7 @@ null,
 "1.23457e+06"
 ],
 [
-2500000000.0,
+2500000000,
 "2.5e+09"
 ],
 [

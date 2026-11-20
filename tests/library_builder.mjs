@@ -54,24 +54,33 @@ const noProblems = result => assert.deepEqual(messages(result), []);
 const some = (result, text) => assert.ok(messages(result).some(m => m.includes(text)), `${text}\n${messages(result).join('\n')}`);
 const compiled = (result, module, variant) => result.compiled.get(`${module}|seh_no|${variant}`);
 const baked = (result, iface) => result.baked.get(iface).get('seh_no');
-const wallsOnly = entries => entries.filter(e => Object.values(e.participants).every(p => p.module === 'wall_panel'));
+// Pairs of plain wall panels; wallsOnly: of the 1200 variant only.
+const allWalls = entries => entries.filter(e => Object.values(e.participants).every(p => p.module === 'wall_panel'));
+const wallsOnly = entries => allWalls(entries).filter(e => Object.values(e.participants).every(p => p.variant === '1200'));
 const roles = out => {
   const counts = {};
   for (const p of out.parts) counts[p.role] = (counts[p.role] ?? 0) + 1;
   return counts;
 };
 
-/** A copy whose window_10x12 variant has the given values, and optionally another rough opening. */
+/**
+ * A copy whose window_10x12 variant has the given values, and optionally
+ * another rough opening; without the door variant (its head, on the bottom
+ * plate, sits higher than these window cases allow).
+ */
 async function openingCopy(variant, catalog = null) {
   const dir = copyLibrary();
   const path = join(dir, OPENING_VARIANTS);
   let text = readFileSync(path, 'utf8');
-  const old = '  window_10x12:\n    width: 1800\n    unit: window_10x12\n    sill_height: 790\n';
+  const old = '  window_10x12:\n    width: 1800\n    unit: window_10x12\n    sill_height: 838\n';
   assert.ok(text.includes(old));
   const own = Object.fromEntries(Object.entries(variant).filter(([k]) => !['height', 'spacing'].includes(k)));
   const fields = { width: 1800, unit: 'window_10x12', sill_height: 790, ...own };
   text = text.replace(old, '  window_10x12:\n' + Object.entries(fields).map(([k, v]) => `    ${k}: ${v}\n`).join(''));
-  for (const key of ['height', 'spacing']) { // set in fixed: changes the door variant too
+  const door = '  door_10x20:\n    width: 1800\n    unit: door_10x20\n    sill_height: 48\n    status: draft\n';
+  assert.ok(text.includes(door));
+  text = text.replace(door, '');
+  for (const key of ['height', 'spacing']) { // set in fixed
     if (key in variant) text = text.replace(new RegExp(`^  ${key}: \\d+`, 'm'), `  ${key}: ${variant[key]}`);
   }
   writeFileSync(path, text);
@@ -108,8 +117,9 @@ async function buildVariantsAsset() {
   rmSync(join(dir, 'library/modules/wall_panel_with_opening'), { recursive: true });
   edit(dir, WALL_VARIANTS, '  height: 2400            # one sheet height\n', '');
   edit(dir, WALL_VARIANTS, '  "1200":\n    width: 1200\n    status: draft\n',
-    '  "1200":\n    width: 1200\n    height: 2400\n    status: draft\n'
-    + '  "600":\n    width: 600\n    height: 2400\n    status: draft\n'
+    '  "1200":\n    width: 1200\n    height: 2400\n    status: draft\n');
+  edit(dir, WALL_VARIANTS, '    width: 600\n    status: draft\n',
+    '    width: 600\n    height: 2400\n    status: draft\n'
     + '  "1200_tall":\n    width: 1200\n    height: 2700\n    status: draft\n');
   const result = await buildAt(dir);
   assert.ok(result.asset, messages(result).join('\n'));
@@ -223,34 +233,35 @@ assert.ok(built.asset);
 { // the wall with an opening
   const win = compiled(built, 'wall_panel_with_opening', 'window_10x12');
   const door = compiled(built, 'wall_panel_with_opening', 'door_10x20');
-  // Rough opening 1010 x 1210 centred in 1800 (x 395 to 1405), sill at 790.
+  // Rough opening 1010 x 1210 centred in 1800 (x 395 to 1405), sill at 838.
   assert.deepEqual(roles(win), { bottom_plate: 1, top_plate: 1, stud: 2, king: 2, jack: 2, header: 2, sill: 1, cripple: 4, bracing: 6 });
   const boxes = Object.fromEntries(win.parts.map(p => [p.id, p.box]));
   assert.deepEqual(boxes.king_right, { min: [1453, 12, 48], max: [1501, 160, 2304] });
-  // The header on the jacks, its underside the top of the opening (2000).
-  assert.deepEqual(boxes.jack_left, { min: [347, 12, 48], max: [395, 160, 2000] });
-  assert.deepEqual(boxes.header_outer, { min: [347, 12, 2000], max: [1453, 60, 2148] });
-  assert.deepEqual(boxes.header_inner, { min: [347, 112, 2000], max: [1453, 160, 2148] });
-  assert.deepEqual(boxes.sill, { min: [395, 12, 742], max: [1405, 160, 790] });
+  // The header on the jacks, its underside the top of the opening (2048).
+  assert.deepEqual(boxes.jack_left, { min: [347, 12, 48], max: [395, 160, 2048] });
+  assert.deepEqual(boxes.header_outer, { min: [347, 12, 2048], max: [1453, 60, 2196] });
+  assert.deepEqual(boxes.header_inner, { min: [347, 112, 2048], max: [1453, 160, 2196] });
+  assert.deepEqual(boxes.sill, { min: [395, 12, 790], max: [1405, 160, 838] });
   // Cripples only at the grid positions 576 and 1176.
   assert.deepEqual(Object.keys(boxes).filter(i => i.startsWith('cripple')).sort(), ['cripple_bottom_1', 'cripple_bottom_2', 'cripple_top_1', 'cripple_top_2']);
-  assert.deepEqual(boxes.cripple_bottom_1, { min: [576, 12, 48], max: [624, 160, 742] });
-  assert.deepEqual(boxes.cripple_top_1, { min: [576, 12, 2148], max: [624, 160, 2304] });
+  assert.deepEqual(boxes.cripple_bottom_1, { min: [576, 12, 48], max: [624, 160, 790] });
+  assert.deepEqual(boxes.cripple_top_1, { min: [576, 12, 2196], max: [624, 160, 2304] });
   assert.ok(!Object.keys(boxes).some(i => /^stud_\d+$/.test(i)));
   const types = new Set(win.joints.map(j => j.type));
   for (const t of ['sill_to_jack', 'cripple_to_sill', 'cripple_to_header']) assert.ok(types.has(t));
   for (const t of ['header_to_plate', 'head_to_jack', 'head_to_header', 'cripple_to_jack']) assert.ok(!types.has(t));
-  // Door: two bottom plate pieces, no sill.
-  assert.deepEqual(roles(door), { bottom_plate: 2, top_plate: 1, stud: 2, king: 2, jack: 2, header: 2, cripple: 2, bracing: 4 });
+  // Door: the bottom plate whole under the threshold, the opening on it; no sill.
+  assert.deepEqual(roles(door), { bottom_plate: 1, top_plate: 1, stud: 2, king: 2, jack: 2, header: 2, cripple: 2, bracing: 6 });
+  assert.deepEqual(door.parts.find(p => p.id === 'bottom_plate').box, { min: [0, 12, 0], max: [1800, 160, 48] });
   assert.deepEqual(door.parts.find(p => p.id === 'header_outer').box, boxes.header_outer);
-  assert.equal(door.ports.right.exposes.bottom_plate, 'bottom_plate_right');
+  assert.equal(door.ports.right.exposes.bottom_plate, 'bottom_plate');
   assert.deepEqual(Object.keys(door.ports).sort(), ['left', 'right']);
   // Each sheet is one sheet with the opening cut out.
   const sheets = {};
   for (const p of win.parts.filter(q => q.role === 'bracing')) (sheets[p.sheet] ??= []).push([p.box.min[0], p.box.min[2], p.box.max[0], p.box.max[2]]);
   assert.deepEqual(sheets, {
-    a1_bracing_sheet_1: [[0, 0, 1200, 790], [0, 2000, 1200, 2400], [0, 790, 395, 2000]],
-    a1_bracing_sheet_2: [[1200, 0, 1800, 790], [1200, 2000, 1800, 2400], [1405, 790, 1800, 2000]],
+    a1_bracing_sheet_1: [[0, 0, 1200, 838], [0, 2048, 1200, 2400], [0, 838, 395, 2048]],
+    a1_bracing_sheet_2: [[1200, 0, 1800, 838], [1200, 2048, 1800, 2400], [1405, 838, 1800, 2048]],
   });
   // Edge spacing only along real edges.
   const counts = Object.fromEntries(win.joints.filter(j => j.type === 'sheathing_to_framing').map(j => [`${j.parts.sheet} ${j.parts.framing}`, j.fasteners.count]));
@@ -281,9 +292,9 @@ assert.ok(built.asset);
     }
   }
 }
-{ // pairs across modules: inline 3 x 3, corner two port pairs x 3 x 3
-  assert.equal(baked(built, 'wall_inline').length, 9);
-  assert.equal(baked(built, 'wall_corner').length, 18);
+{ // pairs across modules (four variants): inline 4 x 4, corner two port pairs x 4 x 4
+  assert.equal(baked(built, 'wall_inline').length, 16);
+  assert.equal(baked(built, 'wall_corner').length, 32);
   const modules = new Set(baked(built, 'wall_corner').map(e => Object.values(e.participants).map(p => p.module).sort().join(',')));
   assert.deepEqual([...modules].sort(), ['wall_panel,wall_panel', 'wall_panel,wall_panel_with_opening', 'wall_panel_with_opening,wall_panel_with_opening']);
 }
@@ -302,7 +313,7 @@ assert.ok(built.asset);
   assert.equal(readFileSync(ASSET, 'utf8'), dumps(built.asset), `${ASSET} is out of date; run node scripts/build_library.mjs`);
   const wall = built.asset.modules.wall_panel;
   assert.deepEqual(wall.parameters.map(p => p.name), ['width', 'height', 'spacing', 'stud', 'buildup']);
-  assert.deepEqual(wall.systems.seh_no.variants.map(v => v.name), ['1200']);
+  assert.deepEqual(wall.systems.seh_no.variants.map(v => v.name), ['1200', '600']);
   assert.equal(readFileSync(VARIANTS_FIXTURE, 'utf8'), await buildVariantsAsset(),
     `${VARIANTS_FIXTURE} is out of date; run node tests/library_builder.mjs --write-fixtures`);
 }
@@ -453,12 +464,11 @@ const BRACING_WORKSHOP = '      - role: bracing\n        sheet: osb_12\n        
     noProblems(r);
     assert.ok(!compiled(r, 'wall_panel', '1200').joints.some(j => j.type === 'sheathing_to_framing' && j.parts.sheet === 'a1_bracing_2'));
   }
-  // Two variants: inline 2 x 2, corner two port pairs x 4.
-  r = await broken(WALL_VARIANTS, '    status: draft\n', '    status: draft\n  "600":\n    width: 600\n    status: draft\n');
-  noProblems(r);
+  // Two wall variants (1200, 600): inline 2 x 2, corner two port pairs x 4.
+  r = built;
   assert.deepEqual(compiled(r, 'wall_panel', '600').parts.filter(p => p.role === 'stud').map(p => p.box.min[0]), [0, 552]);
-  assert.equal(wallsOnly(baked(r, 'wall_inline')).length, 4);
-  const corner = wallsOnly(baked(r, 'wall_corner'));
+  assert.equal(allWalls(baked(r, 'wall_inline')).length, 4);
+  const corner = allWalls(baked(r, 'wall_corner'));
   assert.equal(corner.length, 8);
   assert.deepEqual([...new Set(corner.map(e => `${e.participants.through.variant},${e.participants.butt.variant}`))].sort(),
     ['1200,1200', '1200,600', '600,1200', '600,600']);

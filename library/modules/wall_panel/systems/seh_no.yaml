@@ -12,3 +12,6 @@ variants:
   "1200":
     width: 1200
     status: draft
+  "600":                  # beside an 1800 opening panel, for a solid segment of 600
+    width: 600
+    status: draft

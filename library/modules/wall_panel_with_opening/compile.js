@@ -5,7 +5,8 @@
 // opening. Above it cripples up to the lower top plate when the space is at
 // least MIN_TOP_CRIPPLE; with no space the header is nailed to the plate.
 // Cripples (under a window's rough sill, above the header) only at grid
-// positions between the jacks. A door's bottom plate is cut at the opening.
+// positions between the jacks. A door's bottom plate runs through the
+// opening and stays, under the threshold: its rough opening starts on the plate.
 
 const MIN_CRIPPLE = 200; // mm; cripples under a rough sill; placeholder
 const MIN_TOP_CRIPPLE = 100; // mm; cripples above a header (US framers stop at about 4"); placeholder
@@ -29,7 +30,7 @@ export function compile(params, core) {
   const [ply, plyDepth] = header.section; // each ply: thickness into the wall, depth up
   const studTop = height - 2 * t;
 
-  if (door && z0 !== 0) throw new Error(`a door's sill_height must be 0, got ${z0}`);
+  if (door && z0 !== t) throw new Error(`a door stands on the bottom plate: its sill_height must be ${t}, got ${z0}`);
   if (!door && z0 - 2 * t < MIN_CRIPPLE) {
     throw new Error(`sill_height ${z0}: the cripples under the rough sill would be shorter than ${MIN_CRIPPLE}`);
   }
@@ -51,16 +52,12 @@ export function compile(params, core) {
   }
   const topCripples = space > 0;
 
-  // Plates; a door's bottom plate is two pieces.
-  const plates = panel.plates({ bottom: !door });
-  const lower = plates.lower;
-  const bottomLeft = door ? panel.lumberPart('bottom_plate_left', 'bottom_plate', 0, 0, x0, t) : plates.bottom;
-  const bottomRight = door ? panel.lumberPart('bottom_plate_right', 'bottom_plate', x1, 0, width, t) : plates.bottom;
-  const bottomUnder = (/** @type {number} */ x) => (x < x0 ? bottomLeft : bottomRight);
+  // Plates, whole (a door's too).
+  const { bottom, lower } = panel.plates();
   const stud = (/** @type {string} */ id, /** @type {string} */ role, /** @type {number} */ xa,
     /** @type {number} */ za, /** @type {number} */ zb, top = true) => {
     panel.lumberPart(id, role, xa, za, xa + t, zb);
-    panel.joint('stud_to_plate', { plate: bottomUnder(xa).id, stud: id });
+    panel.joint('stud_to_plate', { plate: bottom.id, stud: id });
     if (top) panel.joint('stud_to_plate', { plate: lower.id, stud: id });
   };
 
@@ -117,7 +114,7 @@ export function compile(params, core) {
     if (!door) {
       const id = `cripple_bottom_${k}`;
       panel.lumberPart(id, 'cripple', x, t, x + t, z0 - t);
-      panel.joint('stud_to_plate', { plate: bottomLeft.id, stud: id });
+      panel.joint('stud_to_plate', { plate: bottom.id, stud: id });
       panel.joint('cripple_to_sill', { cripple: id, sill: 'sill' });
     }
   }
@@ -126,7 +123,7 @@ export function compile(params, core) {
 
   const top = { top_plate: lower.id };
   return panel.result(panel.ports(
-    panel.endExposes('left', { bottom_plate: bottomLeft.id, ...top }),
-    panel.endExposes('right', { bottom_plate: bottomRight.id, ...top }),
+    panel.endExposes('left', { bottom_plate: bottom.id, ...top }),
+    panel.endExposes('right', { bottom_plate: bottom.id, ...top }),
   ));
 }

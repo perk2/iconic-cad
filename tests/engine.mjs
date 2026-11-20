@@ -131,16 +131,16 @@ for (const [facing, min] of [[90, [1000 - 2720, 500 - 12]], [270, [1000, 500 - 3
   assert.deepEqual(part(model, 'c_se/turned_stud').world, { min: [3404, 112, 48], max: [3552, 160, 2304] });
   assert.deepEqual(part(model, 'c_sw/turned_stud').world, { min: [48, 112, 48], max: [196, 160, 2304] });
   // The door's rough opening: 1010 wide, centred in S2 (x 1800 to 3600), from the
-  // floor to 2000; the jack runs up to the header, which sits on it, with
-  // cripples above up to the lower top plate.
-  assert.deepEqual(part(model, 'S2/jack_left').world, { min: [2147, 12, 48], max: [2195, 160, 2000] });
-  assert.deepEqual(part(model, 'S2/header_outer').world, { min: [2147, 12, 2000], max: [3253, 60, 2148] });
-  assert.deepEqual(part(model, 'S2/cripple_top_1').world, { min: [2376, 12, 2148], max: [2424, 160, 2304] });
-  assert.deepEqual(part(model, 'S2/bottom_plate_right').world, { min: [3205, 12, 0], max: [3600, 160, 48] });
-  // The corner at the door panel joins its end stud and the right bottom plate piece.
+  // top of the whole bottom plate (48) to 2048; the jack runs up to the
+  // header, which sits on it, with cripples above up to the lower top plate.
+  assert.deepEqual(part(model, 'S2/jack_left').world, { min: [2147, 12, 48], max: [2195, 160, 2048] });
+  assert.deepEqual(part(model, 'S2/header_outer').world, { min: [2147, 12, 2048], max: [3253, 60, 2196] });
+  assert.deepEqual(part(model, 'S2/cripple_top_1').world, { min: [2376, 12, 2196], max: [2424, 160, 2304] });
+  assert.deepEqual(part(model, 'S2/bottom_plate').world, { min: [1800, 12, 0], max: [3600, 160, 48] });
+  // The corner at the door panel joins its end stud and its bottom plate.
   const backerPlate = model.joints.find(j => j.owner === 'c_se' && j.type === 'backer_to_plate'
     && j.parts.plate.startsWith('S2/bottom'));
-  assert.equal(backerPlate.parts.plate, 'S2/bottom_plate_right');
+  assert.equal(backerPlate.parts.plate, 'S2/bottom_plate');
   // 11 joints per plain panel, 62 for the window panel, 45 for the door panel;
   // five seams and four corners of six.
   assert.equal(model.joints.length, 7 * 11 + 62 + 45 + 5 + 4 * 6);

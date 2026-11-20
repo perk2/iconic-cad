@@ -152,19 +152,16 @@ export class WallPanel {
   }
 
   /**
-   * The bottom plate (unless bottom is false) and the lower top plate over
-   * the full width, lying flat. The upper top plate is fitted on site along
-   * the wall line, so the panel's framing stops one plate below its height.
-   * @param {{bottom?: boolean}} [opts]
-   * @returns {{bottom?: any, lower: any}}
+   * The bottom plate and the lower top plate over the full width, lying
+   * flat. The upper top plate is fitted on site along the wall line, so the
+   * panel's framing stops one plate below its height.
+   * @returns {{bottom: any, lower: any}}
    */
-  plates({ bottom = true } = {}) {
+  plates() {
     const t = this.thick, w = this.width, h = this.height;
-    /** @type {{bottom?: any, lower: any}} */
-    const made = { lower: null };
-    if (bottom) made.bottom = this.lumberPart('bottom_plate', 'bottom_plate', 0, 0, w, t);
-    made.lower = this.lumberPart('top_plate_lower', 'top_plate', 0, h - 2 * t, w, h - t);
-    return made;
+    const bottom = this.lumberPart('bottom_plate', 'bottom_plate', 0, 0, w, t);
+    const lower = this.lumberPart('top_plate_lower', 'top_plate', 0, h - 2 * t, w, h - t);
+    return { bottom, lower };
   }
 
   /** Intermediate stud positions: [k, x0] for k * spacing below the width. */

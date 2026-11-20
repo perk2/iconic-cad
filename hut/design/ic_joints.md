@@ -23,7 +23,7 @@ The fastening schedule in `library/systems/seh_no/system.yaml` is a list of
 - **Joint types:** `library/joint_types.yaml`, each with a description and two
   named sides (`stud_to_plate` {plate, stud}, `sheathing_to_framing` {sheet,
   framing}, `corner_studs` {stud, backing}, and so on).
-- **Compiler joints:** `library/modules/wall/compile.js` emits `top_plates`,
+- **Compiler joints:** `library/modules/wall_panel/compile.js` emits `top_plates`,
   `stud_to_plate` (each stud to the bottom plate and the lower top plate) and
   `sheathing_to_framing` (where a sheet touches a framing member, by
   `_touches`). Sheet parts get the layer's role as their `role` and an id
@@ -316,7 +316,7 @@ for the rest until site layers produce parts.
   and T8 says every joint type needs a schedule entry; both change with J5
   and J6.
 - `hut/design/ic_lib_wall.md`, section 4.2: the builder's joint checks.
-- `library/modules/wall/compile.js` (after the implementation review): sheet
+- `library/modules/wall_panel/compile.js` (after the implementation review): sheet
   parts get a `layer` field, and a sheet is joined to framing only where they
   overlap by more than 1 mm.
 

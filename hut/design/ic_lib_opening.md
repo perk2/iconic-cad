@@ -13,7 +13,7 @@ section 3 and comes up in the next joint review. Topics: T6 (parts), T11 (system
 ## 1. Problem
 
 The hut needs a door and at least one window. The prototype has one module,
-`wall`, a panel of studs, plates and the bracing sheet. A wall with an opening
+`wall_panel`, a panel of studs, plates and the bracing sheet. A wall with an opening
 is built differently (header, king and jack studs, cripples, a rough sill for
 a window, a cut bottom plate for a door), so by T17's splitting rule it is
 its own module: *load-bearing wall with opening*, with window and door as
@@ -43,12 +43,12 @@ not used in the new format):
   wall a subheader and sill blocks; the bottom plate is cut across a door; the
   OSB is split into up to four rectangles around the opening. Sizes are in
   inches in the module ids and `meta.yaml`.
-- **Prototype:** `library/modules/wall/` (schema, compiler, `systems/seh_no.yaml`);
+- **Prototype:** `library/modules/wall_panel/` (schema, compiler, `systems/seh_no.yaml`);
   the builder's parameter types are `length`, `lumber` and `buildup`
   (`PARAMETER_TYPES` in the builder); the system catalog has
   `lumber`, `sheets` and `fasteners`. Compilers are loaded by path and can't
   share code: the wall compiler holds its own box, overlap and sheet-layout
-  helpers (`library/modules/wall/compile.js`). The interfaces `wall_inline`
+  helpers (`library/modules/wall_panel/compile.js`). The interfaces `wall_inline`
   and `wall_corner` accept any port that declares their roles, from any
   module.
 
@@ -56,7 +56,7 @@ not used in the new format):
 
 | | Decision |
 |---|---|
-| O1 | One module, `wall_with_opening`, for windows and doors; the unit's kind decides the framing below the opening |
+| O1 | One module, `wall_panel_with_opening`, for windows and doors; the unit's kind decides the framing below the opening |
 | O2 | Windows and doors are catalog items in the system, in two sections, `windows` and `doors`. Each entry states the unit's `size` and its `rough_opening` (width, height), both from the product or the books; no gap rule in Iconic CAD |
 | O3 | The module has a parameter `unit` whose type is a new one, `opening_unit`, the way `stud` has type `lumber`. A variant names a catalog id (`unit: window_10x12`); the builder looks the id up in `windows` and `doors` and gives the compiler the entry itself, with `kind: window` or `kind: door` added from the section it was found in. The compiler reads the rough opening from it and frames a door or a window by `kind` |
 | O4 | The opening is centred in the panel. The variant states `sill_height`, the height of the rough opening's bottom above the bottom of the wall; it must be 0 for a door |
@@ -96,12 +96,12 @@ leaves 46 mm between a header on the opening (48×148 plies) and the top
 plate; that is what makes the raised header with a head piece the normal
 case in `seh_no`.
 
-**Module** (`library/modules/wall_with_opening/`):
+**Module** (`library/modules/wall_panel_with_opening/`):
 
 - `schema.yaml`: the wall's parameters (`width`, `height`, `spacing`, `stud`,
   `buildup`) plus `header` (lumber), `unit` (opening_unit) and `sill_height`
   (length, minimum 0). A length may be 0 only when the schema says `min: 0`;
-  a schema `min` or `max` must not be negative. Ports as on `wall`: `left`,
+  a schema `min` or `max` must not be negative. Ports as on `wall_panel`: `left`,
   `right` (filling the same roles) and `bottom`.
 - `compile.js`: section 4.2.
 - `systems/seh_no.yaml`:
@@ -155,13 +155,13 @@ sill.
 
 ### 4.2 Compiler
 
-Coordinates and datum as for `wall`. With `W` the width, `t` the stud
+Coordinates and datum as for `wall_panel`. With `W` the width, `t` the stud
 thickness (48), the rough opening `ro = [ro_w, ro_h]` from the unit and
 `x0 = (W - ro_w) / 2`, `x1 = x0 + ro_w`, `z0 = sill_height`, `z1 = z0 + ro_h`:
 
-- **Plates:** as on `wall`; for a door the bottom plate is two parts,
+- **Plates:** as on `wall_panel`; for a door the bottom plate is two parts,
   `bottom_plate_left` (0 to `x0`) and `bottom_plate_right` (`x1` to `W`).
-- **End studs:** `stud_left`, `stud_right`, as on `wall`.
+- **End studs:** `stud_left`, `stud_right`, as on `wall_panel`.
 - **Jack studs:** `jack_left` (`x0 - t` to `x0`), `jack_right` (`x1` to
   `x1 + t`), from the top of the bottom plate to `z1`.
 - **King studs:** `king_left`, `king_right`, outside the jacks, from the
@@ -178,13 +178,13 @@ thickness (48), the rough opening `ro = [ro_w, ro_h]` from the unit and
   stud is left out.
 - **Rough sill:** for a window, `sill`, from `x0` to `x1`, its top at `z0`,
   on `cripple_bottom_left` and `cripple_bottom_right` against the jacks.
-- **Sheets:** laid as on `wall`, then each sheet minus the rough opening, as
+- **Sheets:** laid as on `wall_panel`, then each sheet minus the rough opening, as
   up to four pieces (left and right of the opening at full sheet height,
   above and below it between); pieces 1 mm wide or less are left out. Each
   piece is joined to the framing it touches. This is a simplification: on
   site the sheet is usually cut around the opening's corner, and a narrow
   strip beside an opening adds little bracing.
-- **Ports:** as on `wall`; for a door the end ports expose the bottom plate
+- **Ports:** as on `wall_panel`; for a door the end ports expose the bottom plate
   piece at that end as `bottom_plate`, and `bottom` exposes both pieces
   (`bottom_plate_left`, `bottom_plate_right`).
 - **Errors** (raised, reported by the builder): a king closer than one stud
@@ -209,7 +209,7 @@ Part ids and roles:
 
 The window has 70 joints and the door 49.
 
-Joints, emitted as the parts are made: plates and studs as on `wall`; kings,
+Joints, emitted as the parts are made: plates and studs as on `wall_panel`; kings,
 jacks and cripples to the plates (`stud_to_plate`); `jack_to_king`; each
 header ply to each king (`header_to_king`) and onto each jack
 (`header_on_jack`); top cripples to the lower top plate (`stud_to_plate`) and
@@ -302,7 +302,7 @@ No change. Parts and joints of the new module arrive like the wall's.
 ## 8. Consequences
 
 - A second module tests that interfaces really are module-independent: the
-  corner and inline joints bake pairs across `wall` and `wall_with_opening`.
+  corner and inline joints bake pairs across `wall_panel` and `wall_panel_with_opening`.
 - Shared compiler code is part of the library core, the code the builder
   and the engine use too.
 - The library asset grows with the pairs: three variants filling both
@@ -432,6 +432,7 @@ Open questions (answered 2026-11-17, see 11.1):
 | A6 | *(Replaced by A7.)* **Short cripples on the head piece, stopping 10 below the header** (owner, after the first implementation left the hut an empty 108 gap): at the grid positions, nailed up through the head piece, their tops free. They give the sheets and the lining nailing, and the header still deflects 10 before touching them, so its deflection doesn't reach the head piece or the window. Neither Eurocode 5 nor the IRC says anything about this; it is practice (Byggforsk 523.251, 523.701 or *Trehus*: to check). Placeholder minimum length 50; shorter leaves an empty gap. The outer sheet, nailed to both the header and the cripples, could still pass a little load; assumed small |
 
 | A7 | **No head piece: the header sits on the jacks and its underside is the top of the rough opening** (owner, 2026-11-17, after looking at US practice; replaces R3, A3 and A6, and changes the owner's W4 answer that the header always goes under the top plate). Above the header, cripples at the grid positions up to the lower top plate when the space is at least 100 (US framers stop at about 4"; placeholder); with no space the header is nailed to the plate (`header_to_plate`); a space in between is an error (deeper header or move the opening). The header's deflection over a 1 m span is small, and the unit's own clearance in the rough opening takes it, as in US practice (window makers ask for 6 to 19 mm at the head). The hut: header 2000 to 2148, cripples 2148 to 2304 (156) at 576 and 1176; the seam at 1200 above the opening is backed by the header and a cripple. **TODO: check Byggforsk** (523.251 timber framing, 523.701 fitting windows) for the head piece, the gap and the header's position, before building |
+| A8 | **A door's bottom plate is whole and stays** (owner, 2026-11-20; replaces O8): the plate runs through the door opening and the door's threshold sits on it, so the rough opening starts on the plate: a door's `sill_height` is the plate's thickness (48), and the compiler requires it. The door's head goes to 2048 (48 + 2000), so the window's sill moves to 838 to keep the heads level (A2). Above the 2048 heads, the 48x148 header to 2196 and cripples of 108 up to the lower top plate (2304), over the 100 minimum. The sheet keeps a 48 strip over the plate under the door. A 48 step at the threshold |
 
 Sources: [Swedoor, interior doors](https://www.swedoor.no/tips-og-rad/maaltabeller-innerdorer),
 [Swedoor, exterior doors](https://www.swedoor.no/tips-og-rad/maaltabeller-ytterdorer).

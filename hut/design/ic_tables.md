@@ -39,9 +39,9 @@ choose the values.
   to the compiler unchanged. Variants are finite and baked at library time;
   the engine never runs a compiler (PLAN, "Languages by phase").
 - **The floor:** `floor` variant `3600x2720` fixes `joist: 48x198`
-  (placeholder). **The opening:** `wall_with_opening` fixes
+  (placeholder). **The opening:** `wall_panel_with_opening` fixes
   `header: 48x148` for every opening width, one jack and one king per side
-  (`library/modules/wall_with_opening/compile.js`).
+  (`library/modules/wall_panel_with_opening/compile.js`).
 - **The system's fastening schedule** (`fastening:` in
   `library/systems/seh_no/system.yaml`) is already a table in all but name:
   joint type to fastener, count and spacing, applied by the builder

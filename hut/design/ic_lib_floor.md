@@ -109,7 +109,7 @@ and `b` (the joist beside it).
   floor}`, variant `"3600x2720"` (width 3600, depth 2720).
 - `compile.js`, section 4.2.
 
-**Wall modules**: the `bottom` port of `wall` and `wall_with_opening` fills
+**Wall modules**: the `bottom` port of `wall_panel` and `wall_panel_with_opening` fills
 `wall_on_floor.wall`.
 
 **Interface** `library/interfaces/wall_on_floor/`: `interface.yaml` (roles

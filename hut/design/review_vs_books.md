@@ -16,8 +16,8 @@ Already known from discussion (2026-11-16), marked ★:
 
 ## 1. Wall with opening: framing
 
-Compiler: `library/modules/wall_with_opening/compile.js`. Variants:
-`library/modules/wall_with_opening/systems/seh_no.yaml`.
+Compiler: `library/modules/wall_panel_with_opening/compile.js`. Variants:
+`library/modules/wall_panel_with_opening/systems/seh_no.yaml`.
 
 | # | Model now | Look up | Books say |
 |---|---|---|---|

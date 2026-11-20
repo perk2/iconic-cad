@@ -101,7 +101,7 @@ prototype.
 library/
   joint_types.yaml
   systems/seh_no/system.yaml
-  modules/wall/
+  modules/wall_panel/
     schema.yaml
     compile.js
     systems/seh_no.yaml
@@ -157,7 +157,7 @@ this prototype:
 | `corner_studs` | `stud` (the butt wall's end stud), `backing` (the through wall's end stud or a backer) |
 | `backer_to_plate` | `plate`, `backer` |
 
-**Module schema** (`modules/wall/schema.yaml`): parameters with types and
+**Module schema** (`modules/wall_panel/schema.yaml`): parameters with types and
 ranges (`width`, `height`: length; `spacing`: length; `stud`: lumber;
 `buildup`: buildup) and ports:
 
@@ -235,7 +235,7 @@ panel, here the bracing sheet. The wall's depth (used by placement, e.g.
 148 = 160 in `seh_no`. Site layers are listed but take no part in placement;
 the panels are joined before they exist.
 
-**Variants** (`modules/wall/systems/seh_no.yaml`):
+**Variants** (`modules/wall_panel/systems/seh_no.yaml`):
 
 ```yaml
 # Load-bearing wall in seh_no (SEH modules adapted to Norway): open panels, c/c 600.
@@ -519,7 +519,7 @@ doesn't derive them.
   and `1200_tall`), is built from a copy of the library by
   `tests/library_builder.mjs`, which also checks that it is up to date; it
   covers mixed-width walls and pairs excluded by `same_height`:
-  - **hut**: 3 × 2 panels of `wall/1200`; S and N runs of three panels run
+  - **hut**: 3 × 2 panels of `wall_panel/1200`; S and N runs of three panels run
     through at both ends; E and W runs of two panels butt. Expect: no issues;
     the loop closes (gap 0); outline 3600 × (2400 + 2 × 160) = 3600 × 2720; four
     `backer` parts, each hosted in an S or N panel, stage `site`; workshop
@@ -536,7 +536,7 @@ doesn't derive them.
 
 1. This note.
 2. Make the v1 tools skip new-format folders (tests stay green). Library
-   source for `seh_no`, `wall`, `wall_inline`, `wall_corner`.
+   source for `seh_no`, `wall_panel`, `wall_inline`, `wall_corner`.
 3. Library builder: load, validate, resolve; tests for validation.
 4. Wall compiler and the two implementations; export the library asset; freshness test.
 5. Apply the review decisions (2026-11-13) to the library source, builder and
@@ -548,7 +548,7 @@ doesn't derive them.
 8. Review against this note; update PLAN.md (T3, T6, T7, T16, T17) with what
    held up and what didn't. Done 2026-11-15, section 10; T8 was updated too.
 
-Later steps, not in this prototype: `wall_with_opening` (window 10×12, door
+Later steps, not in this prototype: `wall_panel_with_opening` (window 10×12, door
 10×21), an SEH system to test the convertibility check, T-junctions with
 sliding ports, a read-only 2D plan page, solids via FreeCAD, wiring into the
 editor.

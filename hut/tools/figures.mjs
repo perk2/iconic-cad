@@ -6,8 +6,16 @@
 //   module_wall_lines.svg  the four wall lines from outside, with the upper top plate
 //   storey.svg             the whole storey, isometric, from the south-west
 //   storey_framing.svg     the same without the sheets (framing only)
+//   layout_graph.svg       the layout as entities and connections, beside the placed plan
+//   corner_plan.svg        the south-east corner in plan: the two walls and the
+//                          implementation's parts
+//   assembly/NN.svg        frames: the engine building the model step by step
+//                          (hut/tools/assembly_gif.sh makes the GIF)
 //
 //     node hut/tools/figures.mjs            # writes hut/figures/ (not committed)
+//
+// The figures used by hut/wiki/iconic_cad_design.md are also written to
+// hut/wiki/figures/ (committed; regenerate, don't edit).
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -20,7 +28,7 @@ const derived = {};
 for (const [id, m] of Object.entries(asset.modules)) {
   if (m.derived) derived[id] = await import(pathToFileURL(join(root, 'library/modules', id, 'derive.js')).href);
 }
-const layout = { ...JSON.parse(readFileSync(join(root, 'tests/fixtures/engine/hut_openings.json'), 'utf8')), derive: { module: 'storey' } };
+const layout = JSON.parse(readFileSync(join(root, 'hut/hut.layout.json'), 'utf8'));
 const model = compileDesign(layout, asset, { derived });
 if (model.issues.length) throw new Error(JSON.stringify(model.issues, null, 1));
 
@@ -34,12 +42,19 @@ const LINE = '#444441', DIM = '#5F5E5A';
 const fill = p => (p.owner === 'storey' && p.role === 'top_plate' ? UPPER : FILL[p.role] ?? '#ddd');
 const STYLE = '<style>text{font-family:system-ui,sans-serif;fill:#2C2C2A}.h{font-size:15px;font-weight:600}.s{font-size:11px}</style>';
 const svg = (w, h, body, title) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w.toFixed(0)} ${h.toFixed(0)}" style="background:#fff" role="img"><title>${title}</title>${STYLE}${body}</svg>\n`;
-const legend = (x, y, items) => items.map(([color, label, dashed], i) => {
-  const lx = x + (i % 4) * 150, ly = y + Math.floor(i / 4) * 20;
+const legend = (x, y, items, step = 150) => items.map(([color, label, dashed], i) => {
+  const lx = x + (i % 4) * step, ly = y + Math.floor(i / 4) * 20;
   return `<rect x="${lx}" y="${ly}" width="12" height="12" fill="${color}" ${dashed ? 'fill-opacity="0.25" stroke-dasharray="3 2"' : ''} stroke="${LINE}" stroke-width="0.5"/><text class="s" x="${lx + 17}" y="${ly + 10}">${label}</text>`;
 }).join('');
 mkdirSync(out, { recursive: true });
-const write = (name, text) => { writeFileSync(join(out, name), text); console.log(`wrote hut/figures/${name}`); };
+const wikiOut = join(root, 'hut', 'wiki', 'figures');
+mkdirSync(wikiOut, { recursive: true });
+const WIKI = new Set(['module_1200.svg', 'module_window_10x12.svg', 'layout_graph.svg', 'corner_plan.svg',
+  'storey_framing.svg', 'module_wall_lines.svg', 'module_floor.svg']);
+const write = (name, text) => {
+  writeFileSync(join(out, name), text); console.log(`wrote hut/figures/${name}`);
+  if (WIKI.has(name)) writeFileSync(join(wikiOut, name), text);
+};
 
 // ---- elevations: x along, z up; parts drawn far to near ------------------
 // boxes: [{box, fill, dashed}], u: index of the horizontal axis, depth: a
@@ -97,7 +112,7 @@ for (const [moduleId, m] of Object.entries(asset.modules)) {
 // Each line drawn left to right as seen from outside (the panels' own
 // convention): s along the run from the first panel's left end.
 {
-  const lines = [['line_S1', ['S1', 'S2'], 'south'], ['line_E1', ['E1', 'E2'], 'east'],
+  const lines = [['line_S1', ['S1', 'S2', 'S3'], 'south'], ['line_E1', ['E1', 'E2'], 'east'],
     ['line_N1', ['N1', 'N2', 'N3'], 'north'], ['line_W1', ['W1', 'W2'], 'west']];
   const scale = 0.16, pad = 40, rowH = 2400 * scale + 70;
   let body = `<text class="h" x="${pad}" y="22">wall lines from outside (OSB dashed), with the derived upper top plate</text>`;
@@ -165,7 +180,7 @@ function drawOrder(parts) {
   return order;
 }
 
-function isometric(parts, title) {
+function isometric(parts, title, all = parts, note = '') {
   const c = Math.cos(Math.PI / 6), s = Math.sin(Math.PI / 6);
   const P = ([x, y, z]) => [(x - y) * c, -(z + (x + y) * s)]; // from the south-west, above
   const faces = b => {
@@ -178,7 +193,7 @@ function isometric(parts, title) {
   };
   const shade = (hex, k) => '#' + [1, 3, 5].map(i => Math.round(parseInt(hex.slice(i, i + 2), 16) * k).toString(16).padStart(2, '0')).join('');
   const sorted = drawOrder(parts);
-  const pts = sorted.flatMap(p => faces(p.world).flatMap(([f]) => f.map(P)));
+  const pts = all.flatMap(p => faces(p.world).flatMap(([f]) => f.map(P))); // the view: fixed by all
   const minX = Math.min(...pts.map(p => p[0])), maxX = Math.max(...pts.map(p => p[0]));
   const minY = Math.min(...pts.map(p => p[1])), maxY = Math.max(...pts.map(p => p[1]));
   const scale = 900 / (maxX - minX), pad = 30;
@@ -186,8 +201,162 @@ function isometric(parts, title) {
   const body = sorted.map(p => faces(p.world).map(([f, k]) =>
     `<polygon points="${f.map(P).map(T).join(' ')}" fill="${shade(fill(p), k)}" stroke="${LINE}" stroke-width="0.3"/>`).join('')).join('');
   const W = 900 + 2 * pad, H = (maxY - minY) * scale + 2 * pad + 60;
-  return svg(W, H, body + `<text class="h" x="${pad}" y="22">${title}</text>`
+  return svg(W, H, body + `<text class="h" x="${pad}" y="22">${title}</text>` + (note ? `<text class="s" x="${pad}" y="40">${note}</text>` : '')
     + legend(pad, H - 26, [[UPPER, 'Upper top plate'], [FILL.joist, 'Floor framing'], [FILL.stud, 'Wall framing'], [FILL.bracing, 'OSB']]), title);
 }
 write('storey.svg', isometric(model.parts, 'the hut\'s storey: walls, upper top plate and floor, from the south-west'));
 write('storey_framing.svg', isometric(model.parts.filter(p => !p.layer), 'the hut\'s storey, framing only (sheets hidden), from the south-west'));
+
+// ---- the layout as a graph, beside the placed plan ---------------------------
+// Left: what the layout stores (entities and connections, no coordinates),
+// drawn on a circle in loop order. Right: where the engine placed them.
+{
+  const end = ref => ref.split('.')[0];
+  const conns = layout.connections.map(c => c.interface === 'wall_corner'
+    ? { id: c.id, kind: 'corner', a: end(c.through), b: end(c.butt), through: end(c.through) }
+    : { id: c.id, kind: 'inline', a: end(c.a), b: end(c.b) });
+  // Loop order from the anchor.
+  const order = [layout.anchor.entity];
+  while (order.length < layout.entities.length) {
+    const last = order[order.length - 1];
+    const c = conns.find(k => (k.a === last && !order.includes(k.b)) || (k.b === last && !order.includes(k.a)));
+    if (!c) break;
+    order.push(c.a === last ? c.b : c.a);
+  }
+  const cx = 290, cy = 290, R = 175;
+  const at = Object.fromEntries(order.map((id, i) => {
+    const a = Math.PI / 2 + (2 * Math.PI * i) / order.length; // anchor at the bottom
+    return [id, [cx - R * Math.cos(a), cy + R * Math.sin(a)]];
+  }));
+  const moduleOf = Object.fromEntries(layout.entities.map(e => [e.id, e]));
+  const PANEL = '#E9D8B4', OPENING = '#A8C686', CORNER = '#B5651D';
+  let body = `<text class="h" x="20" y="24">What the layout stores</text>`
+    + `<text class="s" x="20" y="42">entities and connections, no coordinates</text>`;
+  for (const c of conns) {
+    const [x1, y1] = at[c.a], [x2, y2] = at[c.b];
+    const corner = c.kind === 'corner';
+    body += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${corner ? CORNER : LINE}" stroke-width="${corner ? 2.5 : 1.2}"/>`;
+    const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+    const r = Math.hypot(mx - cx, my - cy), out = (r + 30) / r;
+    const lx = cx + (mx - cx) * out, ly = cy + (my - cy) * out;
+    const anchor = lx < cx - 40 ? 'end' : lx > cx + 40 ? 'start' : 'middle';
+    const lines = corner ? ['corner', `${c.through} through`] : ['inline'];
+    body += lines.map((t, k) => `<text class="s" x="${lx.toFixed(1)}" y="${(ly + 4 + (k - (lines.length - 1) / 2) * 13).toFixed(1)}" text-anchor="${anchor}" fill="${corner ? CORNER : DIM}">${t}</text>`).join('');
+  }
+  for (const id of order) {
+    const [x, y] = at[id], e = moduleOf[id];
+    const opening = e.module !== 'wall_panel';
+    body += `<rect x="${(x - 46).toFixed(1)}" y="${(y - 20).toFixed(1)}" width="92" height="40" rx="6" fill="${opening ? OPENING : PANEL}" stroke="${LINE}" stroke-width="${id === layout.anchor.entity ? 2.5 : 0.8}"/>`
+      + `<text class="h" x="${x.toFixed(1)}" y="${(y - 2).toFixed(1)}" text-anchor="middle">${id}</text>`
+      + `<text class="s" x="${x.toFixed(1)}" y="${(y + 13).toFixed(1)}" text-anchor="middle">${e.variant}</text>`;
+  }
+  const [ax, ay] = at[layout.anchor.entity];
+  body += `<text class="s" x="${ax.toFixed(1)}" y="${(ay + 36).toFixed(1)}" text-anchor="middle">anchor</text>`;
+
+  // The placed plan: each entity's footprint from its parts, north up.
+  const ox = 590, scale = 0.095, top = 80;
+  const foot = id => {
+    const ps = model.parts.filter(p => p.owner === id);
+    return { min: [0, 1].map(i => Math.min(...ps.map(p => p.world.min[i]))), max: [0, 1].map(i => Math.max(...ps.map(p => p.world.max[i]))) };
+  };
+  const fs = Object.fromEntries(order.map(id => [id, foot(id)]));
+  const lo = [0, 1].map(i => Math.min(...Object.values(fs).map(f => f.min[i])));
+  const hi = [0, 1].map(i => Math.max(...Object.values(fs).map(f => f.max[i])));
+  const X = x => ox + (x - lo[0]) * scale, Y = y => top + 40 + (hi[1] - y) * scale;
+  body += `<text class="h" x="${ox}" y="24">What the engine works out</text>`
+    + `<text class="s" x="${ox}" y="42">positions, by walking the connections from the anchor</text>`;
+  for (const id of order) {
+    const f = fs[id], e = moduleOf[id];
+    const w = (f.max[0] - f.min[0]) * scale, h = (f.max[1] - f.min[1]) * scale;
+    body += `<rect x="${X(f.min[0]).toFixed(1)}" y="${Y(f.max[1]).toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" fill="${e.module !== 'wall_panel' ? OPENING : PANEL}" stroke="${LINE}" stroke-width="${id === layout.anchor.entity ? 2 : 0.8}"/>`;
+    const tx = X((f.min[0] + f.max[0]) / 2), ty = Y((f.min[1] + f.max[1]) / 2);
+    const horizontal = w > h;
+    const dx = horizontal ? 0 : (f.min[0] < (lo[0] + hi[0]) / 2 ? -24 : 24), dy = horizontal ? (f.min[1] < (lo[1] + hi[1]) / 2 ? 26 : -14) : 4;
+    body += `<text class="s" x="${(tx + dx).toFixed(1)}" y="${(ty + dy).toFixed(1)}" text-anchor="middle">${id}</text>`;
+  }
+  body += `<text class="s" x="${ox}" y="${(Y(lo[1]) + 50).toFixed(1)}">${hi[0] - lo[0]} × ${hi[1] - lo[1]} mm outside, north up</text>`;
+  body += legend(20, 540, [[PANEL, 'wall_panel'], [OPENING, 'wall_panel_with_opening'], [CORNER, 'wall_corner'], [LINE, 'wall_inline']], 210);
+  write('layout_graph.svg', svg(ox + (hi[0] - lo[0]) * scale + 50, 570, body, 'the layout and the placed plan'));
+}
+
+// ---- the south-east corner, in plan -------------------------------------------
+// A horizontal section at mid height through the corner where S3 (the south
+// wall) runs through and E1 (the east wall) butts: the parts cut there, over
+// the bottom plates (faint) that show where each wall runs, and the parts the
+// corner's implementation (california) adds, fitted on site.
+{
+  const c = layout.connections.find(k => k.id === 'c_se');
+  const through = c.through.split('.')[0], butt = c.butt.split('.')[0];
+  const ends = model.parts.filter(p => [through, butt].includes(p.owner));
+  const east = Math.max(...ends.filter(p => !p.layer).map(p => p.world.max[0])); // the framing's outer corner
+  const z = 1000, lo = [east - 560, -20], hi = [east + 20, 560];
+  const inView = p => p.world.max[0] > lo[0] && p.world.min[0] < hi[0] && p.world.max[1] > lo[1] && p.world.min[1] < hi[1]
+    && [through, butt, c.id].includes(p.owner);
+  const cut = model.parts.filter(p => inView(p) && p.world.min[2] <= z && p.world.max[2] >= z);
+  const plates = model.parts.filter(p => inView(p) && p.role === 'bottom_plate');
+  const scale = 0.8, padL = 40, padR = 150, top = 80;
+  const X = x => padL + (x - lo[0]) * scale, Y = y => top + (hi[1] - y) * scale;
+  const clip = b => ({ min: [Math.max(b.min[0], lo[0]), Math.max(b.min[1], lo[1])], max: [Math.min(b.max[0], hi[0]), Math.min(b.max[1], hi[1])] });
+  const rect = (b, attrs) => { b = clip(b); return `<rect x="${X(b.min[0]).toFixed(1)}" y="${Y(b.max[1]).toFixed(1)}" width="${((b.max[0] - b.min[0]) * scale).toFixed(1)}" height="${((b.max[1] - b.min[1]) * scale).toFixed(1)}" ${attrs}/>`; };
+  const IMPL = '#B5651D', THROUGH = '#E9D8B4', BUTT = '#C9D9E8';
+  const colour = p => (p.owner === c.id ? IMPL : p.layer ? FILL.bracing : p.owner === through ? THROUGH : BUTT);
+  let body = plates.map(p => rect(p.world, `fill="${p.owner === through ? THROUGH : BUTT}" fill-opacity="0.45" stroke="${DIM}" stroke-width="0.5" stroke-dasharray="4 3"`)).join('')
+    + [...cut].sort((a, b) => (a.owner === c.id) - (b.owner === c.id))
+      .map(p => rect(p.world, `fill="${colour(p)}" stroke="${LINE}" stroke-width="${p.owner === c.id ? 1.5 : 0.6}"`)).join('');
+  const W = (hi[0] - lo[0]) * scale + padL + padR, H = (hi[1] - lo[1]) * scale + top + 80;
+  const impl = Object.fromEntries(cut.filter(p => p.owner === c.id).map(p => [p.id.split('/')[1], p]));
+  const leader = (x1, y1, x2, y2, text, anchor) => `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${IMPL}" stroke-width="0.8"/>`
+    + `<text class="s" x="${(x2 + (anchor === 'start' ? 4 : 0)).toFixed(1)}" y="${(y2 + (anchor === 'middle' ? -4 : 4)).toFixed(1)}" fill="${IMPL}" text-anchor="${anchor}">${text}</text>`;
+  if (impl.turned_stud) { // label up into the room
+    const b = clip(impl.turned_stud.world), x = X((b.min[0] + b.max[0]) / 2);
+    body += leader(x, Y(b.max[1]), x, Y(b.max[1]) - 50, 'turned stud', 'middle');
+  }
+  if (impl.sheathing_strip) { // label out to the east
+    const b = clip(impl.sheathing_strip.world), y = Y((b.min[1] + b.max[1]) / 2);
+    body += leader(X(b.max[0]), y, X(hi[0]) + 30, y, 'OSB strip', 'start');
+  }
+  body += `<text class="h" x="20" y="24">The corner ${c.id} in plan, cut at ${z} mm</text>`
+    + `<text class="s" x="20" y="42">${through} runs through (the south wall, along the bottom); ${butt} butts against it (the east wall, going up)</text>`
+    + `<text class="s" x="${X(east - 280)}" y="${Y(lo[1]) + 18}" text-anchor="middle">outside (south)</text>`
+    + `<text class="s" x="${X(hi[0]) + 10}" y="${Y(420)}">outside (east)</text>`
+    + legend(20, H - 30, [[THROUGH, `${through}: through wall`], [BUTT, `${butt}: butt wall`], [FILL.bracing, 'OSB, workshop'], [IMPL, 'california: site parts']], 165);
+  write('corner_plan.svg', svg(Math.max(W, 680), H, body, 'wall corner in plan'));
+}
+
+// ---- frames: the engine building the model ----------------------------------
+// One frame per step, all in the same view: the anchor, then each entity as
+// the walk reaches it through a connection (with the connection's
+// implementation parts once both ends are placed), then the derived modules.
+{
+  const dir = join(out, 'assembly');
+  mkdirSync(dir, { recursive: true });
+  const ends = c => (c.interface === 'wall_corner' ? [c.through, c.butt] : [c.a, c.b]).map(r => r.split('.')[0]);
+  const placed = [layout.anchor.entity];
+  const steps = [{ title: `1. The anchor: ${layout.anchor.entity}`, note: 'placed at the origin, facing south' }];
+  const used = new Set();
+  while (placed.length < layout.entities.length) {
+    const c = layout.connections.find(k => !used.has(k.id) && ends(k).some(e => placed.includes(e)) && ends(k).some(e => !placed.includes(e)));
+    if (!c) break;
+    used.add(c.id);
+    const next = ends(c).find(e => !placed.includes(e));
+    placed.push(next);
+    const kind = c.interface === 'wall_corner' ? `corner, ${ends(c)[0]} through` : 'inline';
+    steps.push({ title: `${steps.length + 1}. ${next}, placed by ${c.id} (${kind})`, note: 'the interface\'s rule gives its position; corner parts come with both walls' });
+  }
+  const frames = [];
+  const partsAt = entities => model.parts.filter(p => {
+    if (entities.includes(p.owner)) return true;
+    const c = layout.connections.find(k => k.id === p.owner);
+    return c ? ends(c).every(e => entities.includes(e)) : false;
+  });
+  steps.forEach((s, i) => frames.push([s.title, s.note, partsAt(placed.slice(0, i + 1))]));
+  const walls = partsAt(placed);
+  const plate = model.parts.filter(p => p.owner === 'storey' && !p.id.startsWith('storey/floor/'));
+  frames.push([`${frames.length + 1}. Derived: wall lines`, 'the upper top plate, from the panels along each line', [...walls, ...plate]]);
+  frames.push([`${frames.length + 1}. Derived: the floor`, 'from the walls\' framing loop; the model is complete', model.parts]);
+  frames.forEach(([title, note, parts], i) => {
+    const name = `${String(i + 1).padStart(2, '0')}.svg`;
+    writeFileSync(join(dir, name), isometric(parts, title, model.parts, note));
+  });
+  console.log(`wrote hut/figures/assembly/: ${frames.length} frames`);
+}

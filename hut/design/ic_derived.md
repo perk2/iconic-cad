@@ -194,7 +194,7 @@ design time (the browser). The price: JS numbers don't tell 24 from 24.0
   argument, so library code imports nothing and runs wherever it is loaded
   from.
 - **Library code**: catalog compilers `compile(params, core)`
-  (`library/modules/wall/compile.js`, `wall_with_opening/compile.js`),
+  (`library/modules/wall_panel/compile.js`, `wall_panel_with_opening/compile.js`),
   implementations `build(participants, core)` (`library/interfaces/
   wall_corner/implementations/california.js`, `wall_inline/
   implementations/plain.js`), derived modules `derive(params, input,

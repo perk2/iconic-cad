@@ -23,6 +23,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const out = join(root, 'hut', 'figures');
 const { compileDesign } = await import(pathToFileURL(join(root, 'web/js/engine/compile_design.js')).href);
+const solids = await import(pathToFileURL(join(root, 'web/js/library/solids.js')).href);
 const asset = JSON.parse(readFileSync(join(root, 'web/assets/library.json'), 'utf8'));
 const derived = {};
 for (const [id, m] of Object.entries(asset.modules)) {
@@ -35,7 +36,7 @@ if (model.issues.length) throw new Error(JSON.stringify(model.issues, null, 1));
 const FILL = {
   stud: '#E9D8B4', king: '#D9A95B', jack: '#C47F3A', cripple: '#A8C686', header: '#8A5A2B', sill: '#6E9FC9',
   bottom_plate: '#CBB48A', top_plate: '#CBB48A', sill_plate: '#A8A291', rim: '#CBB48A', joist: '#E9D8B4',
-  blocking: '#C47F3A', bracing: '#D9C38C', subfloor: '#BFB6A0',
+  blocking: '#C47F3A', bracing: '#D9C38C', subfloor: '#BFB6A0', rafter: '#C9A66B', ridge_board: '#8A5A2B', ceiling_joist: '#DCC9A0', lookout: '#B89A62',
 };
 const UPPER = '#B5651D'; // the upper top plate (derived)
 const LINE = '#444441', DIM = '#5F5E5A';
@@ -50,7 +51,7 @@ mkdirSync(out, { recursive: true });
 const wikiOut = join(root, 'hut', 'wiki', 'figures');
 mkdirSync(wikiOut, { recursive: true });
 const WIKI = new Set(['module_1200.svg', 'module_window_10x12.svg', 'layout_graph.svg', 'corner_plan.svg',
-  'storey_framing.svg', 'module_wall_lines.svg', 'module_floor.svg']);
+  'storey_framing.svg', 'module_wall_lines.svg', 'module_floor.svg', 'roof_framing.svg']);
 const write = (name, text) => {
   writeFileSync(join(out, name), text); console.log(`wrote hut/figures/${name}`);
   if (WIKI.has(name)) writeFileSync(join(wikiOut, name), text);
@@ -141,71 +142,122 @@ for (const [moduleId, m] of Object.entries(asset.modules)) {
 }
 
 // ---- the storey, isometric --------------------------------------------------
-// Painter's order for boxes seen from (-x, -y, +z): a box is drawn after
-// every box it hides. A hides B when they're separated along an axis with A
-// on the viewer's side (smaller x, smaller y, or above) and their outlines
-// on screen overlap. Topological order; ties (and any cycle) by depth.
-function drawOrder(parts) {
-  const n = parts.length;
-  const b = parts.map(p => p.world);
-  const depth = i => b[i].min[0] + b[i].max[0] + b[i].min[1] + b[i].max[1] - b[i].min[2] - b[i].max[2];
-  const sep = (i, j) => b[i].max[0] <= b[j].min[0] || b[i].max[1] <= b[j].min[1] || b[i].min[2] >= b[j].max[2];
-  // Screen outlines: x - y and x + y + z ranges (iso screen coordinates).
-  const u = i => [b[i].min[0] - b[i].max[1], b[i].max[0] - b[i].min[1]];
-  const v = i => [b[i].min[0] + b[i].min[1] + b[i].min[2], b[i].max[0] + b[i].max[1] + b[i].max[2]];
-  const w = i => [b[i].min[0] - b[i].max[2], b[i].max[0] - b[i].min[2]];
-  const lap = (p, q) => p[0] < q[1] && q[0] < p[1];
-  const after = Array.from({ length: n }, () => []); // j drawn after i
+// Seen from (-x, -y, +z). Each part is split into convex pieces (a box is
+// one; a rafter is two or three: solids.js), and the pieces are drawn far to
+// near: for two pieces that overlap on screen, a plane separates them (they
+// don't overlap in space), and the one on the viewer's side of it is drawn
+// later. Topological order; ties (and any cycle) by depth.
+const VIEW = [-1, -1, 1];
+const dot3 = (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+const cross3 = (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+const ISO_C = Math.cos(Math.PI / 6), ISO_S = Math.sin(Math.PI / 6);
+const project = ([x, y, z]) => [(x - y) * ISO_C, -(z + (x + y) * ISO_S)]; // from the south-west, above
+
+function drawables(parts) {
+  return parts.flatMap(p => solids.pieces(solids.isSolid(p) ? p : { box: p.world }).map(faces => {
+    const verts = [];
+    for (const f of faces) for (const v of f.verts) if (!verts.some(w => Math.abs(w[0] - v[0]) + Math.abs(w[1] - v[1]) + Math.abs(w[2] - v[2]) < 1e-6)) verts.push(v);
+    const dirs = [];
+    const addDir = d => { const n = Math.hypot(...d); if (n < 1e-9) return; const u = d.map(x => x / n); if (!dirs.some(w => Math.abs(dot3(w, u)) > 1 - 1e-9)) dirs.push(u); };
+    for (const f of faces) f.verts.forEach((v, i) => addDir(f.verts[(i + 1) % f.verts.length].map((x, k) => x - v[k])));
+    const normals = [];
+    for (const f of faces) if (!normals.some(w => Math.abs(dot3(w, f.normal)) > 1 - 1e-9)) normals.push(f.normal);
+    const screen = verts.map(project);
+    const box2 = [0, 1].map(k => [Math.min(...screen.map(q => q[k])), Math.max(...screen.map(q => q[k]))]);
+    return { part: p, faces, verts, dirs, normals, box2, hull: hull2(screen), depth: verts.reduce((d, q) => d + dot3(q, VIEW), 0) / verts.length };
+  }));
+}
+
+// -1 if a is behind b (draw a first), 1 if in front, 0 if no plane says.
+// Only asked for pieces whose outlines overlap on screen; then every plane
+// that separates them puts the same one on the viewer's side.
+function compareDepth(a, b) {
+  const axes = [...a.normals, ...b.normals];
+  for (const u of a.dirs) for (const w of b.dirs) { const c = cross3(u, w); const n = Math.hypot(...c); if (n > 1e-9) axes.push(c.map(x => x / n)); }
+  for (const n of axes) {
+    const toward = dot3(n, VIEW);
+    if (Math.abs(toward) < 1e-9) continue;
+    const pa = a.verts.map(v => dot3(n, v)), pb = b.verts.map(v => dot3(n, v));
+    if (Math.max(...pa) <= Math.min(...pb) + 1e-6) return toward > 0 ? -1 : 1; // a below b along n
+    if (Math.max(...pb) <= Math.min(...pa) + 1e-6) return toward > 0 ? 1 : -1;
+  }
+  return 0;
+}
+
+// The convex hull of points in the plane (counter-clockwise).
+function hull2(points) {
+  const p = [...points].sort((u, v) => u[0] - v[0] || u[1] - v[1]);
+  const turn = (o, u, v) => (u[0] - o[0]) * (v[1] - o[1]) - (u[1] - o[1]) * (v[0] - o[0]);
+  const half = list => { const h = []; for (const q of list) { while (h.length >= 2 && turn(h[h.length - 2], h[h.length - 1], q) <= 0) h.pop(); h.push(q); } h.pop(); return h; };
+  return [...half(p), ...half(p.reverse())];
+}
+
+// The two outlines overlap by more than a hair (2D separating-axis test).
+function outlinesOverlap(a, b) {
+  for (const h of [a.hull, b.hull]) {
+    for (let i = 0; i < h.length; i++) {
+      const e = [h[(i + 1) % h.length][0] - h[i][0], h[(i + 1) % h.length][1] - h[i][1]];
+      const n = [-e[1], e[0]];
+      const len = Math.hypot(...n);
+      if (len < 1e-9) continue;
+      const pa = a.hull.map(q => (q[0] * n[0] + q[1] * n[1]) / len), pb = b.hull.map(q => (q[0] * n[0] + q[1] * n[1]) / len);
+      if (Math.min(Math.max(...pa), Math.max(...pb)) - Math.max(Math.min(...pa), Math.min(...pb)) <= 1e-3) return false;
+    }
+  }
+  return true;
+}
+
+function drawOrder(items) {
+  const n = items.length;
+  const lap = (p, q) => p[0] < q[1] - 1e-6 && q[0] < p[1] - 1e-6;
+  const after = Array.from({ length: n }, () => []);
   const indeg = new Array(n).fill(0);
   for (let i = 0; i < n; i++) {
-    for (let j = 0; j < n; j++) {
-      if (i === j || !lap(u(i), u(j)) || !lap(v(i), v(j)) || !lap(w(i), w(j))) continue;
-      if (sep(i, j) && !sep(j, i)) { after[j].push(i); indeg[i] += 1; } // i in front of j: draw j first
+    for (let j = i + 1; j < n; j++) {
+      if (!lap(items[i].box2[0], items[j].box2[0]) || !lap(items[i].box2[1], items[j].box2[1])) continue;
+      if (!outlinesOverlap(items[i], items[j])) continue;
+      const c = compareDepth(items[i], items[j]);
+      if (c < 0) { after[i].push(j); indeg[j] += 1; } // i behind j: j drawn after i
+      else if (c > 0) { after[j].push(i); indeg[i] += 1; }
     }
   }
   const order = [];
-  const ready = [...Array(n).keys()].filter(i => indeg[i] === 0);
   const done = new Set();
+  const ready = [...Array(n).keys()].filter(i => indeg[i] === 0);
   while (order.length < n) {
-    if (!ready.length) { // a cycle: take the farthest left
-      const k = [...Array(n).keys()].filter(i => !done.has(i)).sort((p, q) => depth(q) - depth(p))[0];
+    if (!ready.length) { // a cycle: take the farthest
+      const k = [...Array(n).keys()].filter(i => !done.has(i)).sort((p, q) => items[p].depth - items[q].depth)[0];
       ready.push(k); indeg[k] = 0;
     }
-    ready.sort((p, q) => depth(q) - depth(p));
+    ready.sort((p, q) => items[p].depth - items[q].depth);
     const i = ready.shift();
     if (done.has(i)) continue;
-    done.add(i); order.push(parts[i]);
+    done.add(i); order.push(items[i]);
     for (const k of after[i]) if (!done.has(k) && --indeg[k] === 0) ready.push(k);
   }
   return order;
 }
 
 function isometric(parts, title, all = parts, note = '') {
-  const c = Math.cos(Math.PI / 6), s = Math.sin(Math.PI / 6);
-  const P = ([x, y, z]) => [(x - y) * c, -(z + (x + y) * s)]; // from the south-west, above
-  const faces = b => {
-    const [x0, y0, z0] = b.min, [x1, y1, z1] = b.max;
-    return [
-      [[[x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1]], 1.0], // top
-      [[[x0, y0, z0], [x1, y0, z0], [x1, y0, z1], [x0, y0, z1]], 0.82], // south face
-      [[[x0, y0, z0], [x0, y1, z0], [x0, y1, z1], [x0, y0, z1]], 0.68], // west face
-    ];
-  };
   const shade = (hex, k) => '#' + [1, 3, 5].map(i => Math.round(parseInt(hex.slice(i, i + 2), 16) * k).toString(16).padStart(2, '0')).join('');
-  const sorted = drawOrder(parts);
-  const pts = all.flatMap(p => faces(p.world).flatMap(([f]) => f.map(P))); // the view: fixed by all
+  // A face toward the viewer, shaded as before: top 1.0, south 0.82, west 0.68.
+  const tone = nrm => Math.min(1, 0.68 + 0.32 * Math.max(0, nrm[2]) + 0.14 * Math.max(0, -nrm[1]));
+  const sorted = drawOrder(drawables(parts));
+  const pts = drawables(all).flatMap(d => d.verts.map(project)); // the view: fixed by all
   const minX = Math.min(...pts.map(p => p[0])), maxX = Math.max(...pts.map(p => p[0]));
   const minY = Math.min(...pts.map(p => p[1])), maxY = Math.max(...pts.map(p => p[1]));
   const scale = 900 / (maxX - minX), pad = 30;
   const T = ([x, y]) => `${(pad + (x - minX) * scale).toFixed(1)},${(pad + 30 + (y - minY) * scale).toFixed(1)}`;
-  const body = sorted.map(p => faces(p.world).map(([f, k]) =>
-    `<polygon points="${f.map(P).map(T).join(' ')}" fill="${shade(fill(p), k)}" stroke="${LINE}" stroke-width="0.3"/>`).join('')).join('');
-  const W = 900 + 2 * pad, H = (maxY - minY) * scale + 2 * pad + 60;
+  const body = sorted.map(d => d.faces.filter(f => dot3(f.normal, VIEW) > 1e-9).map(f =>
+    `<polygon points="${f.verts.map(project).map(T).join(' ')}" fill="${shade(fill(d.part), tone(f.normal))}" stroke="${LINE}" stroke-width="0.3"/>`).join('')).join('');
+  const W = 900 + 2 * pad, H = (maxY - minY) * scale + 2 * pad + 80;
   return svg(W, H, body + `<text class="h" x="${pad}" y="22">${title}</text>` + (note ? `<text class="s" x="${pad}" y="40">${note}</text>` : '')
-    + legend(pad, H - 26, [[UPPER, 'Upper top plate'], [FILL.joist, 'Floor framing'], [FILL.stud, 'Wall framing'], [FILL.bracing, 'OSB']]), title);
+    + legend(pad, H - 46, [[UPPER, 'Upper top plate'], [FILL.joist, 'Joists'], [FILL.stud, 'Wall framing'], [FILL.rafter, 'Rafters'], [FILL.bracing, 'OSB']], 175), title);
 }
-write('storey.svg', isometric(model.parts, 'the hut\'s storey: walls, upper top plate and floor, from the south-west'));
-write('storey_framing.svg', isometric(model.parts.filter(p => !p.layer), 'the hut\'s storey, framing only (sheets hidden), from the south-west'));
+write('storey.svg', isometric(model.parts, 'the hut: walls, upper top plate, floor and roof framing, from the south-west'));
+write('storey_framing.svg', isometric(model.parts.filter(p => !p.layer), 'the hut\'s framing (sheets hidden), from the south-west'));
+write('roof_framing.svg', isometric(model.parts.filter(p => p.owner === 'roof' || (p.owner === 'storey' && p.role === 'top_plate')),
+  'the roof framing on the upper top plates: rafters, ridge board, ceiling joists, gable studs and ladders'));
 
 // ---- the layout as a graph, beside the placed plan ---------------------------
 // Left: what the layout stores (entities and connections, no coordinates),
@@ -353,10 +405,13 @@ write('storey_framing.svg', isometric(model.parts.filter(p => !p.layer), 'the hu
   const walls = partsAt(placed);
   const plate = model.parts.filter(p => p.owner === 'storey' && !p.id.startsWith('storey/floor/'));
   frames.push([`${frames.length + 1}. Derived: wall lines`, 'the upper top plate, from the panels along each line', [...walls, ...plate]]);
-  frames.push([`${frames.length + 1}. Derived: the floor`, 'from the walls\' framing loop; the model is complete', model.parts]);
+  frames.push([`${frames.length + 1}. Derived: the floor`, 'from the walls\' framing loop', model.parts.filter(p => p.owner !== 'roof')]);
+  frames.push([`${frames.length + 1}. Derived: the roof`, 'rafters, ridge board and ceiling joists on the plates; the model is complete', model.parts]);
   frames.forEach(([title, note, parts], i) => {
     const name = `${String(i + 1).padStart(2, '0')}.svg`;
     writeFileSync(join(dir, name), isometric(parts, title, model.parts, note));
   });
   console.log(`wrote hut/figures/assembly/: ${frames.length} frames`);
 }
+
+

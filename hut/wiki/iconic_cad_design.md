@@ -5,7 +5,7 @@ each one adds one idea, with a small hut (one room, about 3.6 x 2.7 m) as the
 running example. The vocabulary at the end collects every term.
 
 Status: prototyped and tested on a fork (walls, a wall with a window or door,
-corners, the upper top plate and a floor). Marked *planned* where it isn't
+corners, the upper top plate, a floor and the roof framing). Marked *planned* where it isn't
 built yet.
 
 ## The big picture
@@ -50,7 +50,7 @@ and sheet, with its size, material and position. That code is the module's
    ──►  bottom plate, lower top plate, 3 studs, 1 OSB sheet
 ```
 
-![The wall_panel variant 1200 and the window panel, seen from outside](figures/module_1200.svg)
+![The wall_panel variant 1200, seen from outside](figures/module_1200.svg)
 ![The wall_panel_with_opening variant window_10x12](figures/module_window_10x12.svg)
 
 *Two compiled variants, seen from outside, coloured by role: studs, plates,
@@ -164,7 +164,7 @@ model; nothing recomputes framing on its own.
 
 *The engine building the hut's model: the anchor, then each panel as the walk
 reaches it through a connection (the corner parts come once both walls are
-in), then the derived upper top plate and floor (Lesson 6).*
+in), then the derived upper top plate, floor and roof (Lesson 6).*
 
 ## Lesson 6: derived modules fill in what follows from the whole design
 
@@ -174,10 +174,19 @@ neighbours:
 - the **upper top plate**, which laps the corners and bridges the joints
   between panels;
 - the **floor**, whose size and joists follow the walls standing on it;
-- later the **roof** and the **foundation**.
+- the **roof**, whose rafters sit on the walls' top plates;
+- later the **foundation**.
 
-These come from **derived modules**. You don't place them; the engine runs
-them once the walls close, using the model so far as input:
+These come from **derived modules**. You don't place them: the layout lists
+the ones the design uses, with their parameters, and the engine runs them in
+order once the walls close:
+
+```json
+"derive": [
+  {"module": "storey"},
+  {"module": "roof", "after": ["storey"], "parameters": {"pitch": 27, "ridge": "east_west", "eaves": 400, "gables": 300}}
+]
+```
 
 ```
  storey  (the walls on one level)
@@ -185,12 +194,28 @@ them once the walls close, using the model so far as input:
    │                    in pieces of at most 2400, joints 600 from panel joints
    └── floor            outline = the walls' framing; sill, rims, joists c/c 600,
                         blocking under the gable walls' studs, chipboard on top
+ roof   (after the storey)
+                        rafters c/c 600 in birdsmouths on the top plates, a
+                        ridge board, ceiling joists that tie the rafters' feet,
+                        gable studs, a ladder at each gable for the overhang
 ```
+
+Each module sees the model so far, plus a summary from the modules it comes
+after: the storey tells the roof where its plates are and which walls face
+which way. If the roof fails, the walls and the floor stay in the model,
+with the problem reported. A derived module's parameters come from two
+places, like a catalog module's: the system fixes some (the lumber, the
+spacing), and the layout gives the rest (the pitch, which way the ridge runs,
+the overhang).
 
 The ordinary modules are called **catalog modules**: they are compiled ahead
 of time and placed by the user. A derived module's code (`derive.js`) gets
 the design so far as input, such as the placed walls, so it runs in the
 browser each time the design changes rather than ahead of time.
+
+Parts don't have to be square to the building: a rafter is a box in its own
+tilted frame, with plane cuts (at the ridge and the tail) and a notch where
+it sits on the plate (the birdsmouth).
 
 ![The four wall lines with the upper top plate](figures/module_wall_lines.svg)
 
@@ -202,9 +227,16 @@ corners, and its joints stay 600 mm from the joints between panels.*
 *The floor in plan, derived from the walls: a sill all round, rims, joists at
 600, and blocking (orange) under the studs of the gable walls (grey).*
 
-![The storey without sheets](figures/storey_framing.svg)
+![The roof framing on the upper top plates](figures/roof_framing.svg)
 
-*The storey's framing, with the sheets hidden.*
+*The roof at 27°: rafters in birdsmouths on the upper top plates, the ridge
+board, a ceiling joist beside each rafter between the gables, gable studs
+under the end rafters, and at each gable a ladder (a fly rafter and
+lookouts) for the 300 mm overhang.*
+
+![The hut's framing without sheets](figures/storey_framing.svg)
+
+*The hut's framing, with the sheets hidden.*
 
 ## Lesson 7: parts are held together by joints
 

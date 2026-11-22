@@ -26,5 +26,8 @@
     {"id": "c_w12", "interface": "wall_inline", "a": "W1.right", "b": "W2.left"},
     {"id": "c_sw", "interface": "wall_corner", "through": "S1.left", "butt": "W2.right"}
   ],
-  "derive": {"module": "storey"}
+  "derive": [
+    {"module": "storey"},
+    {"module": "roof", "after": ["storey"], "parameters": {"pitch": 27, "ridge": "east_west", "eaves": 400, "gables": 300}}
+  ]
 }

@@ -26,10 +26,16 @@ runs the CI steps locally.
 
 Next:
 
-1. **Derived modules, open questions** ([ic_derived.md](design/ic_derived.md)
+1. **Roof** ([ic_lib_roof.md](design/ic_lib_roof.md)): a gable roof, ridge
+   east–west, pitch 27°, rafters on a ridge board, ceiling joists at the
+   plates. Done: sloped parts in the library core (T12), derived modules as a
+   list in the layout with parameters and exports, the roof module with
+   gable studs and gable ladders. Open: the roofing and the roof's build-up,
+   the snow load and the sizes.
+2. **Derived modules, open questions** ([ic_derived.md](design/ic_derived.md)
    section 12): placing against derived parts, several storeys, stable ids,
    what a derived module reads.
-2. **Book review, continued:** W1, W2 (the header's size), W6 to W12 (W9:
+3. **Book review, continued:** W1, W2 (the header's size), W6 to W12 (W9:
    the gap between a unit's frame and its rough opening), N1 to N8, the rest of the
    floor (F-e to F-h, S1 to S7, B1, B2) and the words still open (V5, V8 to
    V10, V17, V26, V40 to V56).
@@ -38,14 +44,21 @@ Open from the book review (2026-11-17):
 
 - **TODO:** review the floor sill on a pier foundation (the book's example
   is a sill on a foundation wall; the hut will more likely stand on piers).
-- **REVISIT** with the roof: the floor assumes a gable roof with gables east
-  and west (joists run parallel to the gable walls).
+- The floor's gables east and west (joists parallel to the gable walls) are
+  now the roof's decision too: a gable roof with the ridge east–west
+  ([ic_lib_roof.md](design/ic_lib_roof.md), 2026-11-22).
 - The wall layout decides the floor's (and later the roof's) framing: joists
   and blocking line up with the studs above (F-c).
 - **REVISIT** the corner sheathing (C3): for now a thin OSB strip fitted on
   site, with tape or a wind barrier strip over seams and corners.
 - **Confirm** that the sheet seam's position at an opening is not a rule
   (ic_lib_opening.md A4, assumed).
+- **TODO: check *vindforankring*** (wind anchorage: a continuous load path
+  for wind uplift and sliding) from the roof all the way down to the
+  foundation: rafters to plates, plates to studs, walls to the floor (F9),
+  the floor to the sill, the sill to the foundation (anchor bolts, hold-downs
+  at braced segments). No joint in the model checks uplift yet; the roof's
+  rafter-to-plate nailing is a placeholder (ic_lib_roof.md, open question 8).
 - **TODO: check Byggforsk** (523.251, 523.701) for the opening: the header
   on the opening without a *losholt* (ic_lib_opening.md A7, from US
   practice), the 10 mm gap the Norwegian forums cite from *Trehus*.
@@ -243,7 +256,7 @@ computed.
 | Design | **Project** | One building or site, with intent (stories, system, code profile) and site values (characteristic snow load, wind, climate, true north) |
 | | **Entity** | A placed module or assembly; refers to a module and one of its variants in the project's system. No per-entity overrides of variant values (for now); a different size means a different variant |
 | | **Connection** | One use of an interface: which entity's port fills each role (corner: which wall runs through), and a required id (pinning an implementation is a later improvement). Connections are the user's choices; positions are derived from them and one anchor. The wiki calls it a *connection occurrence* |
-| | **Storey** | The walls on one level and what follows from them: the top derived module of a layout (`derive: {module: storey}`), compiled once the walls close into a rectangle |
+| | **Storey** | The walls on one level and what follows from them: a derived module the layout lists (`derive: [{module: storey}, …]`), compiled once the walls close into a rectangle; it exports its outline, plates and wall lines to the modules after it (the roof) |
 | | **Wall line** | The panels in a straight run from one corner to the next (chained by `wall_inline`); a derived module, with the upper top plate as its own parts |
 | Derived | **Model** | Everything that follows from a layout and the library asset: entity positions, all parts, joints and issues. Made by the engine. The *building model* of BIM. Layout = what was decided; model = what follows |
 | | **Part** | A physical piece of a module (stud, header, sheet) |

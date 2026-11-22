@@ -15,7 +15,13 @@
 // stored for later features to read. See the seam comment below.
 // =====================================================
 import { doc } from './state.js';
-import { setActiveSystem } from './systems.js';
+import { setActiveSystem, systemIds } from './systems.js';
+import { enterEditor } from './editor_switch.js';
+
+// Systems of the new library format (web/assets/library.json): chosen here,
+// they start the new editor instead of v1 (hut/design/ic_editor.md, 4.1).
+const librarySystems = new Set();
+const isLibrarySystem = id => librarySystems.has(id) && !systemIds().includes(id);
 
 // ---------------------------------------------------------------------------
 // resolveClimate(zone) — PURE. The reference implementation of the
@@ -95,6 +101,15 @@ function validate() {
 function onGo() {
   if (!validate()) return;
 
+  if (isLibrarySystem(form.system)) {
+    // The new editor; the project data it needs is the name and the system.
+    doc.project = { ...doc.project, name: (form.name || '').trim() || 'Untitled Eco Home', system: form.system };
+    _confirmed = true;
+    document.getElementById('options-modal').classList.remove('open');
+    enterEditor({ project: { name: doc.project.name, system: form.system } });
+    return;
+  }
+
   doc.project = {
     name: (form.name || '').trim() || 'Untitled Eco Home',
     system: form.system,
@@ -130,6 +145,7 @@ export function resetProjectOptions() {
     systemSel.value = form.system;
     systemSel.disabled = doc.entities.length > 0;
   }
+  showFieldsFor(form.system);
 }
 
 // ---------------------------------------------------------------------------
@@ -143,9 +159,41 @@ export function openProjectOptions() {
 }
 
 // ---------------------------------------------------------------------------
+// The fields are per system: v1 systems ask for stories and a climate zone; a
+// system of the new library asks only for what its data says (none yet).
+// ---------------------------------------------------------------------------
+function showFieldsFor(system) {
+  const v1 = !isLibrarySystem(system);
+  for (const id of ['opt-stories-single', 'opt-zone']) {
+    const field = document.getElementById(id)?.closest('.opt-field');
+    if (field) field.style.display = v1 ? '' : 'none';
+  }
+  const note = document.querySelector('.opt-system-note');
+  if (note) note.textContent = v1
+    ? 'VCS-12 enables exterior wall placement only; downstream trade and export tools remain disabled.'
+    : 'A system of the new library: the new editor (building blocks, plan, 3D preview).';
+}
+
+// Add the new library's systems to the dropdown.
+async function addLibrarySystems() {
+  const { librarySystems: list } = await import('./editor/library.js');
+  const systemSel = document.getElementById('opt-system');
+  for (const { id, title } of await list()) {
+    if (systemIds().includes(id) || librarySystems.has(id)) continue;
+    librarySystems.add(id);
+    if (!systemSel) continue;
+    const option = document.createElement('option');
+    option.value = id;
+    option.textContent = `${title} (new library)`;
+    systemSel.appendChild(option);
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Init — call once from main.js. Wires inputs; no open/close-by-backdrop/Esc.
 // ---------------------------------------------------------------------------
 export function initProjectOptions() {
+  addLibrarySystems().catch(e => console.warn('New library systems unavailable:', e));
   const nameInput = document.getElementById('opt-name');
   if (nameInput) {
     nameInput.value = form.name;
@@ -161,7 +209,8 @@ export function initProjectOptions() {
         return;
       }
       form.system = systemSel.value;
-      setActiveSystem(form.system);
+      if (!isLibrarySystem(form.system)) setActiveSystem(form.system);
+      showFieldsFor(form.system);
       validate();
     });
   }

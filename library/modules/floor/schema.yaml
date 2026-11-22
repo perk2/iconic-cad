@@ -9,6 +9,7 @@
 id: floor
 title: Floor
 derived: true
+child_of: storey          # run by the storey, which gives it its input
 
 parameters:
   joist:

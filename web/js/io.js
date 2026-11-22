@@ -23,6 +23,13 @@ function download(obj, filename) {
 export function exportJSON(filename = 'layout.json') { download(serialize(true), filename); }
 export function saveLayout(filename = 'layout-save.json') { download(serialize(false), filename); }
 
+// A layout of the new format: entities with module and variant, connections,
+// an anchor, no v1 version field (web/js/editor/layout.js, isLayout).
+function isLibraryLayout(data) {
+  return !!data && typeof data === 'object' && !('version' in data)
+    && typeof data.system === 'string' && Array.isArray(data.entities) && Array.isArray(data.connections) && 'anchor' in data;
+}
+
 export function loadLayout(event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -30,6 +37,12 @@ export function loadLayout(event) {
   reader.onload = (e) => {
     try {
       const data = JSON.parse(e.target.result);
+      // A layout of the new library format goes to the new editor
+      // (editor_switch.js), not into the v1 document.
+      if (isLibraryLayout(data)) {
+        window.dispatchEvent(new CustomEvent('iconic:library-layout', { detail: data }));
+        return;
+      }
       applyLoadedData(data);
       markModelChanged();
       // Refresh the floor switcher (it appears for 2-story loads).

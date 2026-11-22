@@ -9,6 +9,7 @@
 id: roof
 title: Roof
 derived: true
+needs: [storey]           # reads the storey's exports: listed after it
 
 parameters:
   rafter:
@@ -35,18 +36,22 @@ parameters:
     type: angle
     min: 10
     max: 45
+    default: 27
     description: The roof's pitch, in degrees.
   ridge:
     type: choice
     values: [east_west, north_south]
+    default: east_west
     description: Which way the ridge runs (model +x east, +y north); the walls along it are the eaves walls.
   eaves:
     type: length
     min: 0
     max: 800
+    default: 400
     description: The eaves overhang, measured level from the walls' outer face (with the sheets).
   gables:
     type: length
     min: 0
     max: 600
+    default: 300
     description: The gable overhang, measured level from the gable walls' outer face (with the sheets); 0 for none.

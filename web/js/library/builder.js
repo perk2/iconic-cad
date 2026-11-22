@@ -425,9 +425,23 @@ function validateSystem(sid, src, jointTypes, problems) {
 function validateSchema(module, lib, problems, source) {
   const f = module.schema.path, d = module.schema.data;
   if (get(d, 'derived') === true) {
-    if (!checkKeys(problems, f, 'schema', d, ['id', 'title', 'derived', 'parameters'])) return;
+    if (!checkKeys(problems, f, 'schema', d, ['id', 'title', 'derived', 'parameters'], ['child_of', 'needs'])) return;
     const code = `library/modules/${module.id}/derive.js`;
     if (!source.isFile(code)) problems.error(f, `derived module '${module.id}' has no ${code}`);
+    // child_of: run only inside that derived module (the editor doesn't offer
+    // it); needs: derived modules the layout must list before it.
+    const derivedId = (/** @type {any} */ where, /** @type {any} */ id) => {
+      if (!isStr(id)) { problems.error(f, `${where}: expected a module id, got ${describe(id)}`); return; }
+      const other = lib.modules.get(id);
+      if (!other || get(other.schema.data, 'derived') !== true) problems.error(f, `${where}: '${id}' is not a derived module`);
+      else if (id === module.id) problems.error(f, `${where}: '${id}' is the module itself`);
+    };
+    if (has(d, 'child_of')) derivedId('child_of', get(d, 'child_of'));
+    if (has(d, 'needs')) {
+      const needs = get(d, 'needs');
+      if (!Array.isArray(needs)) problems.error(f, `needs: expected a list of module ids`);
+      else for (const id of needs) derivedId('needs', id);
+    }
   } else if (!checkKeys(problems, f, 'schema', d, ['id', 'title', 'parameters', 'ports'], ['derived'])) return;
   if (has(d, 'derived') && get(d, 'derived') !== true) problems.error(f, `derived: expected true, got ${describe(get(d, 'derived'))}`);
   if (get(d, 'id') !== module.id) problems.error(f, `id ${describe(get(d, 'id'))} does not match folder '${module.id}'`);
@@ -439,7 +453,7 @@ function validateSchema(module, lib, problems, source) {
       const where = `parameter '${textOf(name)}'`;
       if (RESERVED_PARAMETERS.has(name)) problems.error(f, `${where}: the name is reserved in variant files`);
       const ptype = isMapping(spec) ? get(spec, 'type') : undefined;
-      const optional = ptype === 'length' || ptype === 'angle' ? ['min', 'max'] : [];
+      const optional = ptype === 'length' || ptype === 'angle' ? ['min', 'max', 'default'] : ptype === 'choice' ? ['default'] : [];
       const required = ptype === 'choice' ? ['type', 'description', 'values'] : ['type', 'description'];
       if (!checkKeys(problems, f, where, spec, required, optional)) continue;
       if (ptype === 'choice') {
@@ -451,6 +465,8 @@ function validateSchema(module, lib, problems, source) {
       if (ptype === 'angle' && ['min', 'max'].some(b => isNumber(get(spec, b)) && get(spec, b) > 90)) {
         problems.error(f, `${where}: an angle's min and max are degrees, at most 90`);
       }
+      // A default: the starting value where the layout gives the parameter.
+      if (has(spec, 'default')) checkValue(problems, f, `${where}: default`, spec, get(spec, 'default'), new Map());
       checkChoice(problems, f, `${where}: type`, ptype, PARAMETER_TYPES);
       checkStr(problems, f, `${where}: description`, get(spec, 'description'));
       for (const bound of ['min', 'max']) {
@@ -1132,14 +1148,21 @@ export async function bakeImplementations(lib, resolved, compiled, problems, sou
 }
 
 // ---- export -------------------------------------------------------------------
-export function exportAsset(lib, resolved, compiled, baked, excluded) {
+/** @param {any} [source]  the library source, for the derived modules' code */
+export function exportAsset(lib, resolved, compiled, baked, excluded, source = null) {
   const modules = {};
   for (const module of lib.modules.values()) {
     const schema = module.schema.data;
     const parameters = entriesOf(get(schema, 'parameters')).map(([name, spec]) => ({ name, ...toPlain(spec) }));
     if (module.derived) {
+      // The derived module's code goes with it, so the editor can run it from
+      // the asset alone (hut/design/ic_editor.md, 4).
+      const code = source ? source.read(`library/modules/${module.id}/derive.js`) : undefined;
       modules[module.id] = {
         title: get(schema, 'title'), derived: true, parameters,
+        ...(has(schema, 'child_of') ? { child_of: get(schema, 'child_of') } : {}),
+        ...(has(schema, 'needs') ? { needs: toPlain(get(schema, 'needs')) } : {}),
+        ...(code !== undefined ? { code } : {}),
         systems: Object.fromEntries([...module.systems].map(([sid, src]) =>
           [sid, { params: resolveParams(new Map(entriesOf(get(schema, 'parameters')).filter(([name]) => has(get(src.data, 'fixed'), name))),
             get(src.data, 'fixed'), lib.systems.get(sid).data) }])),
@@ -1205,6 +1228,6 @@ export async function build(source, { core = CORE } = {}) {
   if (problems.errors.length) return result;
   ({ pairs: result.baked, excluded: result.excluded } = await bakeImplementations(result.lib, result.resolved, result.compiled, problems, source));
   if (problems.errors.length) return result;
-  result.asset = exportAsset(result.lib, result.resolved, result.compiled, result.baked, result.excluded);
+  result.asset = exportAsset(result.lib, result.resolved, result.compiled, result.baked, result.excluded, source);
   return result;
 }

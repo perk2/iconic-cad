@@ -1,0 +1,91 @@
+/* The editor for systems of the new library (js/editor/). It replaces v1's
+   design panes while body has .mode-editor (js/editor_switch.js). */
+
+#editor { display: none; flex: 1; min-width: 0; height: 100vh; }
+body.mode-editor #editor { display: flex; }
+body.mode-editor #sidebar,
+body.mode-editor #main-area,
+body.mode-editor #right-sidebar { display: none; }
+
+#editor button {
+  font: inherit; font-size: 11px; color: #eee; background: #0f3460; border: 1px solid #335; border-radius: 4px;
+  padding: 4px 8px; cursor: pointer;
+}
+#editor button:hover:not(:disabled) { background: #1a4a80; }
+#editor button:disabled { opacity: 0.4; cursor: default; }
+
+.ed-left {
+  width: 280px; flex-shrink: 0; background: #16213e; border-right: 1px solid #333; padding: 12px;
+  overflow-y: auto; font-size: 11px; display: flex; flex-direction: column; gap: 6px;
+}
+.ed-head { margin-bottom: 4px; }
+.ed-title { font-size: 14px; color: #4fc3f7; }
+.ed-system { color: #aaa; font-weight: normal; }
+.ed-buttons { display: flex; flex-wrap: wrap; gap: 4px; }
+.ed-section { margin-top: 10px; color: #4fc3f7; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+.ed-status { display: flex; flex-direction: column; gap: 6px; }
+.ed-note { color: #ccc; font-weight: normal; line-height: 1.4; }
+.ed-issue { padding: 3px 6px; border-radius: 3px; cursor: pointer; font-weight: normal; line-height: 1.35; }
+.ed-issue.error { background: #5a1a24; }
+.ed-issue.warning { background: #4a3d12; }
+.ed-issue:hover { outline: 1px solid #888; }
+
+.ed-center { flex: 1; min-width: 0; display: flex; flex-direction: column; background: #10162a; }
+.ed-plan-wrap { flex: 1; min-height: 0; position: relative; }
+.ed-plan { width: 100%; height: 100%; display: block; cursor: crosshair; user-select: none; }
+.ed-plan-tools { position: absolute; top: 8px; right: 8px; display: flex; gap: 6px; align-items: center; font-size: 11px; color: #ccc; }
+.ed-facing { display: flex; gap: 4px; align-items: center; }
+#editor .ed-facing button.active { background: #e94560; border-color: #e94560; }
+
+/* The library at the bottom, in the style of v1's. */
+.ed-library { flex-shrink: 0; background: #16213e; border-top: 1px solid #333; padding: 8px 12px 10px; }
+.ed-tabs { display: flex; gap: 6px; margin-bottom: 8px; align-items: center; }
+.ed-tabs::before { content: 'LIBRARY'; font-size: 13px; letter-spacing: 2px; margin-right: 10px; color: #eee; }
+#editor .ed-tab { background: transparent; border-color: #445; }
+#editor .ed-tab.active { border-color: #4fc3f7; color: #4fc3f7; background: #0f3460; }
+.ed-cards { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 2px; }
+#editor .ed-card { display: flex; align-items: center; gap: 10px; min-width: 190px; padding: 8px 12px; background: #1a2848; border-color: #2a3a5e; text-align: left; }
+#editor .ed-card:hover { background: #223566; }
+#editor .ed-card.active { border-color: #e94560; box-shadow: inset 0 0 0 1px #e94560; }
+.ed-card-text { display: flex; flex-direction: column; gap: 2px; }
+.ed-card-name { font-size: 12px; }
+.ed-card-size { font-size: 10px; color: #aaa; font-weight: normal; }
+.ed-thumb { width: 34px; height: 52px; flex-shrink: 0; }
+.ed-thumb rect { fill: #e9d8b4; stroke: #6b5a3a; stroke-width: 6px; }
+.ed-thumb .th-header, .ed-thumb .th-king, .ed-thumb .th-jack { fill: #c47f3a; }
+.ed-thumb .th-sill { fill: #6e9fc9; }
+.ed-thumb .th-cripple { fill: #a8c686; }
+.ed-thumb .th-sheet { fill: none; stroke: #8fbc8f; stroke-width: 10px; stroke-dasharray: 30 20; }
+
+.plan-grid line { stroke: #1d2742; stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.plan-ghost rect { fill: #4fc3f7; fill-opacity: 0.35; stroke: #4fc3f7; stroke-width: 1px; vector-effect: non-scaling-stroke; pointer-events: none; }
+.plan-ghost-label { fill: #4fc3f7; font-size: 110px; pointer-events: none; paint-order: stroke; stroke: #10162a; stroke-width: 20px; }
+.plan-bg { fill: #10162a; }
+.plan-hint { fill: #888; font-size: 160px; font-weight: normal; }
+.plan-derived rect { fill: none; stroke: #3a4a6a; stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.plan-entity rect { stroke: #444; stroke-width: 0.5px; vector-effect: non-scaling-stroke; }
+.plan-entity .plan-outline { fill: transparent; stroke: #9ab; stroke-width: 1px; cursor: pointer; }
+.plan-entity.selected .plan-outline { stroke: #e94560; stroke-width: 3px; }
+.plan-entity.flagged .plan-outline { stroke: #ff5050; stroke-width: 3px; stroke-dasharray: 6 3; }
+.plan-label { fill: #fff; font-size: 120px; pointer-events: none; paint-order: stroke; stroke: #10162a; stroke-width: 24px; }
+.plan-port { fill: #4fc3f7; fill-opacity: 0.6; stroke: #fff; stroke-width: 1px; vector-effect: non-scaling-stroke; pointer-events: none; }
+
+.ed-right { width: 38%; max-width: 560px; min-width: 300px; flex-shrink: 0; display: flex; flex-direction: column; border-left: 1px solid #333; }
+.ed-3d { flex: 1; min-height: 0; position: relative; }
+.ed-3d canvas { width: 100% !important; height: 100% !important; display: block; }
+.ed-toggle { padding: 6px 10px; font-size: 11px; color: #ccc; background: #16213e; }
+
+/* Derived modules: their entries and parameters. */
+.ed-derived { display: flex; flex-direction: column; gap: 8px; }
+.ed-derived-entry { background: #1a2848; border: 1px solid #2a3a5e; border-radius: 4px; padding: 6px 8px; display: flex; flex-direction: column; gap: 4px; }
+.ed-derived-head { display: flex; justify-content: space-between; align-items: center; }
+.ed-derived-title { color: #4fc3f7; }
+.ed-derived-fixed { color: #888; font-weight: normal; font-size: 10px; line-height: 1.4; }
+.ed-param { display: grid; grid-template-columns: 52px 1fr 52px 18px; gap: 4px; align-items: center; font-weight: normal; }
+.ed-param.missing .ed-param-name { color: #ff8080; }
+.ed-param-name { color: #ccc; overflow: hidden; text-overflow: ellipsis; }
+.ed-param select { grid-column: 2 / 5; }
+.ed-param input[type=number], .ed-param select { font: inherit; font-size: 11px; background: #10162a; color: #eee; border: 1px solid #335; border-radius: 3px; padding: 2px 4px; width: 100%; }
+.ed-param input[type=range] { width: 100%; }
+.ed-param-unit { color: #888; }
+

@@ -437,6 +437,11 @@ const BRACING_WORKSHOP = '      - role: bracing\n        sheet: osb_12\n        
     ['library/modules/wall_line/schema.yaml', 'parameters:\n', 'parameters:\n  ridge:\n    type: choice\n    description: x\n', "parameter 'ridge': missing 'values'"],
     ['library/modules/wall_line/schema.yaml', 'parameters:\n', 'parameters:\n  ridge:\n    type: choice\n    values: [a, a]\n    description: x\n', "parameter 'ridge': values: expected a list of distinct names"],
     ['library/modules/wall_line/schema.yaml', 'parameters:\n', 'parameters:\n  pitch:\n    type: angle\n    max: 120\n    description: x\n', "parameter 'pitch': an angle's min and max are degrees, at most 90"],
+    ['library/modules/wall_line/schema.yaml', 'child_of: storey', 'child_of: wall_panel', "child_of: 'wall_panel' is not a derived module"],
+    ['library/modules/roof/schema.yaml', 'needs: [storey]', 'needs: [roof]', "needs: 'roof' is the module itself"],
+    ['library/modules/roof/schema.yaml', 'needs: [storey]', 'needs: storey', 'needs: expected a list of module ids'],
+    ['library/modules/roof/schema.yaml', '    default: 27\n', '    default: 60\n', "parameter 'pitch': default: 60 is above the maximum 45"],
+    ['library/modules/roof/schema.yaml', '    default: east_west\n', '    default: up\n', "parameter 'ridge': default: 'up' is not one of east_west, north_south"],
   ]) some(await broken(rel, old, replacement), expected);
   // A derived module's system file may fix only some parameters: the layout
   // gives the rest, and the asset holds only the fixed ones.

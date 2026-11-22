@@ -6,6 +6,7 @@
 import { openProjectOptions, resetProjectOptions } from './options.js';
 import { resetDoc } from './state.js';
 import { markModelChanged } from './app.js';
+import { leaveEditor } from './editor_switch.js';
 
 // ---------------------------------------------------------------------------
 // HERO MEDIA CONFIG — optional full-bleed media layer behind the home view.
@@ -132,6 +133,7 @@ export function initHome() {
     // Fresh design: wipe any previously-loaded layout/levels/project intent so
     // they don't bleed in, drop the options write-once latch, then re-render the
     // now-empty plan and re-prompt setup.
+    leaveEditor(); // back to v1's panes until the options pick a system
     resetDoc();
     resetProjectOptions();
     markModelChanged();

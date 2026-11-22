@@ -6,6 +6,7 @@
 id: wall_line
 title: Wall line
 derived: true
+child_of: storey          # run by the storey, which gives it its input
 
 parameters:
   max_piece:

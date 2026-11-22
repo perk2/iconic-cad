@@ -26,16 +26,22 @@ runs the CI steps locally.
 
 Next:
 
-1. **Roof** ([ic_lib_roof.md](design/ic_lib_roof.md)): a gable roof, ridge
+1. **The editor on the new library** ([ic_editor.md](design/ic_editor.md)):
+   one page, the editor chosen by the project's system. Done: step 1 (place
+   the system's blocks in a plan view, attach to free ports, close loops,
+   3D preview, issues, load and save; placing as in v1), step 2 (the storey
+   and roof added in the editor, their parameters in a form). Next: to be
+   decided (more editing, outputs from the model).
+2. **Roof** ([ic_lib_roof.md](design/ic_lib_roof.md)): a gable roof, ridge
    east–west, pitch 27°, rafters on a ridge board, ceiling joists at the
    plates. Done: sloped parts in the library core (T12), derived modules as a
    list in the layout with parameters and exports, the roof module with
    gable studs and gable ladders. Open: the roofing and the roof's build-up,
    the snow load and the sizes.
-2. **Derived modules, open questions** ([ic_derived.md](design/ic_derived.md)
+3. **Derived modules, open questions** ([ic_derived.md](design/ic_derived.md)
    section 12): placing against derived parts, several storeys, stable ids,
    what a derived module reads.
-3. **Book review, continued:** W1, W2 (the header's size), W6 to W12 (W9:
+4. **Book review, continued:** W1, W2 (the header's size), W6 to W12 (W9:
    the gap between a unit's frame and its rough opening), N1 to N8, the rest of the
    floor (F-e to F-h, S1 to S7, B1, B2) and the words still open (V5, V8 to
    V10, V17, V26, V40 to V56).

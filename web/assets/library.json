@@ -7897,11 +7897,25 @@
     "king": "The king stud."
    }
   },
+  "joist_to_plate": {
+   "description": "A ceiling joist bearing on an upper top plate.",
+   "sides": {
+    "joist": "The ceiling joist.",
+    "plate": "The plate."
+   }
+  },
   "joist_to_rim": {
    "description": "A floor joist's end against a rim joist.",
    "sides": {
     "joist": "The joist.",
     "rim": "The rim joist."
+   }
+  },
+  "lookout_to_rafter": {
+   "description": "A lookout of the gable ladder, its end against a rafter (the end rafter or the fly rafter).",
+   "sides": {
+    "lookout": "The lookout.",
+    "rafter": "The rafter."
    }
   },
   "on_sill": {
@@ -7923,6 +7937,27 @@
    "sides": {
     "end": "The upper top plate whose end meets the other.",
     "side": "The lapping upper top plate."
+   }
+  },
+  "rafter_to_joist": {
+   "description": "The heel joint, a ceiling joist beside a rafter at the plate; with the joists across the building it ties the rafters' feet together.",
+   "sides": {
+    "joist": "The ceiling joist.",
+    "rafter": "The rafter."
+   }
+  },
+  "rafter_to_plate": {
+   "description": "A rafter's birdsmouth seat on the upper top plate of an eaves wall (or a gable wall's plate at a corner).",
+   "sides": {
+    "plate": "The plate.",
+    "rafter": "The rafter."
+   }
+  },
+  "rafter_to_ridge": {
+   "description": "A rafter's plumb cut against the ridge board.",
+   "sides": {
+    "rafter": "The rafter.",
+    "ridge": "The ridge board."
    }
   },
   "sheathing_to_framing": {
@@ -7951,6 +7986,13 @@
    "sides": {
     "plate": "The plate.",
     "stud": "The stud."
+   }
+  },
+  "stud_to_rafter": {
+   "description": "A gable stud's top, cut to the slope, against the end rafter's underside.",
+   "sides": {
+    "rafter": "The rafter.",
+    "stud": "The gable stud."
    }
   },
   "top_plates": {
@@ -8042,6 +8084,121 @@
     }
    },
    "title": "Floor"
+  },
+  "roof": {
+   "derived": true,
+   "parameters": [
+    {
+     "description": "Lumber for the rafters (catalog id).",
+     "name": "rafter",
+     "type": "lumber"
+    },
+    {
+     "description": "Lumber for the ceiling joists, which tie the rafters' feet (catalog id).",
+     "name": "ceiling_joist",
+     "type": "lumber"
+    },
+    {
+     "description": "Lumber for the ridge board; at least as deep as the rafters' plumb cut (catalog id).",
+     "name": "ridge_board",
+     "type": "lumber"
+    },
+    {
+     "description": "Lumber for the gable studs, on the gable walls' upper plates (catalog id).",
+     "name": "gable_stud",
+     "type": "lumber"
+    },
+    {
+     "description": "Lumber for the lookouts of the gable ladder, laid flat (catalog id).",
+     "name": "lookout",
+     "type": "lumber"
+    },
+    {
+     "description": "Rafter spacing, centre to centre, from the ridge's start.",
+     "max": 600,
+     "min": 300,
+     "name": "spacing",
+     "type": "length"
+    },
+    {
+     "description": "The roof's pitch, in degrees.",
+     "max": 45,
+     "min": 10,
+     "name": "pitch",
+     "type": "angle"
+    },
+    {
+     "description": "Which way the ridge runs (model +x east, +y north); the walls along it are the eaves walls.",
+     "name": "ridge",
+     "type": "choice",
+     "values": [
+      "east_west",
+      "north_south"
+     ]
+    },
+    {
+     "description": "The eaves overhang, measured level from the walls' outer face (with the sheets).",
+     "max": 800,
+     "min": 0,
+     "name": "eaves",
+     "type": "length"
+    },
+    {
+     "description": "The gable overhang, measured level from the gable walls' outer face (with the sheets); 0 for none.",
+     "max": 600,
+     "min": 0,
+     "name": "gables",
+     "type": "length"
+    }
+   ],
+   "systems": {
+    "seh_no": {
+     "params": {
+      "ceiling_joist": {
+       "grade": "C24",
+       "id": "48x148",
+       "section": [
+        48,
+        148
+       ]
+      },
+      "gable_stud": {
+       "grade": "C24",
+       "id": "48x148",
+       "section": [
+        48,
+        148
+       ]
+      },
+      "lookout": {
+       "grade": "C24",
+       "id": "48x98",
+       "section": [
+        48,
+        98
+       ]
+      },
+      "rafter": {
+       "grade": "C24",
+       "id": "48x198",
+       "section": [
+        48,
+        198
+       ]
+      },
+      "ridge_board": {
+       "grade": "C24",
+       "id": "48x223",
+       "section": [
+        48,
+        223
+       ]
+      },
+      "spacing": 600
+     }
+    }
+   },
+   "title": "Roof"
   },
   "storey": {
    "derived": true,
@@ -11667,6 +11824,13 @@
        198
       ]
      },
+     "48x223": {
+      "grade": "C24",
+      "section": [
+       48,
+       223
+      ]
+     },
      "48x98": {
       "grade": "C24",
       "section": [
@@ -11776,10 +11940,21 @@
      "from": "jack",
      "spacing": 300
     },
+    "joist_to_plate": {
+     "count": 2,
+     "fastener": "nail_28x95",
+     "from": "joist",
+     "method": "toe"
+    },
     "joist_to_rim": {
      "count": 3,
      "fastener": "nail_28x95",
      "from": "rim"
+    },
+    "lookout_to_rafter": {
+     "count": 2,
+     "fastener": "nail_28x95",
+     "from": "rafter"
     },
     "on_sill": {
      "count": 2,
@@ -11799,6 +11974,22 @@
      "fastener": "nail_28x95",
      "from": "side"
     },
+    "rafter_to_joist": {
+     "count": 4,
+     "fastener": "nail_28x95",
+     "from": "joist"
+    },
+    "rafter_to_plate": {
+     "count": 3,
+     "fastener": "nail_28x95",
+     "from": "rafter",
+     "method": "toe"
+    },
+    "rafter_to_ridge": {
+     "count": 3,
+     "fastener": "nail_28x95",
+     "from": "ridge"
+    },
     "sill_corner": {
      "count": 2,
      "fastener": "nail_28x95",
@@ -11811,6 +12002,12 @@
      "method": "toe"
     },
     "stud_to_plate": {
+     "count": 2,
+     "fastener": "nail_28x95",
+     "from": "stud",
+     "method": "toe"
+    },
+    "stud_to_rafter": {
      "count": 2,
      "fastener": "nail_28x95",
      "from": "stud",

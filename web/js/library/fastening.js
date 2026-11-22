@@ -2,6 +2,7 @@
 // list of joints. Pure.
 
 import { ROUND_MM, TOUCH_MM, contact, fmtG, longAxis } from './geometry.js';
+import { faceSpan, isSolid, longAxisVector, solidContact } from './solids.js';
 
 /** @typedef {import('./types.js').Box} Box */
 /** @typedef {import('./types.js').FasteningEntry} FasteningEntry */
@@ -44,6 +45,35 @@ export function fastenerCount(entry, axis, face, boxes, throughSheet = false) {
       || Math.abs(face.max[across] - fromBox.max[across]) <= TOUCH_MM;
     if (onEdge) spacing = entry.edge_spacing;
   }
+  return { count: Math.ceil((length - 2 * end - ROUND_MM) / spacing) + 1 };
+}
+
+/**
+ * Fasteners for one joint when a part is sloped or cut (solids.js): as
+ * fastenerCount, with the contact as a polygon and the row along the
+ * 'along' part's long axis as a vector.
+ * @param {FasteningEntry} entry
+ * @param {{normal: import('./solids.js').V, face: import('./solids.js').V[]}} c
+ * @param {Object<string, PartInfo>} parts  by side
+ * @param {boolean} [throughSheet]
+ * @returns {{count: number} | {count: null, reason: string}}
+ */
+export function fastenerCountSolid(entry, c, parts, throughSheet = false) {
+  if (entry.count !== undefined) return { count: entry.count };
+  const alongName = /** @type {string} */ (entry.along);
+  const along = longAxisVector(parts[alongName], throughSheet ? c.normal : null);
+  if (along === null || Math.abs(along[0] * c.normal[0] + along[1] * c.normal[1] + along[2] * c.normal[2]) > 1 - 1e-6) {
+    return { count: null, reason: `the '${alongName}' part has no long axis in the contact face` };
+  }
+  const { length, onEdge } = faceSpan(c.face, along, c.normal, parts[entry.from]);
+  const end = entry.end_distance ?? 0;
+  if (length < 2 * end) {
+    return {
+      count: null,
+      reason: `the contact (${fmtG(length)} mm) is shorter than twice the end distance (${fmtG(end)} mm)`,
+    };
+  }
+  const spacing = entry.edge_spacing !== undefined && onEdge ? entry.edge_spacing : /** @type {number} */ (entry.spacing);
   return { count: Math.ceil((length - 2 * end - ROUND_MM) / spacing) + 1 };
 }
 
@@ -110,10 +140,11 @@ export function fastenJoints(where, joints, info, jointTypes, system) {
     /** @type {Object<string, PartInfo>} */
     const parts = Object.fromEntries(Object.entries(refs).map(([side, ref]) => [side, info(ref)]));
     const labels = Object.values(parts).map(p => p.label).join(' and ');
-    const [a, b] = Object.values(parts).map(p => p.box);
-    const c = contact(a, b);
-    if (c.axis === null) {
-      errors.push(`${jwhere}: ${labels} ${c.reason}`);
+    const solid = Object.values(parts).some(isSolid);
+    const [pa, pb] = Object.values(parts);
+    const c = solid ? solidContact(pa, pb) : contact(pa.box, pb.box);
+    if ('axis' in c ? c.axis === null : c.normal === null) {
+      errors.push(`${jwhere}: ${labels} ${/** @type {{reason: string}} */ (c).reason}`);
       return;
     }
     const workshop = Object.values(parts).every(p => p.stage === 'workshop')
@@ -124,8 +155,14 @@ export function fastenJoints(where, joints, info, jointTypes, system) {
       return;
     }
     const throughSheet = Object.values(parts).some(p => p.layer && p.layer.sheet && p.layer.fastening);
-    const boxes = Object.fromEntries(Object.entries(parts).map(([side, p]) => [side, p.box]));
-    const n = fastenerCount(sched.entry, c.axis, c.face, boxes, throughSheet);
+    let n;
+    if ('axis' in c) {
+      const boxes = Object.fromEntries(Object.entries(parts).map(([side, p]) => [side, p.box]));
+      const touch = /** @type {{axis: number, face: import('./types.js').Box}} */ (c);
+      n = fastenerCount(sched.entry, touch.axis, touch.face, boxes, throughSheet);
+    } else {
+      n = fastenerCountSolid(sched.entry, /** @type {{normal: import('./solids.js').V, face: import('./solids.js').V[]}} */ (c), parts, throughSheet);
+    }
     if (n.count === null) {
       errors.push(`${jwhere}: ${sched.source}: ${n.reason}`);
       return;

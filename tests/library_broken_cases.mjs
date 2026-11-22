@@ -73,7 +73,7 @@ export const BROKEN = [
     "type: ['lumber'] is not one of", "unhashable-choice"],
   [WALL_VARIANTS, "default: \"1200\"", "default: [\"1200\"]",
     "default ['1200'] is not one of the variants", "unhashable-default"],
-  [SYSTEM, "    \"48x98\": {section: [48, 98], grade: C24}\n    \"48x148\": {section: [48, 148], grade: C24}\n    \"48x198\": {section: [48, 198], grade: C24}   # floor joists; placeholder\n", "    - \"48x148\"\n",
+  [SYSTEM, "    \"48x98\": {section: [48, 98], grade: C24}\n    \"48x148\": {section: [48, 148], grade: C24}\n    \"48x198\": {section: [48, 198], grade: C24}   # floor joists; placeholder\n    \"48x223\": {section: [48, 223], grade: C24}   # ridge board (deeper than a 48x198 rafter's plumb cut at 27°); placeholder\n", "    - \"48x148\"\n",
     "catalog lumber: expected a mapping", "catalog-lumber-list"],
   [WALL_VARIANTS, "  \"1200\":\n", "  \"1200\":\n    width: 2400\n    status: draft\n  \"1200\":\n",
     "duplicate key '1200'", "duplicate-key"],

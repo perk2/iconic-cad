@@ -19,6 +19,7 @@ catalog:
     "48x98": {section: [48, 98], grade: C24}
     "48x148": {section: [48, 148], grade: C24}
     "48x198": {section: [48, 198], grade: C24}   # floor joists; placeholder
+    "48x223": {section: [48, 223], grade: C24}   # ridge board (deeper than a 48x198 rafter's plumb cut at 27°); placeholder
   sheets:
     osb_12: {material: OSB/3, thickness: 12, size: [1200, 2400]}
     chipboard_22: {material: chipboard P5, thickness: 22, size: [600, 2400]}   # subfloor; placeholder
@@ -114,3 +115,9 @@ fastening:
   sill_corner: {fastener: nail_28x95, from: a, count: 2}   # placeholder
   blocking_to_joist: {fastener: nail_28x95, from: joist, count: 3}   # placeholder
   doubled_blocking: {fastener: nail_28x95, from: a, along: b, spacing: 300, end_distance: 50}   # placeholder
+  rafter_to_plate: {fastener: nail_28x95, from: rafter, method: toe, count: 3}   # placeholder; a connector against uplift may be needed
+  rafter_to_ridge: {fastener: nail_28x95, from: ridge, count: 3}   # placeholder
+  rafter_to_joist: {fastener: nail_28x95, from: joist, count: 4}   # placeholder: by pitch, span and snow load (cf. the IRC's heel joint table)
+  joist_to_plate: {fastener: nail_28x95, from: joist, method: toe, count: 2}   # placeholder
+  stud_to_rafter: {fastener: nail_28x95, from: stud, method: toe, count: 2}   # placeholder
+  lookout_to_rafter: {fastener: nail_28x95, from: rafter, count: 2}   # placeholder: through the rafter into the lookout's end

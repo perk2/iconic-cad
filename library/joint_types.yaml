@@ -128,3 +128,39 @@ doubled_blocking:
   sides:
     a: The first block.
     b: The block beside it.
+
+rafter_to_plate:
+  description: A rafter's birdsmouth seat on the upper top plate of an eaves wall (or a gable wall's plate at a corner).
+  sides:
+    plate: The plate.
+    rafter: The rafter.
+
+rafter_to_ridge:
+  description: A rafter's plumb cut against the ridge board.
+  sides:
+    ridge: The ridge board.
+    rafter: The rafter.
+
+rafter_to_joist:
+  description: The heel joint, a ceiling joist beside a rafter at the plate; with the joists across the building it ties the rafters' feet together.
+  sides:
+    rafter: The rafter.
+    joist: The ceiling joist.
+
+joist_to_plate:
+  description: A ceiling joist bearing on an upper top plate.
+  sides:
+    plate: The plate.
+    joist: The ceiling joist.
+
+stud_to_rafter:
+  description: A gable stud's top, cut to the slope, against the end rafter's underside.
+  sides:
+    rafter: The rafter.
+    stud: The gable stud.
+
+lookout_to_rafter:
+  description: A lookout of the gable ladder, its end against a rafter (the end rafter or the fly rafter).
+  sides:
+    rafter: The rafter.
+    lookout: The lookout.

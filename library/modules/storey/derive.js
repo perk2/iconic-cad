@@ -12,7 +12,13 @@
 //           (its frame is the building's); derive(id, params, input) runs a
 //           derived child
 //   result  own parts (ids prefixed by the child: line_S1/upper_plate_1,
-//           floor/joist_1) and joints whose sides are {own: id} or {model: id}
+//           floor/joist_1) and joints whose sides are {own: id} or {model: id};
+//           exports, for the derived modules that come after (the roof), in
+//           world coordinates, model +x east and +y north: outline (the
+//           walls' framing in plan, {min: [x, y], max: [x, y]}), outside (the
+//           walls with their sheets), plate_top (the upper top plates' top),
+//           lines [{id, side: south | north | east | west, panels, plates}]
+//           (plates: the line's upper plate pieces, own ids)
 //
 // The storey is derived only when the walls close: every line ends at a
 // corner, four corners (wall_corner joins convex corners, so the walls make
@@ -22,7 +28,7 @@
  * @param {object} params
  * @param {any} input
  * @param {any} core
- * @returns {{parts: any[], joints: any[]}}
+ * @returns {{parts: any[], joints: any[], exports: any}}
  */
 export function derive(params, input, core) {
   const entities = new Map(input.entities.map((/** @type {any} */ e) => [e.id, e]));
@@ -118,8 +124,43 @@ export function derive(params, input, core) {
     }
   }
 
+  const exports = summary(lines, plates, walls, entities);
   deriveFloor(input, core, walls, entities, parts, joints, prefix);
-  return { parts, joints };
+  return { parts, joints, exports };
+}
+
+/**
+ * What the storey tells the derived modules after it: the outline, the
+ * outside with the sheets, the upper top plates' top, and each wall line's
+ * side (the way it faces) and upper plate pieces.
+ * @param {any[][]} lines
+ * @param {any[]} plates  the upper plate pieces (own ids, world boxes)
+ * @param {Set<string>} walls
+ * @param {Map<string, any>} entities
+ */
+function summary(lines, plates, walls, entities) {
+  const wallParts = [...walls].flatMap(id => entities.get(id).parts);
+  const extent = (/** @type {any[]} */ boxes) => ({
+    min: [0, 1].map(i => Math.min(...boxes.map(b => b.min[i]))),
+    max: [0, 1].map(i => Math.max(...boxes.map(b => b.max[i]))),
+  });
+  const outline = extent(wallParts.filter((/** @type {any} */ p) => p.role === 'bottom_plate').map((/** @type {any} */ p) => p.world));
+  const outside = extent(wallParts.map((/** @type {any} */ p) => p.world));
+  const mid = [0, 1].map(i => (outline.min[i] + outline.max[i]) / 2);
+  return {
+    outline,
+    outside,
+    plate_top: Math.max(...plates.map(p => p.box.max[2])),
+    lines: lines.map(line => {
+      const id = `line_${line[0].id}`;
+      const own = plates.filter(p => p.id.startsWith(`${id}/`));
+      const b = extent(own.map(p => p.box));
+      const alongX = b.max[0] - b.min[0] >= b.max[1] - b.min[1];
+      const centre = [0, 1].map(i => (b.min[i] + b.max[i]) / 2);
+      const side = alongX ? (centre[1] < mid[1] ? 'south' : 'north') : (centre[0] < mid[0] ? 'west' : 'east');
+      return { id, side, panels: line.map(e => e.id), plates: own.map(p => p.id) };
+    }),
+  };
 }
 
 const STANDING = new Set(['stud', 'king', 'jack', 'cripple']);

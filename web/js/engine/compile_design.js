@@ -15,9 +15,10 @@
 //   system, git, anchor {entity, position [x, y, z], facing (degrees about z,
 //   a multiple of 90)}, entities [{id, module, variant}],
 //   connections [{id, interface, <role>: "entity.port", ...}],
-//   derive {module} (optional): the derived module that adds what spans the
-//   placed modules (hut/design/ic_derived.md); its code comes from the
-//   caller: compileDesign(layout, asset, {derived: {<module id>: {derive}}})
+//   derive (optional): the derived modules that add what spans the placed
+//   modules (hut/design/ic_derived.md, ic_lib_roof.md 4.2): one entry or a
+//   list, each {module, id, after: [ids], parameters}; their code comes from
+//   the caller: compileDesign(layout, asset, {derived: {<module id>: {derive}}})
 // Model:
 //   git (the engine's), layout_git (the layout's), system, entities (with
 //   world transforms), parts, connections, joints (id, owner, type, parts,
@@ -31,6 +32,7 @@
 import { applyBox, compose, det, difference, fromFrame, invert, placement } from './affine.js';
 import { fastenJoints } from '../library/fastening.js';
 import { checkAdded } from '../library/checks.js';
+import * as solids from '../library/solids.js';
 // What a derived module's code gets as its third argument: the library core.
 import { CORE } from '../library/core.js';
 
@@ -408,23 +410,122 @@ function variantLayers(variant) {
   return out;
 }
 
-// Run the layout's derived module (and, through input.derive, its derived
-// children), add its parts and fastened joints to the model, and check the
-// new parts against the rest. Problems become issues; the model keeps what
-// was placed.
-function deriveModules(spec, { asset, systemId, entities, connections, parts, joints, derived, issue, anchor }) {
-  if (!isObject(spec) || typeof spec.module !== 'string') {
-    issue('error', 'malformed', 'derive: expected {module: "<derived module id>"}');
-    return;
+// The layout's derived modules: derive is one entry or a list of them, each
+// {module, id (default: the module), after: [ids], parameters}. They run in
+// order of `after` (then of the list); each sees the model so far (what was
+// placed and what earlier derived modules added) and the exports of the
+// modules it comes after. A module whose dependency failed is skipped. The
+// parameters come from the system file (fixed) and the layout entry: every
+// parameter from exactly one of them (hut/design/ic_lib_roof.md, 4.2).
+function deriveModules(spec, ctx) {
+  const { issue } = ctx;
+  const list = Array.isArray(spec) ? spec : [spec];
+  const entries = [];
+  const ids = new Set();
+  list.forEach((e, k) => {
+    const where = Array.isArray(spec) ? `derive[${k}]` : 'derive';
+    if (!isObject(e) || typeof e.module !== 'string') {
+      issue('error', 'malformed', `${where}: expected {module, id, after, parameters}`);
+      return;
+    }
+    const extra = Object.keys(e).filter(key => !['module', 'id', 'after', 'parameters'].includes(key));
+    if (extra.length) { issue('error', 'malformed', `${where}: unknown key(s) ${extra.join(', ')}`); return; }
+    const id = e.id ?? e.module;
+    if (typeof id !== 'string' || !/^[a-z][a-z0-9_]*$/.test(id)) { issue('error', 'malformed', `${where}: id ${JSON.stringify(id)} must be a lower-case name`); return; }
+    if (ids.has(id)) { issue('error', 'malformed', `${where}: the id '${id}' is used twice`); return; }
+    const after = e.after ?? [];
+    if (!Array.isArray(after) || !after.every(a => typeof a === 'string')) { issue('error', 'malformed', `${where}: after: expected a list of ids`); return; }
+    if (e.parameters !== undefined && !isObject(e.parameters)) { issue('error', 'malformed', `${where}: parameters: expected a mapping`); return; }
+    ids.add(id);
+    entries.push({ id, module: e.module, after, parameters: e.parameters ?? {} });
+  });
+  const status = new Map(); // id -> 'done' | 'failed'
+  const exported = new Map();
+  for (const e of entries) {
+    for (const a of e.after) {
+      if (!ids.has(a)) issue('error', 'malformed', `derived module '${e.id}': after '${a}': no such derived module in the layout`);
+      if (a === e.id) issue('error', 'malformed', `derived module '${e.id}': it comes after itself`);
+    }
   }
+  const pending = entries.filter(e => e.after.every(a => ids.has(a) && a !== e.id));
+  for (const e of entries) if (!pending.includes(e)) status.set(e.id, 'failed');
+  while (pending.length) {
+    const at = pending.findIndex(e => e.after.every(a => status.has(a)));
+    if (at < 0) {
+      for (const e of pending) {
+        issue('error', 'malformed', `derived module '${e.id}': its 'after' goes round in a circle`);
+        status.set(e.id, 'failed');
+      }
+      break;
+    }
+    const [e] = pending.splice(at, 1);
+    const failed = e.after.find(a => status.get(a) !== 'done');
+    if (failed) {
+      issue('error', 'derive_skipped', `derived module '${e.id}' is skipped: '${failed}' failed`);
+      status.set(e.id, 'failed');
+      continue;
+    }
+    const deps = Object.fromEntries(e.after.map(a => [a, exported.get(a) ?? {}]));
+    const result = deriveOne(e, deps, ctx);
+    status.set(e.id, result ? 'done' : 'failed');
+    if (result) exported.set(e.id, result.exports);
+  }
+}
+
+// A value the layout gives a derived module's parameter: problems (empty if
+// fine). Lengths, angles and choices; catalog types come from the system file.
+function layoutValueProblems(spec, value) {
+  if (spec.type === 'length' || spec.type === 'angle') {
+    if (!isFiniteNumber(value)) return [`expected a number, got ${JSON.stringify(value)}`];
+    const out = [];
+    if (value < 0 || (value === 0 && spec.min !== 0)) out.push(`${value} must be positive`);
+    if (isFiniteNumber(spec.min) && value < spec.min) out.push(`${value} is below the minimum ${spec.min}`);
+    if (isFiniteNumber(spec.max) && value > spec.max) out.push(`${value} is above the maximum ${spec.max}`);
+    return out;
+  }
+  if (spec.type === 'choice') {
+    return spec.values.includes(value) ? [] : [`${JSON.stringify(value)} is not one of ${spec.values.join(', ')}`];
+  }
+  return [`a ${spec.type} can't be given in the layout (the system file gives it)`];
+}
+
+// Run one derived module (and, through input.derive, its children), add its
+// parts and fastened joints to the model, and check the new parts against
+// the rest. Returns {exports} when its parts are in the model, null if it
+// failed; problems become issues.
+function deriveOne(entry, deps, { asset, systemId, entities, connections, parts, joints, derived, issue, anchor }) {
+  const instance = entry.id;
+  const where = `derived module '${instance}'`;
+  const module = asset.modules[entry.module];
+  if (!module?.derived) { issue('error', 'derive_failed', `${where}: '${entry.module}' is not a derived module in the library`); return null; }
+  const fixed = module.systems[systemId]?.params;
+  if (!fixed) { issue('error', 'derive_failed', `${where}: '${entry.module}' has no values for system '${systemId}'`); return null; }
+  const specs = Object.fromEntries(module.parameters.map(p => [p.name, p]));
+  let badParams = false;
+  for (const [name, value] of Object.entries(entry.parameters)) {
+    const fail = message => { issue('error', 'derive_parameter', `${where}: parameter '${name}': ${message}`); badParams = true; };
+    if (!(name in specs)) fail(`not a parameter of '${entry.module}'`);
+    else if (name in fixed) fail(`fixed by the system file; the layout can't change it`);
+    else for (const message of layoutValueProblems(specs[name], value)) fail(message);
+  }
+  for (const name of Object.keys(specs)) {
+    if (!(name in fixed) && !(name in entry.parameters)) {
+      issue('error', 'derive_parameter', `${where}: parameter '${name}' has no value: give it in the layout`);
+      badParams = true;
+    }
+  }
+  if (badParams) return null;
   const run = (moduleId, params, input) => {
-    const module = asset.modules[moduleId];
-    if (!module?.derived) throw new Error(`'${moduleId}' is not a derived module in the library`);
-    const fixed = module.systems[systemId]?.params;
-    if (!fixed) throw new Error(`derived module '${moduleId}' has no values for system '${systemId}'`);
+    const child = asset.modules[moduleId];
+    if (!child?.derived) throw new Error(`'${moduleId}' is not a derived module in the library`);
+    const childFixed = child.systems[systemId]?.params;
+    if (!childFixed) throw new Error(`derived module '${moduleId}' has no values for system '${systemId}'`);
     const code = derived[moduleId];
     if (typeof code?.derive !== 'function') throw new Error(`no code given for derived module '${moduleId}'`);
-    return code.derive({ ...fixed, ...params }, input, CORE);
+    const values = { ...childFixed, ...params };
+    const missing = child.parameters.map(p => p.name).filter(name => !(name in values));
+    if (missing.length) throw new Error(`derived module '${moduleId}': no value for ${missing.map(m => `'${m}'`).join(', ')}`);
+    return code.derive(values, input, CORE);
   };
   const placed = [...entities.values()].filter(e => e.world);
   const modelParts = parts.map(p => ({ ...p }));
@@ -448,15 +549,21 @@ function deriveModules(spec, { asset, systemId, entities, connections, parts, jo
     // The anchor entity: its frame is the building's, so what a derived
     // module lays out turns with the building, not with the world's axes.
     anchor: anchor?.world ? anchor.id : null,
+    // What the modules this one comes after exported, by their ids; part
+    // ids in them are the module's own (the model's are '<id>/<own id>').
+    exports: deps,
     derive: (moduleId, params, childInput) => run(moduleId, params ?? {}, childInput),
   };
-  const instance = spec.module;
   let result;
   try {
-    result = run(instance, {}, input);
+    result = run(entry.module, entry.parameters, input);
   } catch (error) {
-    issue('error', 'derive_failed', `derived module '${instance}': ${error.message}`);
-    return;
+    issue('error', 'derive_failed', `${where}: ${error.message}`);
+    return null;
+  }
+  if (result.exports !== undefined && !isObject(result.exports)) {
+    issue('error', 'derive_failed', `${where}: exports must be a mapping`);
+    return null;
   }
   // A derived part cut from a layer carries the layer's definition
   // (layerDef), since its layer is the derived module's, not an entity's.
@@ -464,15 +571,20 @@ function deriveModules(spec, { asset, systemId, entities, connections, parts, jo
   const added = result.parts.map(p => {
     const id = `${instance}/${p.id}`;
     if (p.layerDef) layerDefs.set(id, p.layerDef);
+    // A sloped part (frame, cuts, notches): box is in its frame, which is in
+    // world coordinates; world is its bounding box.
+    const shape = {
+      ...(p.frame ? { frame: p.frame } : {}), ...(p.cuts?.length ? { cuts: p.cuts } : {}),
+      ...(p.notches?.length ? { notches: p.notches } : {}),
+    };
     return {
       id, owner: instance, host: null, stage: p.stage ?? 'site',
       role: p.role, catalog: p.catalog, material: p.material, ...(p.layer ? { layer: p.layer } : {}),
-      box: p.box, world: p.box,
+      box: p.box, ...shape, world: p.box,
     };
   });
   const ids = new Set(parts.map(p => p.id));
   const catalog = asset.systems[systemId].catalog;
-  const where = `derived module '${instance}'`;
   let bad = false;
   for (const p of added) {
     const fail = message => { issue('error', 'derived_part', `${where}: part '${p.id}': ${message}`); bad = true; };
@@ -483,12 +595,19 @@ function deriveModules(spec, { asset, systemId, entities, connections, parts, jo
     if (!(p.catalog in (catalog.lumber ?? {})) && !(p.catalog in (catalog.sheets ?? {}))) {
       fail(`catalog ${JSON.stringify(p.catalog)} is not lumber or a sheet in the system's catalog`);
     }
-    const b = p.world;
+    const b = p.box;
     if (!isObject(b) || ![0, 1, 2].every(i => isFiniteNumber(b.min?.[i]) && isFiniteNumber(b.max?.[i]) && b.min[i] < b.max[i])) {
       fail('the box must have min below max on every axis');
+    } else if (solids.isSolid(p)) {
+      const problems = solids.shapeProblems(p);
+      for (const message of problems) fail(message);
+      if (!problems.length) {
+        if (!solids.pieces(p).length) fail('its cuts and notches leave nothing');
+        else p.world = solids.boundingBox(p);
+      }
     }
   }
-  if (bad) return;
+  if (bad) return null;
   // Fasten the joints as the builder fastens a module's.
   const byId = new Map([...parts, ...added].map(p => [p.id, p]));
   const layersOf = new Map(placed.map(e => [e.id, variantLayers(e.compiled)]));
@@ -502,12 +621,14 @@ function deriveModules(spec, { asset, systemId, entities, connections, parts, jo
     else if (sides !== given) bad = true, issue('error', 'derived_joint', `${where}: a '${j.type}' joint has sides ${given}, not ${sides}`);
     else refJoints.push({ type: j.type, parts: Object.fromEntries(Object.entries(j.parts).map(([side, ref]) => [side, resolve(ref)])) });
   }
-  if (bad) return;
+  if (bad) return null;
   const info = id => {
     const p = byId.get(id);
     if (!p) throw new Error(`derived module '${instance}': a joint refers to '${id}', which is not a part`);
+    const sloped = solids.isSolid(p);
     return {
-      label: `'${id}'`, box: p.world, stage: p.stage, entity: p.owner === instance ? instance : p.host,
+      label: `'${id}'`, box: sloped ? p.box : p.world, stage: p.stage, entity: p.owner === instance ? instance : p.host,
+      ...(sloped ? { frame: p.frame, cuts: p.cuts, notches: p.notches } : {}),
       layer: p.layer ? (layerDefs.get(id) ?? layersOf.get(p.host)?.[p.layer] ?? null) : null,
     };
   };
@@ -516,13 +637,15 @@ function deriveModules(spec, { asset, systemId, entities, connections, parts, jo
     fastened = fastenJoints(`derived module '${instance}'`, refJoints, info, asset.joint_types, asset.systems[systemId]);
   } catch (error) {
     issue('error', 'derive_failed', error.message);
-    return;
+    return null;
   }
   for (const message of fastened.errors) issue('error', 'derived_joint', message);
-  if (!fastened.joints) return;
+  if (!fastened.joints) return null;
+  // World boxes, except a sloped part keeps its box in its (world) frame.
+  const inWorld = p => (solids.isSolid(p) ? p : { ...p, box: p.world });
   const problems = checkAdded(
-    added.map(p => ({ ...p, box: p.world })),
-    parts.map(p => ({ ...p, box: p.world })),
+    added.map(inWorld),
+    parts.map(inWorld),
     fastened.joints.map(j => ({ parts: j.parts })),
   );
   for (const message of problems) issue('error', 'derived_part', `derived module '${instance}': ${message}`);
@@ -530,4 +653,5 @@ function deriveModules(spec, { asset, systemId, entities, connections, parts, jo
   for (const j of fastened.joints) {
     joints.push({ ...j, id: `${instance}/${j.id}`, owner: instance });
   }
+  return { exports: result.exports ?? {} };
 }

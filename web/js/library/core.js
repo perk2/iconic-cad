@@ -6,7 +6,8 @@ import { applyBox, invert } from '../engine/affine.js';
 import * as geometry from './geometry.js';
 import * as framing from './framing.js';
 import * as walls from './walls.js';
+import * as solids from './solids.js';
 import { contact } from './geometry.js';
 import { faceToFace, nailable } from './framing.js';
 
-export const CORE = Object.freeze({ contact, faceToFace, nailable, applyBox, invert, geometry, framing, walls });
+export const CORE = Object.freeze({ contact, faceToFace, nailable, applyBox, invert, geometry, framing, walls, solids });

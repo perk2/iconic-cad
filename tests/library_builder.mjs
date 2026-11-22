@@ -430,12 +430,29 @@ const BRACING_WORKSHOP = '      - role: bracing\n        sheet: osb_12\n        
 {
   const WALL_LINE_SEH = 'library/modules/wall_line/systems/seh_no.yaml';
   for (const [rel, old, replacement, expected] of [
-    [WALL_LINE_SEH, '  min_from_joint: 600\n', '', "fixed: missing 'min_from_joint'"],
     [WALL_LINE_SEH, '  max_piece: 2400', '  max_piece: 2400\n  spacing: 600', "fixed: 'spacing' is not a parameter"],
     [WALL_LINE_SEH, '  max_piece: 2400', '  max_piece: 200', 'max_piece: 200 is below the minimum 600'],
     [WALL_LINE_SEH, 'fixed:', 'default: x\nfixed:', "system file: unknown key 'default'"],
     ['library/modules/wall_line/schema.yaml', 'derived: true', 'derived: false', 'derived: expected true'],
+    ['library/modules/wall_line/schema.yaml', 'parameters:\n', 'parameters:\n  ridge:\n    type: choice\n    description: x\n', "parameter 'ridge': missing 'values'"],
+    ['library/modules/wall_line/schema.yaml', 'parameters:\n', 'parameters:\n  ridge:\n    type: choice\n    values: [a, a]\n    description: x\n', "parameter 'ridge': values: expected a list of distinct names"],
+    ['library/modules/wall_line/schema.yaml', 'parameters:\n', 'parameters:\n  pitch:\n    type: angle\n    max: 120\n    description: x\n', "parameter 'pitch': an angle's min and max are degrees, at most 90"],
   ]) some(await broken(rel, old, replacement), expected);
+  // A derived module's system file may fix only some parameters: the layout
+  // gives the rest, and the asset holds only the fixed ones.
+  {
+    const partial = await broken(WALL_LINE_SEH, '  min_from_joint: 600\n', '');
+    noProblems(partial);
+    assert.deepEqual(partial.asset.modules.wall_line.systems.seh_no, { params: { max_piece: 2400 } });
+    const typed = await copyWith(['library/modules/wall_line/schema.yaml', 'parameters:\n',
+      'parameters:\n  pitch:\n    type: angle\n    min: 5\n    max: 45\n    description: x\n  ridge:\n    type: choice\n    values: [east_west, north_south]\n    description: x\n'],
+    [WALL_LINE_SEH, '  max_piece: 2400', '  max_piece: 2400\n  pitch: 27\n  ridge: east_west']);
+    noProblems(typed);
+    assert.deepEqual(typed.asset.modules.wall_line.systems.seh_no.params, { max_piece: 2400, min_from_joint: 600, pitch: 27, ridge: 'east_west' });
+    some(await copyWith(['library/modules/wall_line/schema.yaml', 'parameters:\n',
+      'parameters:\n  ridge:\n    type: choice\n    values: [east_west, north_south]\n    description: x\n'],
+    [WALL_LINE_SEH, '  max_piece: 2400', '  max_piece: 2400\n  ridge: up']), "fixed: ridge: 'up' is not one of east_west, north_south");
+  }
   const dir = copyLibrary();
   unlinkSync(join(dir, 'library/modules/wall_line/derive.js'));
   some(await buildAt(dir), "derived module 'wall_line' has no library/modules/wall_line/derive.js");

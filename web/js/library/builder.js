@@ -23,7 +23,7 @@ import { fastenJoints } from './fastening.js';
 import { fromFrame, portHand, toFrame } from './frames.js';
 
 // What the engine and builder know about. A new entry here is a code change.
-export const PARAMETER_TYPES = new Set(['length', 'lumber', 'buildup', 'opening_unit']);
+export const PARAMETER_TYPES = new Set(['length', 'angle', 'choice', 'lumber', 'buildup', 'opening_unit']);
 // Catalog sections an `opening_unit` parameter resolves against, and the kind each gives.
 const UNIT_SECTIONS = { windows: 'window', doors: 'door' };
 // Port kinds: only fixed ports (sliding ports went with the placed floor).
@@ -439,8 +439,18 @@ function validateSchema(module, lib, problems, source) {
       const where = `parameter '${textOf(name)}'`;
       if (RESERVED_PARAMETERS.has(name)) problems.error(f, `${where}: the name is reserved in variant files`);
       const ptype = isMapping(spec) ? get(spec, 'type') : undefined;
-      const optional = ptype === 'length' ? ['min', 'max'] : [];
-      if (!checkKeys(problems, f, where, spec, ['type', 'description'], optional)) continue;
+      const optional = ptype === 'length' || ptype === 'angle' ? ['min', 'max'] : [];
+      const required = ptype === 'choice' ? ['type', 'description', 'values'] : ['type', 'description'];
+      if (!checkKeys(problems, f, where, spec, required, optional)) continue;
+      if (ptype === 'choice') {
+        const values = get(spec, 'values');
+        if (!Array.isArray(values) || !values.length || !values.every(isStr) || new Set(values).size !== values.length) {
+          problems.error(f, `${where}: values: expected a list of distinct names`);
+        }
+      }
+      if (ptype === 'angle' && ['min', 'max'].some(b => isNumber(get(spec, b)) && get(spec, b) > 90)) {
+        problems.error(f, `${where}: an angle's min and max are degrees, at most 90`);
+      }
       checkChoice(problems, f, `${where}: type`, ptype, PARAMETER_TYPES);
       checkStr(problems, f, `${where}: description`, get(spec, 'description'));
       for (const bound of ['min', 'max']) {
@@ -485,11 +495,14 @@ function checkValue(problems, f, where, spec, value, system) {
   const ptype = get(spec, 'type');
   const catalog = isMapping(get(system, 'catalog')) ? get(system, 'catalog') : new Map();
   const mapping = v => (isMapping(v) ? v : new Map());
-  if (ptype === 'length') {
+  if (ptype === 'length' || ptype === 'angle') {
     if (!checkNumber(problems, f, where, value)) return;
     if (value < 0 || (value === 0 && get(spec, 'min') !== 0)) problems.error(f, `${where}: ${numText(value)} must be positive`);
     if (isNumber(get(spec, 'min')) && value < get(spec, 'min')) problems.error(f, `${where}: ${numText(value)} is below the minimum ${numText(get(spec, 'min'))}`);
     if (isNumber(get(spec, 'max')) && value > get(spec, 'max')) problems.error(f, `${where}: ${numText(value)} is above the maximum ${numText(get(spec, 'max'))}`);
+  } else if (ptype === 'choice') {
+    const values = get(spec, 'values');
+    if (checkStr(problems, f, where, value) && Array.isArray(values) && !values.includes(value)) problems.error(f, `${where}: '${value}' is not one of ${values.join(', ')}`);
   } else if (ptype === 'lumber') {
     if (checkStr(problems, f, where, value) && !inside(value, mapping(get(catalog, 'lumber')))) problems.error(f, `${where}: lumber '${value}' is not in the system catalog`);
   } else if (ptype === 'buildup') {
@@ -515,9 +528,9 @@ function validateVariants(module, sid, lib, problems) {
       return;
     }
     for (const key of keysOf(fixed)) if (!has(parameters, key)) problems.error(f, `fixed: '${textOf(key)}' is not a parameter of module '${module.id}'`);
+    // The rest come from the layout's entry for the module (the engine checks them).
     for (const [name, spec] of entriesOf(parameters)) {
-      if (!has(fixed, name)) problems.error(f, `fixed: missing '${textOf(name)}'`);
-      else if (isMapping(spec)) checkValue(problems, f, `fixed: ${textOf(name)}`, spec, get(fixed, name), system);
+      if (has(fixed, name) && isMapping(spec)) checkValue(problems, f, `fixed: ${textOf(name)}`, spec, get(fixed, name), system);
     }
     return;
   }
@@ -1128,7 +1141,8 @@ export function exportAsset(lib, resolved, compiled, baked, excluded) {
       modules[module.id] = {
         title: get(schema, 'title'), derived: true, parameters,
         systems: Object.fromEntries([...module.systems].map(([sid, src]) =>
-          [sid, { params: resolveParams(get(schema, 'parameters'), get(src.data, 'fixed'), lib.systems.get(sid).data) }])),
+          [sid, { params: resolveParams(new Map(entriesOf(get(schema, 'parameters')).filter(([name]) => has(get(src.data, 'fixed'), name))),
+            get(src.data, 'fixed'), lib.systems.get(sid).data) }])),
       };
       continue;
     }

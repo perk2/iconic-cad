@@ -1,0 +1,11 @@
+# Roofs in seh_no: rafters c/c 600 over the wall studs, ceiling joists at the
+# plates. Sizes are placeholders until the snow load is known and checked
+# against SINTEF Byggforsk's tables or Eurocode 5 (ic_lib_roof.md, P2).
+
+fixed:
+  rafter: "48x198"
+  ceiling_joist: "48x148"
+  ridge_board: "48x223"
+  gable_stud: "48x148"    # the walls' stud
+  lookout: "48x98"
+  spacing: 600

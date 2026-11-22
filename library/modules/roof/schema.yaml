@@ -1,0 +1,52 @@
+# A gable roof of rafters on a ridge board, tied by ceiling joists at the
+# plates, derived from the storey's walls (derive.js; hut/design/ic_lib_roof.md):
+# the rafters sit in birdsmouths on the eaves walls' upper top plates, c/c
+# the spacing from the end of the ridge, an end rafter over each gable wall,
+# carried by gable studs; at each gable a ladder (fly rafter and lookouts)
+# for the overhang. The system file fixes the lumber and the spacing; the
+# layout gives the pitch, the ridge's direction and the overhangs.
+
+id: roof
+title: Roof
+derived: true
+
+parameters:
+  rafter:
+    type: lumber
+    description: Lumber for the rafters (catalog id).
+  ceiling_joist:
+    type: lumber
+    description: Lumber for the ceiling joists, which tie the rafters' feet (catalog id).
+  ridge_board:
+    type: lumber
+    description: Lumber for the ridge board; at least as deep as the rafters' plumb cut (catalog id).
+  gable_stud:
+    type: lumber
+    description: Lumber for the gable studs, on the gable walls' upper plates (catalog id).
+  lookout:
+    type: lumber
+    description: Lumber for the lookouts of the gable ladder, laid flat (catalog id).
+  spacing:
+    type: length
+    min: 300
+    max: 600
+    description: Rafter spacing, centre to centre, from the ridge's start.
+  pitch:
+    type: angle
+    min: 10
+    max: 45
+    description: The roof's pitch, in degrees.
+  ridge:
+    type: choice
+    values: [east_west, north_south]
+    description: Which way the ridge runs (model +x east, +y north); the walls along it are the eaves walls.
+  eaves:
+    type: length
+    min: 0
+    max: 800
+    description: The eaves overhang, measured level from the walls' outer face (with the sheets).
+  gables:
+    type: length
+    min: 0
+    max: 600
+    description: The gable overhang, measured level from the gable walls' outer face (with the sheets); 0 for none.

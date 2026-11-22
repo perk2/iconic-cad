@@ -4,8 +4,42 @@
 
 import { contact, intersects, longAxis } from './geometry.js';
 import { MIN_NAILABLE } from './framing.js';
+import { isSolid, longAxisVector, solidContact, solidsIntersect } from './solids.js';
 
 /** @typedef {import('./types.js').Part} Part */
+
+// The two parts' overlap and contact, for boxes (geometry.js) or, when
+// either is sloped or cut, for solids (solids.js). contact: the face's
+// least width, and whether both parts' long axes run across it (end grain
+// to end grain); null if they don't touch face to face.
+/** @returns {{overlap: true} | {overlap: false, contact: null | {width: number, endGrain: boolean}}} */
+function meet(/** @type {Part} */ a, /** @type {Part} */ b) {
+  if (!isSolid(a) && !isSolid(b)) {
+    if (intersects(a.box, b.box)) return { overlap: true };
+    const c = contact(a.box, b.box);
+    if (c.axis === null) return { overlap: false, contact: null };
+    const axis = c.axis;
+    const sizes = [0, 1, 2].filter(k => k !== axis).map(k => c.face.max[k] - c.face.min[k]);
+    return { overlap: false, contact: { width: Math.min(...sizes), endGrain: longAxis(a.box) === axis && longAxis(b.box) === axis } };
+  }
+  if (solidsIntersect(a, b)) return { overlap: true };
+  const c = solidContact(a, b);
+  if (c.normal === null) return { overlap: false, contact: null };
+  const n = c.normal;
+  const along = (/** @type {Part} */ part) => { const v = longAxisVector(part); return !!v && Math.abs(v[0] * n[0] + v[1] * n[1] + v[2] * n[2]) > 1 - 1e-6; };
+  // The face's least width, from its extent along its own edges' normals.
+  let width = Infinity;
+  const f = c.face;
+  for (let i = 0; i < f.length; i++) {
+    const e = [0, 1, 2].map(k => f[(i + 1) % f.length][k] - f[i][k]);
+    const across = [n[1] * e[2] - n[2] * e[1], n[2] * e[0] - n[0] * e[2], n[0] * e[1] - n[1] * e[0]];
+    const len = Math.hypot(...across);
+    if (len < 1e-9) continue;
+    const ps = f.map(q => (q[0] * across[0] + q[1] * across[1] + q[2] * across[2]) / len);
+    width = Math.min(width, Math.max(...ps) - Math.min(...ps));
+  }
+  return { overlap: false, contact: { width, endGrain: along(a) && along(b) } };
+}
 
 /**
  * Problems with parts and joints: parts that overlap, and parts that touch
@@ -27,18 +61,17 @@ export function checkParts(parts, joints, { exemptLayerTouch = false } = {}) {
     const a = parts[i];
     for (let j = i + 1; j < parts.length; j++) {
       const b = parts[j];
-      if (intersects(a.box, b.box)) {
+      const m = meet(a, b);
+      if (m.overlap) {
         problems.push(`part '${a.id}' overlaps part '${b.id}'`);
         continue;
       }
       if (a.layer && b.layer) continue;
-      const c = contact(a.box, b.box);
-      if (c.axis === null) continue;
+      if (!m.contact) continue;
       if (joined.has([a.id, b.id].sort().join('|'))) continue;
       if (a.layer || b.layer) {
         if (exemptLayerTouch) continue;
-        const sizes = [0, 1, 2].filter(k => k !== c.axis).map(k => c.face.max[k] - c.face.min[k]);
-        if (Math.min(...sizes) < MIN_NAILABLE) continue;
+        if (m.contact.width < MIN_NAILABLE) continue;
       }
       problems.push(`part '${a.id}' touches part '${b.id}' with no joint`);
     }
@@ -63,14 +96,13 @@ export function checkAdded(added, existing, joints) {
   const problems = [];
   const joined = new Set(joints.map(j => Object.values(j.parts).slice().sort().join('|')));
   const check = (/** @type {Part} */ a, /** @type {Part} */ b) => {
-    if (intersects(a.box, b.box)) {
+    const m = meet(a, b);
+    if (m.overlap) {
       problems.push(`part '${a.id}' overlaps part '${b.id}'`);
       return;
     }
     if (a.layer || b.layer) return;
-    const c = contact(a.box, b.box);
-    if (c.axis === null) return;
-    if (longAxis(a.box) === c.axis && longAxis(b.box) === c.axis) return;
+    if (!m.contact || m.contact.endGrain) return;
     if (!joined.has([a.id, b.id].sort().join('|'))) problems.push(`part '${a.id}' touches part '${b.id}' with no joint`);
   };
   for (let i = 0; i < added.length; i++) {

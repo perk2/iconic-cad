@@ -16,6 +16,9 @@
  * @property {string} [layer]  the build-up layer the part is cut from
  * @property {string} [sheet]  the whole sheet a piece belongs to
  * @property {string} [host]   a connection part's host role
+ * @property {import('./solids.js').Frame} [frame]  a sloped part: box is in this frame (solids.js)
+ * @property {import('./solids.js').Cut[]} [cuts]
+ * @property {import('./solids.js').Notch[]} [notches]
  */
 
 /**
@@ -45,6 +48,9 @@
  * @typedef {object} PartInfo
  * @property {string} label
  * @property {Box} box
+ * @property {import('./solids.js').Frame} [frame]  a sloped part (solids.js)
+ * @property {import('./solids.js').Cut[]} [cuts]
+ * @property {import('./solids.js').Notch[]} [notches]
  * @property {string} stage
  * @property {string} entity  what the part belongs to (a connection part's host)
  * @property {Layer | null} layer
